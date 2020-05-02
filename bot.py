@@ -16,6 +16,8 @@ FIREBASE_NAME = os.environ.get('FIREBASE_NAME', 3)
 MEE6 = bot.get_user(159985870458322944)
 firebase = firebase.FirebaseApplication(FIREBASE, None)
 
+
+
 ListOfMEE6insults = []
 
 
@@ -47,7 +49,10 @@ async def load(ctx):
 async def insult(ctx, *, insult):
     result = firebase.post(FIREBASE_NAME+'/insult', insult)
     print(result)
+    bruh = firebase.get('/' + FIREBASE_NAME + '/insult', '')
+    print(bruh)
     await ctx.send('bruh')
+
 
 
 @bot.command(hidden=True)
