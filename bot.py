@@ -12,27 +12,38 @@ bot = commands.Bot(command_prefix='!', description='Aejay\'s Birthday!!')
 TOKEN = os.environ.get('TOKEN', 3)
 FIREBASE = os.environ.get('FIREBASE', 3)
 FIREBASE_NAME = os.environ.get('FIREBASE_NAME', 3)
-
-MEE6 = bot.get_user(159985870458322944)
 firebase = firebase.FirebaseApplication(FIREBASE, None)
+bot.remove_command('help')
 
 
 
-ListOfMEE6insults = []
+Acceptance_List = ['added to the arsenal 💪',
+                   'Yeah let\'s take this bastard down',
+                   'MWA HA HA That is so evil!!! I love it!',
+                   'Yes! Perfect 😍',
+                   'I mean. Ok I guess',
+                   'MEE6 MUST BE ELIMINATED']
+
+MEE6_LIST = []
+FirebaseList = firebase.get('/' + FIREBASE_NAME + '/insult', '')
+for i in FirebaseList.values():
+    MEE6_LIST.append(i)
+
 
 @bot.event
 async def on_message(message):
+    MEE6 = bot.get_user(159985870458322944)
     if message.author == MEE6:
         await message.add_reaction('🤡')
-        await message.channel.send('lick me')
-
+        await message.channel.send(random.choice(MEE6_LIST))
+    print(message.author)
+    print(MEE6)
+    await bot.process_commands(message)
 
 
 @bot.event
 async def on_ready():
     print('bot.py is active')
-
-
 
 #@bot.command(name='ping')
 #async def ping(ctx):
@@ -55,9 +66,7 @@ async def load(ctx):
 async def insult(ctx, *, insult):
     result = firebase.post(FIREBASE_NAME+'/insult', insult)
     print(result)
-    bruh = firebase.get('/' + FIREBASE_NAME + '/insult', '')
-    print(bruh)
-    await ctx.send('bruh')
+    await ctx.send(random.choice(Acceptance_List))
 
 
 
