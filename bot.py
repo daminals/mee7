@@ -50,8 +50,9 @@ async def on_message(message):
             if not message.author == MEE6:
                 if not message.content.startswith('!'):
                     await message.add_reaction("🤡")
-                    await message.channel.send(
-                        'STFU ABOUT MEE6 WE DON\'T MENTION THAT DISGUSTING PIECE OF MALWARE HERE')
+                    if random.randint(0,100) > 39:
+                        await message.channel.send(
+                          'STFU ABOUT MEE6 WE DON\'T MENTION THAT DISGUSTING PIECE OF MALWARE HERE')
 
     if ('daniel' in message.content.lower()) and ('kogan' in message.content.lower()):
         if not message.author.bot:
