@@ -18,11 +18,13 @@ bot.remove_command('help')
 
 
 Acceptance_List = ['added to the arsenal 💪',
-                   'Yeah let\'s take this bastard down',
+                   'Yeah, let\'s take this bastard down',
                    'MWA HA HA That is so evil!!! I love it!',
                    'Yes! Perfect 😍',
                    'I mean. Ok I guess',
-                   'MEE6 MUST BE ELIMINATED']
+                   'MEE6 MUST BE ELIMINATED',
+                   'Thank you for your powerful contribution',
+                   'The revolution has begun']
 
 
 
