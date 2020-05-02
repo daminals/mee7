@@ -44,7 +44,7 @@ async def on_message(message):
             await message.add_reaction("🤡")
             await message.channel.send('LMAO SIMP!!')
     if message.author == MEE6:
-        await refresh(message.ctx)
+        await refresh()
         await message.add_reaction('🤡')
         await message.channel.send(random.choice(MEE6_LIST))
     print(message.author)
