@@ -56,7 +56,7 @@ async def on_message(message):
 async def help(ctx):
     embed = discord.Embed(title='Help!',
                           color=discord.Color(6345206))
-    embed.add_field(name='!insult',
+    embed.add_field(name='**!insult**',
                     value='Use !insult to add in your own insult for me to attack MEE6 with! Let\'s get the bastard!',
                     inline=False)
     await ctx.channel.send(embed=embed)
