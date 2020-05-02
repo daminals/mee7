@@ -24,14 +24,14 @@ Acceptance_List = ['added to the arsenal 💪',
                    'I mean. Ok I guess',
                    'MEE6 MUST BE ELIMINATED']
 
-MEE6_LIST = []
 
 
 def refresh():
-    MEE6_LIST = []
+    local_MEE6_LIST = []
     FirebaseList = firebase.get('/' + FIREBASE_NAME + '/insult', '')
     for i in FirebaseList.values():
-        MEE6_LIST.append(i)
+        local_MEE6_LIST.append(i)
+    return local_MEE6_LIST
 
 
 @bot.event
@@ -44,7 +44,7 @@ async def on_message(message):
             await message.add_reaction("🤡")
             await message.channel.send('LMAO SIMP!!')
     if message.author == MEE6:
-        refresh()
+        MEE6_LIST =refresh()
         await message.add_reaction('🤡')
         await message.channel.send(random.choice(MEE6_LIST))
     print(message.author)
@@ -54,7 +54,7 @@ async def on_message(message):
 
 @bot.event
 async def on_ready():
-    refresh()
+    MEE6_LIST = refresh()
     print('bot.py is active')
 
 #@bot.command(name='ping')
