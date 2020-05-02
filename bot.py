@@ -20,6 +20,12 @@ firebase = firebase.FirebaseApplication(FIREBASE, None)
 
 ListOfMEE6insults = []
 
+@bot.event
+async def on_message(message):
+    if message.author == MEE6:
+        await message.add_reaction('🤡')
+        await message.channel.send('lick me')
+
 
 
 @bot.event
@@ -28,14 +34,14 @@ async def on_ready():
 
 
 
-@bot.command(name='ping')
-async def ping(ctx):
-    data = {
-        "USER": 'heroku',
-        'TEAM': 'online'}
-    result = firebase.post(FIREBASE_NAME + '/Team', data)
-    print(result)
-    await ctx.send('pong')
+#@bot.command(name='ping')
+#async def ping(ctx):
+#    data = {
+#        "USER": 'heroku',
+#        'TEAM': 'online'}
+#    result = firebase.post(FIREBASE_NAME + '/Team', data)
+#    print(result)
+#    await ctx.send('pong')
 
 
 @bot.command(hidden=True)
