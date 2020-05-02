@@ -33,6 +33,12 @@ for i in FirebaseList.values():
 @bot.event
 async def on_message(message):
     MEE6 = bot.get_user(159985870458322944)
+    if ('happy birthday' in message.content.lower()) and not (message.author.bot):
+        await message.channel.send('Happy Birthday! 🥳🎉')
+    if 'i agree' in message.content.lower():
+        if not message.author.bot:
+            await message.add_reaction("🤡")
+            await message.channel.send('LMAO SIMP!!')
     if message.author == MEE6:
         await message.add_reaction('🤡')
         await message.channel.send(random.choice(MEE6_LIST))
