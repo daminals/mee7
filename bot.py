@@ -3,8 +3,6 @@ import os
 
 import discord, random, asyncio
 from dotenv import load_dotenv
-from discord import Member
-from itertools import cycle
 from firebase import firebase
 
 load_dotenv()
@@ -27,23 +25,16 @@ async def on_ready():
     print('bot.py is active')
 
 
-@bot.event
-async def on_message(message):
-        if random.randint(0, 100) > 99:
-            emoji = '🥳'
-            emoji2 = '🎉'
-            await message.add_reaction(emoji)
-            await message.add_reaction(emoji2)
-        if ('happy birthday' in message.content.lower()) and not(message.author.bot):
-            await message.channel.send('Happy Birthday! 🥳🎉')
-        if random.randint(0, 100) > 99:
-            await message.channel.send('Happy Birthday! 🥳🎉')
-        if 'i agree' in message.content.lower():
-            if not message.author.bot:
-                await message.add_reaction("🤡")
-                await message.channel.send('LMAO SIMP!!')
-        if message.author == MEE6:
-            await message.channel.send()
+
+@bot.command(name='ping')
+async def ping(ctx):
+    data = {
+        "USER": 'heroku',
+        'TEAM': 'online'}
+    result = firebase.post(FIREBASE_NAME + '/Team', data)
+    print(result)
+    await ctx.send('pong')
+
 
 @bot.command(hidden=True)
 async def load(ctx):
@@ -56,6 +47,7 @@ async def load(ctx):
 async def insult(ctx, *, insult):
     result = firebase.post(FIREBASE_NAME+'/insult', insult)
     print(result)
+    await ctx.send('bruh')
 
 
 @bot.command(hidden=True)
