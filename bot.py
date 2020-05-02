@@ -50,7 +50,7 @@ async def on_ready():
 
 
 @bot.event
-async def on_server_join(server):
+async def on_guild_join(server):
     servers = list(bot.guilds)
     server_num = len(servers)
     await bot.change_presence(
