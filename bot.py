@@ -8,7 +8,7 @@ from firebase import firebase
 load_dotenv()
 from discord.ext import commands, tasks
 
-bot = commands.Bot(command_prefix='!', description='Aejay\'s Birthday!!')
+bot = commands.Bot(command_prefix='!')
 TOKEN = os.environ.get('TOKEN', 3)
 FIREBASE = os.environ.get('FIREBASE', 3)
 FIREBASE_NAME = os.environ.get('FIREBASE_NAME', 3)
@@ -48,6 +48,15 @@ async def on_message(message):
         await message.add_reaction('🤡')
         await message.channel.send(random.choice(MEE6_LIST))
     await bot.process_commands(message)
+
+
+@bot.command(name='help')
+async def help(ctx):
+    embed = discord.Embed(title='Help!',
+                          color=discord.Color.blue())
+    embed.add_field(name='!insult',
+                    value='Use !insult to add in your own insult for me to attack MEE6 with! Let\'s get the bastard!',
+                    inline=False)
 
 
 @bot.event
