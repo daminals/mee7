@@ -57,6 +57,7 @@ async def help(ctx):
     embed.add_field(name='!insult',
                     value='Use !insult to add in your own insult for me to attack MEE6 with! Let\'s get the bastard!',
                     inline=False)
+    await ctx.channel.send(embed=embed)
 
 
 @bot.event
