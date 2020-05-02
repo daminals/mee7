@@ -25,10 +25,14 @@ Acceptance_List = ['added to the arsenal 💪',
                    'MEE6 MUST BE ELIMINATED']
 
 MEE6_LIST = []
-FirebaseList = firebase.get('/' + FIREBASE_NAME + '/insult', '')
-for i in FirebaseList.values():
-    MEE6_LIST.append(i)
 
+
+@bot.command(name='refresh', hidden=True)
+async def refresh(ctx):
+    MEE6_LIST = []
+    FirebaseList = firebase.get('/' + FIREBASE_NAME + '/insult', '')
+    for i in FirebaseList.values():
+        MEE6_LIST.append(i)
 
 @bot.event
 async def on_message(message):
@@ -40,6 +44,7 @@ async def on_message(message):
             await message.add_reaction("🤡")
             await message.channel.send('LMAO SIMP!!')
     if message.author == MEE6:
+        await refresh()
         await message.add_reaction('🤡')
         await message.channel.send(random.choice(MEE6_LIST))
     print(message.author)
