@@ -46,7 +46,7 @@ async def on_message(message):
             await message.add_reaction("🤡")
             await message.channel.send('LMAO SIMP!!')
     if message.author == MEE6:
-        MEE6_LIST =refresh()
+        MEE6_LIST = refresh()
         await message.add_reaction('🤡')
         await message.channel.send(random.choice(MEE6_LIST))
     await bot.process_commands(message)
@@ -86,6 +86,8 @@ async def load(ctx):
 
 @bot.command(name='insult')
 async def insult(ctx, *, insult):
+    if 'kogan' in insult.lower() and not ctx.author == bot.get_user(577668867380477962):
+        await ctx.send('The official stance of MEE7 is that I am an avid supporter of Daniel Kogan for Brooklyn Tech\'s Senior President, thank you')
     result = firebase.post(FIREBASE_NAME+'/insult', insult)
     print(result)
     await ctx.send(random.choice(Acceptance_List))
