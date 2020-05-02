@@ -37,6 +37,29 @@ def refresh():
 
 
 @bot.event
+async def on_ready():
+    MEE6_LIST = refresh()
+    print('bot.py is active')
+    servers = list(bot.guilds)
+    server_num = len(servers)
+    await bot.change_presence(
+        # "you all code"
+        # "myself break over & over"
+        activity=discord.Activity(type=discord.ActivityType.watching, name=f"over {server_num} servers"))
+
+
+
+@bot.event
+async def on_server_join(server):
+    servers = list(bot.guilds)
+    server_num = len(servers)
+    await bot.change_presence(
+        # "you all code"
+        # "myself break over & over"
+        activity=discord.Activity(type=discord.ActivityType.watching, name=f"over {server_num} servers"))
+
+
+@bot.event
 async def on_message(message):
     MEE6 = bot.get_user(159985870458322944)
     if ('happy birthday' in message.content.lower()) and not (message.author.bot):
@@ -76,17 +99,6 @@ async def help(ctx):
                     inline=False)
     await ctx.channel.send(embed=embed)
 
-
-@bot.event
-async def on_ready():
-    MEE6_LIST = refresh()
-    print('bot.py is active')
-    servers = list(bot.guilds)
-    server_num = len(servers)
-    await bot.change_presence(
-        # "you all code"
-        # "myself break over & over"
-        activity=discord.Activity(type=discord.ActivityType.watching, name=f"over {server_num} servers"))
 
 
 
