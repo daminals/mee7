@@ -81,6 +81,14 @@ async def help(ctx):
 async def on_ready():
     MEE6_LIST = refresh()
     print('bot.py is active')
+    servers = list(bot.guilds)
+    server_num = len(servers)
+    await bot.change_presence(
+        # "you all code"
+        # "myself break over & over"
+        activity=discord.Activity(type=discord.ActivityType.watching, name=f"over {server_num} servers"))
+
+
 
 #@bot.command(name='ping')
 #async def ping(ctx):
