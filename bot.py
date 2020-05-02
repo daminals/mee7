@@ -48,7 +48,7 @@ async def on_message(message):
     if 'mee6' in message.content.lower():
         if not message.author.bot:
             if not message.author == MEE6:
-                if not message.startswith('!'):
+                if not message.content.startswith('!'):
                     await message.add_reaction("🤡")
                     await message.channel.send(
                         'STFU ABOUT MEE6 WE DON\'T MENTION THAT DISGUSTING PIECE OF MALWARE HERE')
