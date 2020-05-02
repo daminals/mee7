@@ -13,7 +13,7 @@ class Extra(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print('fun.py is online')
+        print('fun.py is active')
 
     @commands.Cog.listener()
     async def on_message(self, message):

@@ -47,8 +47,6 @@ async def on_message(message):
         MEE6_LIST =refresh()
         await message.add_reaction('🤡')
         await message.channel.send(random.choice(MEE6_LIST))
-    print(message.author)
-    print(MEE6)
     await bot.process_commands(message)
 
 
