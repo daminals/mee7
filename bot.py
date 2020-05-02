@@ -50,11 +50,6 @@ async def on_message(message):
             if not message.author == MEE6:
                 await message.add_reaction("🤡")
                 await message.channel.send('STFU ABOUT MEE6 WE DON\'T MENTION THAT DISGUSTING PIECE OF MALWARE HERE')
-    if ('daniel' in message.content.lower()) and ('kogan' in message.content.lower()):
-        if not message.author.bot:
-            await message.add_reaction("😍")
-            await message.channel.send('OMG DANIEL KOGAN??? THE NEXT BROOKLYN TECH SENIOR PRESIDENT 😮 \n I love that mans 🥰☺️')
-
     if message.author == MEE6:
         MEE6_LIST = refresh()
         await message.add_reaction('🤡')
