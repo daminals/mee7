@@ -34,6 +34,7 @@ async def refresh(ctx):
     for i in FirebaseList.values():
         MEE6_LIST.append(i)
 
+
 @bot.event
 async def on_message(message):
     MEE6 = bot.get_user(159985870458322944)
@@ -54,6 +55,7 @@ async def on_message(message):
 
 @bot.event
 async def on_ready():
+    await refresh()
     print('bot.py is active')
 
 #@bot.command(name='ping')
