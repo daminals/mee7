@@ -45,14 +45,15 @@ async def on_message(message):
         if not message.author.bot:
             await message.add_reaction("🤡")
             await message.channel.send('LMAO SIMP!!')
+    if 'mee6' in message.content.lower():
+        if not message.author.bot:
+            if not message.author == MEE6:
+                await message.add_reaction("🤡")
+                await message.channel.send('STFU ABOUT MEE6 WE DON\'T MENTION THAT DISGUSTING PIECE OF MALWARE HERE')
     if message.author == MEE6:
         MEE6_LIST = refresh()
         await message.add_reaction('🤡')
         await message.channel.send(random.choice(MEE6_LIST))
-
-    if (('daniel' and 'kogan') in message.content.lower()) and not (message.author == bot.get_user(577668867380477962)):
-        await message.channel.send('The official stance of MEE7 is that I am an avid supporter of Daniel Kogan for Brooklyn Tech\'s Senior President, thank you')
-
     await bot.process_commands(message)
 
 
