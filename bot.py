@@ -40,6 +40,7 @@ def refresh():
 
 def updateTicker():
     FirebaseTicker = firebase.get('/' + FIREBASE_NAME + '/ticker', '')
+    print(FirebaseTicker)
     key = FirebaseTicker.keys()
     ticker = FirebaseTicker.values()
     ticker += 1
