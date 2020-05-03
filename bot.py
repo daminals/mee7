@@ -15,8 +15,6 @@ FIREBASE_NAME = os.environ.get('FIREBASE_NAME', 3)
 firebase = firebase.FirebaseApplication(FIREBASE, None)
 bot.remove_command('help')
 
-
-
 Acceptance_List = ['added to the arsenal 💪',
                    'Yeah, let\'s take this bastard down',
                    'MWA HA HA That is so evil!!! I love it!',
@@ -32,13 +30,16 @@ Acceptance_List = ['added to the arsenal 💪',
                    'MEE6 boutta eat some 💩']
 
 
-
 def refresh():
     local_MEE6_LIST = []
     FirebaseList = firebase.get('/' + FIREBASE_NAME + '/insult', '')
     for i in FirebaseList.values():
         local_MEE6_LIST.append(i)
     return local_MEE6_LIST
+
+
+def updateTicker():
+    FirebaseTicker = firebase.get('/' + FIREBASE_NAME + '/ticker', '')
 
 
 @bot.event
@@ -51,7 +52,6 @@ async def on_ready():
         # "you all code"
         # "myself break over & over"
         activity=discord.Activity(type=discord.ActivityType.watching, name=f"over {server_num} servers"))
-
 
 
 @bot.event
@@ -78,25 +78,26 @@ async def on_message(message):
             if not message.author == MEE6:
                 if not message.content.startswith('!'):
                     await message.add_reaction("🤡")
-                    if random.randint(0,100) > 39:
+                    if random.randint(0, 100) > 39:
                         await message.channel.send(
-                          'STFU ABOUT MEE6 WE DON\'T MENTION THAT DISGUSTING PIECE OF MALWARE HERE')
+                            'STFU ABOUT MEE6 WE DON\'T MENTION THAT DISGUSTING PIECE OF MALWARE HERE')
 
     if ('daniel' in message.content.lower()) and ('kogan' in message.content.lower()):
         if not message.author.bot:
             await message.add_reaction("😍")
-            await message.channel.send('OMG DANIEL KOGAN??? THE NEXT BROOKLYN TECH SENIOR PRESIDENT 😮 \n I love that mans 🥰☺️')
+            await message.channel.send(
+                'OMG DANIEL KOGAN??? THE NEXT BROOKLYN TECH SENIOR PRESIDENT 😮 \n I love that mans 🥰☺️')
 
     if message.author == MEE6:
         MEE6_LIST = refresh()
         await message.add_reaction('🤡')
         await message.channel.send(random.choice(MEE6_LIST))
 
-    if (message.guild == None) and not (message.author.bot):
-        await message.author.send('bruh whats poppin')
+    # if (message.guild == None) and not (message.author.bot):
+    #    await message.author.send('bruh whats poppin')
+    #    await message.author.send('My name is MEE7, far superior to MEE6')
 
     await bot.process_commands(message)
-
 
 
 @bot.command(name='help')
@@ -109,48 +110,15 @@ async def help(ctx):
     await ctx.channel.send(embed=embed)
 
 
-
-
-#@bot.command(name='ping')
-#async def ping(ctx):
-#    data = {
-#        "USER": 'heroku',
-#        'TEAM': 'online'}
-#    result = firebase.post(FIREBASE_NAME + '/Team', data)
-#    print(result)
-#    await ctx.send('pong')
-
-
-@bot.command(hidden=True)
-async def load(ctx):
-    for filename in os.listdir('./cogs'):
-        if filename.endswith('.py'):
-            bot.load_extension(f'cogs.{filename[:-3]}')
-
-
 @bot.command(name='insult')
 async def insult(ctx, *, insult):
     if 'kogan' in insult.lower() and not ctx.author == bot.get_user(577668867380477962):
-        await ctx.send('The official stance of MEE7 is that I am an avid supporter of Daniel Kogan for Brooklyn Tech\'s Senior President, thank you')
-    result = firebase.post(FIREBASE_NAME+'/insult', insult)
+        await ctx.send(
+            'The official stance of MEE7 is that I am an avid supporter of Daniel Kogan for Brooklyn Tech\'s Senior President, thank you')
+    result = firebase.post(FIREBASE_NAME + '/insult', insult)
     print(result)
+    ticker = firebase.post(FIREBASE_NAME + '/ticker', 0)
     await ctx.send(random.choice(Acceptance_List))
-
-
-
-@bot.command(hidden=True)
-async def unload(ctx):
-    for filename in os.listdir('./cogs'):
-        if filename.endswith('.py'):
-            bot.unload_extension(f'cogs.{filename[:-3]}')
-
-
-@bot.command(hidden=True)
-async def reload(ctx):
-    for filename in os.listdir('./cogs'):
-        if filename.endswith('.py'):
-            bot.unload_extension(f'cogs.{filename[:-3]}')
-            bot.load_extension(f'cogs.{filename[:-3]}')
 
 
 for filename in os.listdir('./cogs'):
