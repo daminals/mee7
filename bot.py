@@ -40,7 +40,10 @@ def refresh():
 
 def updateTicker():
     FirebaseTicker = firebase.get('/' + FIREBASE_NAME + '/ticker', '')
-
+    key = FirebaseTicker.keys()
+    ticker = FirebaseTicker.values()
+    ticker += 1
+    firebase.put('/' + FIREBASE_NAME + '/ticker/' + key, ticker)
 
 @bot.event
 async def on_ready():
@@ -116,8 +119,8 @@ async def insult(ctx, *, insult):
         await ctx.send(
             'The official stance of MEE7 is that I am an avid supporter of Daniel Kogan for Brooklyn Tech\'s Senior President, thank you')
     result = firebase.post(FIREBASE_NAME + '/insult', insult)
+    updateTicker()
     print(result)
-    ticker = firebase.post(FIREBASE_NAME + '/ticker', 0)
     await ctx.send(random.choice(Acceptance_List))
 
 
