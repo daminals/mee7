@@ -37,18 +37,25 @@ def refresh():
         local_MEE6_LIST.append(i)
     return local_MEE6_LIST
 
-
-def updateTicker():
+def CurrentTicker():
     FirebaseTicker = firebase.get('/' + FIREBASE_NAME + '/ticker', '')
     print(FirebaseTicker)
-    key = FirebaseTicker.keys()
-    ticker = FirebaseTicker.values()
+    key = list(FirebaseTicker.keys())
+    ticker = list(FirebaseTicker.values())
+    key = key[0]
+    ticker = ticker[0]
+    ticker = ticker['ticker']
+    return [key,ticker]
+
+def updateTicker():
+    Dict_Tick = CurrentTicker()
+    key = Dict_Tick[0]
+    ticker = Dict_Tick[1]
     ticker += 1
-    firebase.put('/' + FIREBASE_NAME + '/ticker/' + key, ticker)
+    firebase.put('/' + FIREBASE_NAME + '/ticker/' + key, 'ticker', ticker)
 
 @bot.event
 async def on_ready():
-    MEE6_LIST = refresh()
     print('bot.py is active')
     servers = list(bot.guilds)
     server_num = len(servers)
@@ -96,6 +103,7 @@ async def on_message(message):
         MEE6_LIST = refresh()
         await message.add_reaction('🤡')
         await message.channel.send(random.choice(MEE6_LIST))
+        updateTicker()
 
     # if (message.guild == None) and not (message.author.bot):
     #    await message.author.send('bruh whats poppin')
@@ -120,9 +128,18 @@ async def insult(ctx, *, insult):
         await ctx.send(
             'The official stance of MEE7 is that I am an avid supporter of Daniel Kogan for Brooklyn Tech\'s Senior President, thank you')
     result = firebase.post(FIREBASE_NAME + '/insult', insult)
-    updateTicker()
     print(result)
     await ctx.send(random.choice(Acceptance_List))
+
+@bot.command(name='count')
+async def count(ctx):
+    Dict_Tick = CurrentTicker()
+    ticker = Dict_Tick[1]
+    servers = list(bot.guilds)
+    server_num = len(servers)
+    await ctx.send(f'We have successfully attacked the tyrannical MEE6 ***{ticker}*** times '
+                   f'across ***{server_num}*** servers! Congratulations my fellow Crusaders!')
+
 
 
 for filename in os.listdir('./cogs'):
