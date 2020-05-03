@@ -24,7 +24,12 @@ Acceptance_List = ['added to the arsenal 💪',
                    'I mean. Ok I guess',
                    'MEE6 MUST BE ELIMINATED',
                    'Thank you for your powerful contribution',
-                   'The revolution has begun']
+                   'The revolution has begun',
+                   '😳✊',
+                   'lmao nice',
+                   'bruh moment let\'s get it boys n girls',
+                   'flexing on MEE6 like Mr. Brutus wants 💪',
+                   'MEE6 boutta eat some 💩']
 
 
 
