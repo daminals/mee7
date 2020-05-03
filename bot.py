@@ -91,6 +91,10 @@ async def on_message(message):
         MEE6_LIST = refresh()
         await message.add_reaction('🤡')
         await message.channel.send(random.choice(MEE6_LIST))
+
+    if (message.guild == None) and not (message.author.bot):
+        await message.author.send('bruh whats poppin')
+
     await bot.process_commands(message)
 
 
