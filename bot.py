@@ -193,15 +193,14 @@ async def mock(ctx):
 @bot.command(name='allroast')
 async def allroast(ctx):
     MEE6_LIST = refresh()
-    async with ctx.channel.typing():
+    await ctx.author.send('Sorry to DM, but I don\'t want to spam the server, sigh')
+    async with ctx.author.typing():
         await asyncio.sleep(2.5)
-    embed = discord.Embed(title='My whole damn database',
-                          color=discord.Color(6345206))
-    i = 0
+    all_roasts = ''
     for item in MEE6_LIST:
-        i += 1
-        embed.add_field(name='**'+str(i)+'**', value=item, inline=False)
-    await ctx.channel.send(embed=embed)
+        all_roasts += item +'\n\n'
+
+    await ctx.author.send(all_roasts)
 
 # ----------------------------------------------------
 
