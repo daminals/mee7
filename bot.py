@@ -127,6 +127,8 @@ async def on_message(message):
     if message.author == MEE6:
         MEE6_LIST = refresh()
         await message.add_reaction('🤡')
+        async with message.channel.typing():
+            await asyncio.sleep(5)
         await message.channel.send(random.choice(MEE6_LIST))
         updateTicker()
 
