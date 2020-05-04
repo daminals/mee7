@@ -195,7 +195,8 @@ async def allroast(ctx):
     MEE6_LIST = refresh()
     async with ctx.channel.typing():
         await asyncio.sleep(2.5)
-    await ctx.channel.send((MEE6_LIST))
+    for item in MEE6_LIST:
+        await ctx.channel.send((item))
     updateTicker()
 
 # ----------------------------------------------------
