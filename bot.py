@@ -90,6 +90,15 @@ async def on_guild_join(server):
         # "myself break over & over"
         activity=discord.Activity(type=discord.ActivityType.watching, name=f"over {server_num} servers"))
 
+@bot.event
+async def on_guild_remove(server):
+    servers = list(bot.guilds)
+    server_num = len(servers)
+    await bot.change_presence(
+        # "you all code"
+        # "myself break over & over"
+        activity=discord.Activity(type=discord.ActivityType.watching, name=f"over {server_num} servers"))
+
 # ----------------------------------------------------
 
 @bot.event
