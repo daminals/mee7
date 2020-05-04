@@ -114,7 +114,7 @@ async def on_message(message):
         if not message.author.bot:
             if not message.author == MEE6:
                 if not message.content.startswith('!'):
-                    if random.randint(1)>0.5:
+                    if random.randint(0,10)>5:
                         await message.add_reaction("😍")
                     else:
                         await message.add_reaction("😘")
