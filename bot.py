@@ -35,6 +35,8 @@ Acceptance_List = ['added to the arsenal 💪',
                    'MEE6 boutta eat some 💩']
 
 
+Acceptance_Emojis = ['😍','❤️','🥰','💪','👑','☺️','🤙']
+
 # FUNCTION CALLS
 # ----------------------------------------------------
 
@@ -112,10 +114,13 @@ async def on_message(message):
         if not message.author.bot:
             if not message.author == MEE6:
                 if not message.content.startswith('!'):
-                    if random.randint(1)>0.5:
-                        await message.add_reaction("😍")
-                    else:
-                        await message.add_reaction("😘")
+                    #if random.randint(1)>0.5:
+                    #    await message.add_reaction("😍")
+                    #else:
+                    #    await message.add_reaction("😘")
+
+                    await message.add_reaction("❤️")
+
                     if random.randint(0, 100) > 39:
                         async with message.channel.typing():
                             await asyncio.sleep(1.5)
@@ -132,7 +137,7 @@ async def on_message(message):
         MEE6_LIST = refresh()
         await message.add_reaction('🤡')
         async with message.channel.typing():
-            await asyncio.sleep(3)
+            await asyncio.sleep(1.5)
         await message.channel.send(random.choice(MEE6_LIST))
         updateTicker()
 
@@ -163,6 +168,7 @@ async def help(ctx):
 
 @bot.command(name='insult')
 async def insult(ctx, *, insult):
+    await ctx.add_reaction(random.choice(Acceptance_Emojis))
     if 'kogan' in insult.lower() and not ctx.author == bot.get_user(577668867380477962):
         await ctx.send(
             'The official stance of MEE7 is that I am an avid supporter of Daniel Kogan for Brooklyn Tech\'s Senior President, thank you')
