@@ -162,6 +162,7 @@ async def help(ctx):
     embed.add_field(name='**!mock**',
                     value='Use !mock to insult MEE6, without MEE6 even provoking it!',
                     inline=False)
+    embed.add_field(name='***!allroast***',value='This sends a text file containing my entire insult database!',inline=False)
     await ctx.channel.send(embed=embed)
 
 # ----------------------------------------------------
