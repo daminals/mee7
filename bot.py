@@ -200,6 +200,7 @@ async def allroast(ctx):
         f.write(item)
         f.write('\n\n')
     f.close()
+    await ctx.channel.send('Behold! My Database!')
     await ctx.channel.send(file=discord.File('insults.txt'))
 # ----------------------------------------------------
 
