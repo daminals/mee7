@@ -196,13 +196,11 @@ async def allroast(ctx):
     async with ctx.channel.typing():
         await asyncio.sleep(2.5)
     f = open("insults.txt", 'w')
-    all_roasts = ''
     for item in MEE6_LIST:
-        all_roasts += item +'\n\n'
-
-    f.write(all_roasts)
+        f.write(item)
+        f.write('\n\n')
+    f.close()
     await ctx.channel.send(file=discord.File('insults.txt'))
-
 # ----------------------------------------------------
 
 @bot.command(name='count')
