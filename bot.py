@@ -200,8 +200,8 @@ async def allroast(ctx):
     i = 0
     for item in MEE6_LIST:
         i += 1
-        embed.add_field(name=str(i), value=item, inline=False)
-    await ctx.channel.send(embed)
+        embed.add_field(name='**'+str(i)+'**', value=item, inline=False)
+    await ctx.channel.send(embed=embed)
 
 # ----------------------------------------------------
 
