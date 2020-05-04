@@ -195,9 +195,13 @@ async def allroast(ctx):
     MEE6_LIST = refresh()
     async with ctx.channel.typing():
         await asyncio.sleep(2.5)
+    embed = discord.Embed(title='My whole damn database',
+                          color=discord.Color(6345206))
+    i = 0
     for item in MEE6_LIST:
-        await ctx.channel.send((item))
-    updateTicker()
+        i += 1
+        embed.add_field(name=str(i), value=item)
+    await ctx.channel.send(embed)
 
 # ----------------------------------------------------
 
