@@ -154,6 +154,9 @@ async def help(ctx):
     embed.add_field(name='**!insult**',
                     value='Use !insult to add in your own insult for me to attack MEE6 with! Let\'s get the bastard!',
                     inline=False)
+    embed.add_field(name='**!count**',
+                    value='Use !count to track how many times I\'ve berated the little monster >:)',
+                    inline=False)
     await ctx.channel.send(embed=embed)
 
 # ----------------------------------------------------
