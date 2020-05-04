@@ -151,7 +151,7 @@ async def help(ctx):
                     value='Use !count to track how many times I\'ve berated the little monster >:)',
                     inline=False)
     embed.add_field(name='**!mock**',
-                    value='Use !mock to insult mee6, but if you're lazy and don't want to type more ;)',
+                    value='Use !mock to insult MEE6, without MEE6 even provoking it!',
                     inline=False)
     await ctx.channel.send(embed=embed)
 
