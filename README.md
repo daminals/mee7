@@ -9,7 +9,11 @@ Add me with the link: <http://tiny.cc/MEE7>
 # Commands 
 !insult <example insult>
 
-Add your marvelous insults to my dastardly database!
+Add your marvelous insults to my dastardly database! (anything you put after !insult will be added to a database containing all insults)
+
+!mock
+
+What if you want me to mock MEE6 right here, right now. MEE6 hasn't spoken but damn are you mad!
 
 !count
 
