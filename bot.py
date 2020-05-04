@@ -165,7 +165,6 @@ async def help(ctx):
 
 @bot.command(name='insult')
 async def insult(ctx, *, insult):
-    await ctx.add_reaction(random.choice(Acceptance_Emojis))
     if 'kogan' in insult.lower() and not ctx.author == bot.get_user(577668867380477962):
         await ctx.send(
             'The official stance of MEE7 is that I am an avid supporter of Daniel Kogan for Brooklyn Tech\'s Senior President, thank you')
