@@ -159,7 +159,7 @@ async def help(ctx):
 
 @bot.command(name='insult')
 async def insult(ctx, *, insult):
-    if not ('mee6' in insult.lower()):
+    if not (('mee6' or 'you') in insult.lower()):
         await ctx.send('I would really prefer if you could add MEE6 into your insult')
         return None
 
