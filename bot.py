@@ -1,5 +1,5 @@
 # bot.py
-import os
+import os, sys
 
 import discord, random, asyncio
 from dotenv import load_dotenv
@@ -193,14 +193,15 @@ async def mock(ctx):
 @bot.command(name='allroast')
 async def allroast(ctx):
     MEE6_LIST = refresh()
-    await ctx.author.send('Sorry to DM, but I don\'t want to spam the server, sigh')
-    async with ctx.author.typing():
+    async with ctx.channel.typing():
         await asyncio.sleep(2.5)
+    f = open("insults.txt", 'w')
     all_roasts = ''
     for item in MEE6_LIST:
         all_roasts += item +'\n\n'
 
-    await ctx.author.send(all_roasts)
+    f.write(all_roasts)
+    await ctx.channel.send(file=discord.File('insults.txt'))
 
 # ----------------------------------------------------
 
