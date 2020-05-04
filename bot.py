@@ -173,6 +173,15 @@ async def insult(ctx, *, insult):
     await ctx.send(random.choice(Acceptance_List))
 
 # ----------------------------------------------------
+@bot.command(name='mock')
+async def mock(ctx):
+    MEE6_LIST = refresh()
+    async with ctx.channel.typing():
+        await asyncio.sleep(1.5)
+    await ctx.channel.send(random.choice(MEE6_LIST))
+    updateTicker()
+
+# ----------------------------------------------------
 
 @bot.command(name='count')
 async def count(ctx):
