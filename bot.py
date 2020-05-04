@@ -94,37 +94,33 @@ async def on_guild_join(server):
 
 @bot.event
 async def on_message(message):
+    if message.author.bot:
+        return
     MEE6 = bot.get_user(159985870458322944)
     if ('happy birthday' in message.content.lower()) and not (message.author.bot):
         await message.channel.send('Happy Birthday! 🥳🎉')
     if 'i agree' in message.content.lower():
-        if not message.author.bot:
-            await message.add_reaction("🤡")
-            await message.channel.send('LMAO SIMP!!')
+        await message.add_reaction("🤡")
+        await message.channel.send('LMAO SIMP!!')
     if 'mee6' in message.content.lower():
-        if not message.author.bot:
-            if not message.author == MEE6:
-                if not message.content.startswith('!'):
-                    await message.add_reaction("🤡")
-                    if random.randint(0, 100) > 39:
-                        async with message.channel.typing():
-                            await asyncio.sleep(1.5)
-                        await message.channel.send(random.choice(MEE6_garbolist))
+        if not message.content.startswith('!'):
+            await message.add_reaction("🤡")
+            if random.randint(0, 100) > 39:
+                async with message.channel.typing():
+                    await asyncio.sleep(1.5)
+                    await message.channel.send(random.choice(MEE6_garbolist))
     if 'mee7' in message.content.lower():
-        if not message.author.bot:
-            if not message.author == MEE6:
-                if not message.content.startswith('!'):
-                    if random.randint(0,10)>5:
-                        await message.add_reaction("😍")
-                    else:
-                        await message.add_reaction("😘")
-                    if random.randint(0, 100) > 39:
-                        async with message.channel.typing():
-                            await asyncio.sleep(1.5)
-                        await message.channel.send(
-                            'MEE7? That\'s me baby!! Don\'t wear it out 😉')
-
-
+            if not message.content.startswith('!'):
+                if random.randint(0,10)>5:
+                    await message.add_reaction("😍")
+                else:
+                    await message.add_reaction("😘")
+                if random.randint(0, 100) > 39:
+                    async with message.channel.typing():
+                        await asyncio.sleep(1.5)
+                    await message.channel.send(
+                        'MEE7? That\'s me baby!! Don\'t wear it out 😉')
+                    
     if message.author == MEE6:
         MEE6_LIST = refresh()
         await message.add_reaction('🤡')
@@ -153,6 +149,9 @@ async def help(ctx):
                     inline=False)
     embed.add_field(name='**!count**',
                     value='Use !count to track how many times I\'ve berated the little monster >:)',
+                    inline=False)
+    embed.add_field(name='**!mock**',
+                    value='Use !mock to insult mee6, but if you're lazy and don't want to type more ;)',
                     inline=False)
     await ctx.channel.send(embed=embed)
 
