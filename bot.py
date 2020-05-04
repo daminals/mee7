@@ -190,6 +190,16 @@ async def mock(ctx):
 
 # ----------------------------------------------------
 
+@bot.command(name='allroast')
+async def allroast(ctx):
+    MEE6_LIST = refresh()
+    async with ctx.channel.typing():
+        await asyncio.sleep(2.5)
+    await ctx.channel.send((MEE6_LIST))
+    updateTicker()
+
+# ----------------------------------------------------
+
 @bot.command(name='count')
 async def count(ctx):
     Dict_Tick = CurrentTicker()
