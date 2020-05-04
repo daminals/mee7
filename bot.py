@@ -124,11 +124,6 @@ async def on_message(message):
                         await message.channel.send(
                             'MEE7? That\'s me baby!! Don\'t wear it out 😉')
 
-    if ('daniel' in message.content.lower()) and ('kogan' in message.content.lower()):
-        if not message.author.bot:
-            await message.add_reaction("😍")
-            await message.channel.send(
-                'OMG DANIEL KOGAN??? THE NEXT BROOKLYN TECH SENIOR PRESIDENT 😮 \n I love that mans 🥰☺️')
 
     if message.author == MEE6:
         MEE6_LIST = refresh()
