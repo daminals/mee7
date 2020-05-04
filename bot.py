@@ -105,6 +105,8 @@ async def on_message(message):
                 if not message.content.startswith('!'):
                     await message.add_reaction("🤡")
                     if random.randint(0, 100) > 39:
+                        async with message.channel.typing():
+                            await asyncio.sleep(1.5)
                         await message.channel.send(random.choice(MEE6_garbolist))
     if 'mee7' in message.content.lower():
         if not message.author.bot:
@@ -115,6 +117,8 @@ async def on_message(message):
                     else:
                         await message.add_reaction("😘")
                     if random.randint(0, 100) > 39:
+                        async with message.channel.typing():
+                            await asyncio.sleep(1.5)
                         await message.channel.send(
                             'MEE7? That\'s me baby!! Don\'t wear it out 😉')
 
@@ -128,7 +132,7 @@ async def on_message(message):
         MEE6_LIST = refresh()
         await message.add_reaction('🤡')
         async with message.channel.typing():
-            await asyncio.sleep(5)
+            await asyncio.sleep(3)
         await message.channel.send(random.choice(MEE6_LIST))
         updateTicker()
 
