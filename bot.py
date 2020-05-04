@@ -201,8 +201,7 @@ async def allroast(ctx):
         f.write(item)
         f.write('\n\n')
     f.close()
-    await ctx.channel.send('Behold! My Database!')
-    await ctx.channel.send(file=discord.File('insults.txt'))
+    await ctx.channel.send('Behold! My Database!',file=discord.File('insults.txt'))
 # ----------------------------------------------------
 
 @bot.command(name='count')
