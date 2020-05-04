@@ -15,6 +15,11 @@ FIREBASE_NAME = os.environ.get('FIREBASE_NAME', 3)
 firebase = firebase.FirebaseApplication(FIREBASE, None)
 bot.remove_command('help')
 
+MEE6_garbolist = ['STFU ABOUT MEE6 WE DON\'T MENTION THAT DISGUSTING PIECE OF MALWARE HERE',
+                  'Ok why are we STILL talking about that defective bot',
+                  'Stop talking about MEE6 already I stg you\'re really pissing me off']
+
+
 Acceptance_List = ['added to the arsenal 💪',
                    'Yeah, let\'s take this bastard down',
                    'MWA HA HA That is so evil!!! I love it!',
@@ -30,12 +35,16 @@ Acceptance_List = ['added to the arsenal 💪',
                    'MEE6 boutta eat some 💩']
 
 
+# FUNCTION CALLS
+# ----------------------------------------------------
+
 def refresh():
     local_MEE6_LIST = []
     FirebaseList = firebase.get('/' + FIREBASE_NAME + '/insult', '')
     for i in FirebaseList.values():
         local_MEE6_LIST.append(i)
     return local_MEE6_LIST
+# ----------------------------------------------------
 
 def CurrentTicker():
     FirebaseTicker = firebase.get('/' + FIREBASE_NAME + '/ticker', '')
@@ -46,6 +55,7 @@ def CurrentTicker():
     ticker = ticker[0]
     ticker = ticker['ticker']
     return [key,ticker]
+# ----------------------------------------------------
 
 def updateTicker():
     Dict_Tick = CurrentTicker()
@@ -53,6 +63,9 @@ def updateTicker():
     ticker = Dict_Tick[1]
     ticker += 1
     firebase.put('/' + FIREBASE_NAME + '/ticker/' + key, 'ticker', ticker)
+
+# EVENTS
+# ----------------------------------------------------
 
 @bot.event
 async def on_ready():
@@ -64,6 +77,7 @@ async def on_ready():
         # "myself break over & over"
         activity=discord.Activity(type=discord.ActivityType.watching, name=f"over {server_num} servers"))
 
+# ----------------------------------------------------
 
 @bot.event
 async def on_guild_join(server):
@@ -74,6 +88,7 @@ async def on_guild_join(server):
         # "myself break over & over"
         activity=discord.Activity(type=discord.ActivityType.watching, name=f"over {server_num} servers"))
 
+# ----------------------------------------------------
 
 @bot.event
 async def on_message(message):
@@ -90,8 +105,18 @@ async def on_message(message):
                 if not message.content.startswith('!'):
                     await message.add_reaction("🤡")
                     if random.randint(0, 100) > 39:
+                        await message.channel.send(random.choice(MEE6_garbolist))
+    if 'mee7' in message.content.lower():
+        if not message.author.bot:
+            if not message.author == MEE6:
+                if not message.content.startswith('!'):
+                    if random.randint(1)>0.5:
+                        await message.add_reaction("😍")
+                    else:
+                        await message.add_reaction("😘")
+                    if random.randint(0, 100) > 39:
                         await message.channel.send(
-                            'STFU ABOUT MEE6 WE DON\'T MENTION THAT DISGUSTING PIECE OF MALWARE HERE')
+                            'MEE7? That\'s me baby!! Don\'t wear it out 😉')
 
     if ('daniel' in message.content.lower()) and ('kogan' in message.content.lower()):
         if not message.author.bot:
@@ -112,6 +137,10 @@ async def on_message(message):
     await bot.process_commands(message)
 
 
+
+# THE COMMANDS
+# ----------------------------------------------------
+
 @bot.command(name='help')
 async def help(ctx):
     embed = discord.Embed(title='Help!',
@@ -121,6 +150,7 @@ async def help(ctx):
                     inline=False)
     await ctx.channel.send(embed=embed)
 
+# ----------------------------------------------------
 
 @bot.command(name='insult')
 async def insult(ctx, *, insult):
@@ -131,6 +161,8 @@ async def insult(ctx, *, insult):
     print(result)
     await ctx.send(random.choice(Acceptance_List))
 
+# ----------------------------------------------------
+
 @bot.command(name='count')
 async def count(ctx):
     Dict_Tick = CurrentTicker()
@@ -140,6 +172,7 @@ async def count(ctx):
     await ctx.send(f'We have successfully attacked the tyrannical MEE6 ***{ticker}*** times '
                    f'across ***{server_num}*** servers! Congratulations my fellow Crusaders!')
 
+# ----------------------------------------------------
 
 
 for filename in os.listdir('./cogs'):

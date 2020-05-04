@@ -6,7 +6,7 @@ Do you hate MEE6? Like, absolutely despise MEE6? BOI SAME! Add me to your server
 
 Add me with the link: <http://tiny.cc/MEE7>
 
-My commands are here:
+# Commands 
 !insult <example insult>
 
 Add your marvelous insults to my dastardly database!
