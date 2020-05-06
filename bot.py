@@ -19,7 +19,6 @@ MEE6_garbolist = ['STFU ABOUT MEE6 WE DON\'T MENTION THAT DISGUSTING PIECE OF MA
                   'Ok why are we STILL talking about that defective bot',
                   'Stop talking about MEE6 already I stg you\'re really pissing me off']
 
-
 Acceptance_List = ['added to the arsenal 💪',
                    'Yeah, let\'s take this bastard down',
                    'MWA HA HA That is so evil!!! I love it!',
@@ -35,7 +34,11 @@ Acceptance_List = ['added to the arsenal 💪',
                    'MEE6 boutta eat some 💩']
 
 
-Acceptance_Emojis = ['😍','❤️','🥰','💪','👑','☺️','🤙']
+ImMEE7 = ['MEE7, not MEE6, it\'s MEE7. Don\'t you dare mix us up',
+          'MEE7? That\'s me baby!! Don\'t wear it out 😉']
+
+Acceptance_Emojis = ['😍', '❤️', '🥰', '💪', '👑', '☺️', '🤙']
+
 
 # FUNCTION CALLS
 # ----------------------------------------------------
@@ -46,6 +49,8 @@ def refresh():
     for i in FirebaseList.values():
         local_MEE6_LIST.append(i)
     return local_MEE6_LIST
+
+
 # ----------------------------------------------------
 
 def CurrentTicker():
@@ -56,7 +61,9 @@ def CurrentTicker():
     key = key[0]
     ticker = ticker[0]
     ticker = ticker['ticker']
-    return [key,ticker]
+    return [key, ticker]
+
+
 # ----------------------------------------------------
 
 def updateTicker():
@@ -65,6 +72,7 @@ def updateTicker():
     ticker = Dict_Tick[1]
     ticker += 1
     firebase.put('/' + FIREBASE_NAME + '/ticker/' + key, 'ticker', ticker)
+
 
 # EVENTS
 # ----------------------------------------------------
@@ -79,6 +87,7 @@ async def on_ready():
         # "myself break over & over"
         activity=discord.Activity(type=discord.ActivityType.watching, name=f"over {server_num} servers"))
 
+
 # ----------------------------------------------------
 
 @bot.event
@@ -90,6 +99,7 @@ async def on_guild_join(server):
         # "myself break over & over"
         activity=discord.Activity(type=discord.ActivityType.watching, name=f"over {server_num} servers"))
 
+
 @bot.event
 async def on_guild_remove(server):
     servers = list(bot.guilds)
@@ -98,6 +108,7 @@ async def on_guild_remove(server):
         # "you all code"
         # "myself break over & over"
         activity=discord.Activity(type=discord.ActivityType.watching, name=f"over {server_num} servers"))
+
 
 # ----------------------------------------------------
 
@@ -114,22 +125,22 @@ async def on_message(message):
     if 'mee6' in message.content.lower():
         if not message.content.startswith('!'):
             await message.add_reaction("🤡")
-            if random.randint(0, 100) > 39:
+            if random.randint(0, 100) > 25:
                 async with message.channel.typing():
                     await asyncio.sleep(1.5)
                     await message.channel.send(random.choice(MEE6_garbolist))
     if 'mee7' in message.content.lower():
-            if not message.content.startswith('!'):
-                if random.randint(0,10)>5:
-                    await message.add_reaction("😍")
-                else:
-                    await message.add_reaction("😘")
-                if random.randint(0, 100) > 39:
-                    async with message.channel.typing():
-                        await asyncio.sleep(1.5)
-                    await message.channel.send(
-                        'MEE7? That\'s me baby!! Don\'t wear it out 😉')
-                    
+        if not message.content.startswith('!'):
+            if random.randint(0, 10) > 5:
+                await message.add_reaction("😍")
+            else:
+                await message.add_reaction("😘")
+            if random.randint(0, 100) > 15:
+                async with message.channel.typing():
+                    await asyncio.sleep(1.5)
+                await message.channel.send(
+                    random.choice(ImMEE7))
+
     if message.author == MEE6:
         MEE6_LIST = refresh()
         await message.add_reaction('🤡')
@@ -143,7 +154,6 @@ async def on_message(message):
     #    await message.author.send('My name is MEE7, far superior to MEE6')
 
     await bot.process_commands(message)
-
 
 
 # THE COMMANDS
@@ -162,14 +172,16 @@ async def help(ctx):
     embed.add_field(name='**!mock**',
                     value='Use !mock to insult MEE6, without MEE6 even provoking it!',
                     inline=False)
-    embed.add_field(name='***!allroast***',value='This sends a text file containing my entire insult database!',inline=False)
+    embed.add_field(name='***!allroast***', value='This sends a text file containing my entire insult database!',
+                    inline=False)
     await ctx.channel.send(embed=embed)
+
 
 # ----------------------------------------------------
 
 @bot.command(name='insult')
 async def insult(ctx, *, insult):
-    if not (('mee6'in insult.lower()) or ('you' in insult.lower())):
+    if not (('mee6' in insult.lower()) or ('you' in insult.lower())):
         await ctx.send('I would really prefer if you could add \'MEE6\' or \'you\' into your insult')
         return None
 
@@ -180,6 +192,7 @@ async def insult(ctx, *, insult):
     print(result)
     await ctx.send(random.choice(Acceptance_List))
 
+
 # ----------------------------------------------------
 @bot.command(name='mock')
 async def mock(ctx):
@@ -188,6 +201,7 @@ async def mock(ctx):
         await asyncio.sleep(1.5)
     await ctx.channel.send(random.choice(MEE6_LIST))
     updateTicker()
+
 
 # ----------------------------------------------------
 
@@ -201,7 +215,9 @@ async def allroast(ctx):
         f.write(item)
         f.write('\n\n')
     f.close()
-    await ctx.channel.send('Behold! My Database!',file=discord.File('insults.txt'))
+    await ctx.channel.send('Behold! My Database!', file=discord.File('insults.txt'))
+
+
 # ----------------------------------------------------
 
 @bot.command(name='count')
@@ -212,6 +228,7 @@ async def count(ctx):
     server_num = len(servers)
     await ctx.send(f'We have successfully attacked the tyrannical MEE6 ***{ticker}*** times '
                    f'across ***{server_num}*** servers! Congratulations my fellow Crusaders!')
+
 
 # ----------------------------------------------------
 
