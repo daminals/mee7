@@ -142,6 +142,17 @@ async def on_message(message):
                 await message.channel.send(
                     random.choice(ImMEE7))
 
+    if 'mee8' in message.content.lower():
+        if not message.content.startswith('!'):
+            if random.randint(0, 10) > 5:
+                await message.add_reaction("🥵")
+            else:
+                await message.add_reaction("😭")
+            if random.randint(0, 100) > 85:
+                async with message.channel.typing():
+                    await asyncio.sleep(1.5)
+                await message.channel.send('please don\'t replace me homie')
+
     if message.author == MEE6:
         MEE6_LIST = refresh()
         await message.add_reaction('🤡')
