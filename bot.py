@@ -120,8 +120,9 @@ async def on_message(message):
     if ('happy birthday' in message.content.lower()) and not (message.author.bot):
         await message.channel.send('Happy Birthday! 🥳🎉')
     if 'i agree' in message.content.lower():
-        await message.add_reaction("🤡")
-        await message.channel.send('LMAO SIMP!!')
+        if random.randint(0,100) > 90:
+            await message.add_reaction("🤡")
+            await message.channel.send('LMAO SIMP!!')
     if 'mee6' in message.content.lower():
         if not message.content.startswith('!'):
             await message.add_reaction("🤡")
