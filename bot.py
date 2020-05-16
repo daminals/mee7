@@ -214,7 +214,11 @@ async def mock(ctx):
     await ctx.channel.send(random.choice(MEE6_LIST))
     updateTicker()
 
+# ----------------------------------------------------
 
+@bot.command(name='stank')
+async def stank(ctx):
+    await ctx.channel.send('lmao imagine not having a !stank command')
 # ----------------------------------------------------
 
 @bot.command(name='allroast')
