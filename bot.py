@@ -163,9 +163,7 @@ async def on_message(message):
         await message.add_reaction('🤡')
         async with message.channel.typing():
             await asyncio.sleep(1.5)
-        send_this = pf.censor(random.choice(MEE6_LIST))
-        print(send_this)
-        await message.channel.send(send_this)
+        await message.channel.send(pf.censor(random.choice(MEE6_LIST)))
         updateTicker()
 
     # if (message.guild == None) and not (message.author.bot):
@@ -212,7 +210,7 @@ async def mock(ctx):
     MEE6_LIST = refresh()
     async with ctx.channel.typing():
         await asyncio.sleep(1.5)
-    await ctx.channel.send(random.choice(MEE6_LIST))
+    await ctx.channel.send(pf.censor(random.choice(MEE6_LIST)))
     updateTicker()
 
 # ----------------------------------------------------
