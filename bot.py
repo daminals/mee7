@@ -161,7 +161,7 @@ async def on_message(message):
         await message.add_reaction('🤡')
         async with message.channel.typing():
             await asyncio.sleep(1.5)
-        await message.channel.send(random.choice(MEE6_LIST))
+        await message.channel.send(pf.censor(random.choice(MEE6_LIST)))
         updateTicker()
 
     # if (message.guild == None) and not (message.author.bot):
