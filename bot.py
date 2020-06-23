@@ -4,6 +4,9 @@ import os, sys
 import discord, random, asyncio
 from dotenv import load_dotenv
 from firebase import firebase
+from profanity_filter import ProfanityFilter
+
+pf = ProfanityFilter()
 
 load_dotenv()
 from discord.ext import commands, tasks
@@ -197,9 +200,11 @@ async def insult(ctx, *, insult):
         await ctx.send('I would really prefer if you could add \'MEE6\' or \'you\' into your insult')
         return None
 
-    if 'kogan' in insult.lower() and not ctx.author == bot.get_user(577668867380477962):
-        await ctx.send(
-            'The official stance of MEE7 is that I am an avid supporter of Daniel Kogan for Brooklyn Tech\'s Senior President, thank you')
+    for i in insult.split(' '):
+        if pf.is_profane(i):
+            for j in range(1,len(insult)):
+                insult[j] = '*'
+
     result = firebase.post(FIREBASE_NAME + '/insult', insult)
     print(result)
     await ctx.send(random.choice(Acceptance_List))
