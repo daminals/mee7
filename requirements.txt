@@ -13,7 +13,6 @@ chardet==3.0.4
 cymem==2.0.3
 discord.py==1.3.3
 dnspython==1.16.0
-spacy>=2.0.0,<3.0.0
 google-auth==1.18.0
 google-auth-httplib2==0.0.3
 google-cloud-core==1.3.0
