@@ -4,11 +4,7 @@ import os, sys
 import discord, random, asyncio
 from dotenv import load_dotenv
 from firebase import firebase
-from profanity_filter import ProfanityFilter
-import spacy
-
-spacy.prefer_gpu()
-nlp = spacy.load("en_core_web_sm")
+from profanityfilter import ProfanityFilter
 
 pf = ProfanityFilter()
 
