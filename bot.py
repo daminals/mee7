@@ -7,6 +7,8 @@ from firebase import firebase
 from profanityfilter import ProfanityFilter
 
 pf = ProfanityFilter()
+pf.set_censor("@")
+
 
 load_dotenv()
 from discord.ext import commands, tasks
