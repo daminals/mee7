@@ -200,11 +200,7 @@ async def insult(ctx, *, insult):
         await ctx.send('I would really prefer if you could add \'MEE6\' or \'you\' into your insult')
         return None
 
-    for i in insult.split(' '):
-        if pf.is_profane(i):
-            for j in range(1,len(insult)):
-                insult[j] = '*'
-
+    insult = pf.censor(insult)
     result = firebase.post(FIREBASE_NAME + '/insult', insult)
     print(result)
     await ctx.send(random.choice(Acceptance_List))
