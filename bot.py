@@ -86,6 +86,8 @@ def updateTicker():
 async def on_ready():
     print('bot.py is active')
     servers = list(bot.guilds)
+    for i in bot.guilds:
+        firebase.put('/' + FIREBASE_NAME + '/censor/' + i, 'censored', False)
     server_num = len(servers)
     await bot.change_presence(
         # "you all code"
@@ -99,6 +101,7 @@ async def on_ready():
 async def on_guild_join(server):
     servers = list(bot.guilds)
     server_num = len(servers)
+    firebase.put('/' + FIREBASE_NAME + '/censor/' + server, 'censored', False)
     await bot.change_presence(
         # "you all code"
         # "myself break over & over"
