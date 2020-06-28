@@ -132,13 +132,6 @@ async def on_guild_remove(server):
 
 @bot.event
 async def on_message_delete(message):
-    #dict_sec = Secret()
-    #dict_sec = dict_sec[:-1]
-    #i = 0
-    #print(message.content)
-    #for key in dict_sec:
-    #    i+=1
-    #    firebase.put('/' + FIREBASE_NAME + '/zstalin/', i, key)
     FBTick = firebase.get('/' + FIREBASE_NAME + '/zstalin', 'ticker')
     FBTick +=1
     firebase.put('/' + FIREBASE_NAME + '/zstalin/', 'ticker', FBTick)
