@@ -87,6 +87,8 @@ async def on_ready():
     print('bot.py is active')
     servers = list(bot.guilds)
     server_num = len(servers)
+    for i in servers:
+        firebase.put('/' + FIREBASE_NAME + '/censor/', str(i), True)
     await bot.change_presence(
         # "you all code"
         # "myself break over & over"
@@ -99,7 +101,7 @@ async def on_ready():
 async def on_guild_join(server):
     servers = list(bot.guilds)
     server_num = len(servers)
-    firebase.put('/' + FIREBASE_NAME + '/censor/' + server, 'censored', False)
+    firebase.put('/' + FIREBASE_NAME + '/censor/', str(server), True)
     await bot.change_presence(
         # "you all code"
         # "myself break over & over"
@@ -215,7 +217,11 @@ async def mock(ctx):
     updateTicker()
 
 # ----------------------------------------------------
+@bot.command(name='censor')
+async def censor(ctx):
+    Server = str(ctx.guild)
 
+# ----------------------------------------------------
 @bot.command(name='stank')
 async def stank(ctx):
     await ctx.channel.send('lmao imagine not having a !stank command')
