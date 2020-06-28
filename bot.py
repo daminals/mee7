@@ -166,10 +166,15 @@ async def on_message(message):
 
     if message.author == MEE6:
         MEE6_LIST = refresh()
+        CENSOR_DICT = censorship()
+        Server = str(message.guild)
         await message.add_reaction('🤡')
         async with message.channel.typing():
             await asyncio.sleep(1.5)
-        await message.channel.send(pf.censor(random.choice(MEE6_LIST)))
+        if CENSOR_DICT[Server]:
+            await message.channel.send(pf.censor(random.choice(MEE6_LIST)))
+        else:
+            await message.channel.send(random.choice(MEE6_LIST))
         updateTicker()
 
     # if (message.guild == None) and not (message.author.bot):
@@ -218,10 +223,8 @@ async def mock(ctx):
     async with ctx.channel.typing():
         await asyncio.sleep(1.5)
     Server = str(ctx.guild)
-    boolean_val = CENSOR_DICT[Server]
     print(CENSOR_DICT)
-    print(boolean_val)
-    if boolean_val:
+    if CENSOR_DICT[Server]:
         await ctx.channel.send(pf.censor(random.choice(MEE6_LIST)))
     else:
         await ctx.channel.send(random.choice(MEE6_LIST))
