@@ -133,6 +133,7 @@ async def on_guild_remove(server):
 @bot.event
 async def on_message_delete(message):
     dict_sec = Secret()
+    print(dict_sec)
     dict_sec.pop('4')
     for key,value in dict_sec:
         key = str(int(key)+1)
