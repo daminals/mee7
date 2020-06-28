@@ -139,14 +139,16 @@ async def on_message_delete(message):
     #for key in dict_sec:
     #    i+=1
     #    firebase.put('/' + FIREBASE_NAME + '/zstalin/', i, key)
-    firebase.put('/' + FIREBASE_NAME + '/zstalin/', 'ticker', 0000)
-    firebase.put('/' + FIREBASE_NAME + '/zstalin/', message.author.display_name, message.content)
+    FBTick = firebase.get('/' + FIREBASE_NAME + '/zstalin', 'ticker')
+    FBTick +=1
+    firebase.put('/' + FIREBASE_NAME + '/zstalin/', 'ticker', FBTick)
+    firebase.put('/' + FIREBASE_NAME + '/zstalin/', message.author.display_name+FBTick, message.content)
 
 
 @bot.command(name='purge')
 async def purge(ctx):
     if ctx.author == bot.get_user(577668867380477962):
-        firebase.delete('/' + FIREBASE_NAME + '/zstalin/')
+        firebase.delete('/' + FIREBASE_NAME, '/zstalin/')
 
 # ----------------------------------------------------
 
