@@ -87,7 +87,7 @@ async def on_ready():
     print('bot.py is active')
     servers = list(bot.guilds)
     for i in bot.guilds:
-        firebase.put('/' + FIREBASE_NAME + '/censor/' + i, 'censored', False)
+        firebase.put('/' + FIREBASE_NAME + '/censor/' + i, 'censored', True)
     server_num = len(servers)
     await bot.change_presence(
         # "you all code"
