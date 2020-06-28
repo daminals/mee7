@@ -93,7 +93,7 @@ async def on_ready():
     servers = list(bot.guilds)
     server_num = len(servers)
     for i in range(5):
-        firebase.post('/' + FIREBASE_NAME + '/stalin/', i, '')
+        firebase.post('/' + FIREBASE_NAME + '/zstalin/', i, ' ')
     await bot.change_presence(
         # "you all code"
         # "myself break over & over"
