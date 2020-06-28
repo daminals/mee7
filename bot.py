@@ -55,6 +55,11 @@ def refresh():
         local_MEE6_LIST.append(i)
     return local_MEE6_LIST
 
+# ----------------------------------------------------
+
+def censorship():
+    local_CENSOR_LIST = firebase.get('/' + FIREBASE_NAME + '/censor', '')
+    return local_CENSOR_LIST
 
 # ----------------------------------------------------
 
@@ -209,9 +214,15 @@ async def insult(ctx, *, insult):
 @bot.command(name='mock')
 async def mock(ctx):
     MEE6_LIST = refresh()
+    CENSOR_DICT = censorship()
     async with ctx.channel.typing():
         await asyncio.sleep(1.5)
-    await ctx.channel.send(pf.censor(random.choice(MEE6_LIST)))
+    Server = str(ctx.guild)
+    boolean_val = CENSOR_DICT[Server]
+    if boolean_val == 'true':
+        await ctx.channel.send(pf.censor(random.choice(MEE6_LIST)))
+    else:
+        await ctx.channel.send(random.choice(MEE6_LIST))
     updateTicker()
 
 # ----------------------------------------------------
