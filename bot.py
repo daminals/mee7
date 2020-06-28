@@ -202,6 +202,8 @@ async def help(ctx):
                     inline=False)
     embed.add_field(name='***!allroast***', value='This sends a text file containing my entire insult database!',
                     inline=False)
+    embed.add_field(name='**!censor**', value='Censors MEE7. MEE7 is censored by default', inline=False)
+    embed.add_field(name='**!uncensor**', value='Uncensors MEE7. MEE7 is censored by default', inline=False)
     await ctx.channel.send(embed=embed)
 
 
