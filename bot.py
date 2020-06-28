@@ -219,14 +219,14 @@ async def mock(ctx):
 async def censor(ctx):
     Server = str(ctx.guild)
     firebase.put('/' + FIREBASE_NAME + '/censor/', Server, True)
-    ctx.send('I am now censored for this server')
+    await ctx.send('I am now censored for this server')
 
 # ----------------------------------------------------
 @bot.command(name='uncensor')
 async def uncensor(ctx):
     Server = str(ctx.guild)
     firebase.put('/' + FIREBASE_NAME + '/censor/', Server, False)
-    ctx.send('I am now uncensored for this server')
+    await ctx.send('I am now uncensored for this server')
 
 # ----------------------------------------------------
 @bot.command(name='stank')
