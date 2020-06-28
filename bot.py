@@ -104,7 +104,7 @@ async def on_ready():
 async def on_guild_join(server):
     servers = list(bot.guilds)
     server_num = len(servers)
-    firebase.post('/' + FIREBASE_NAME + '/censor/', str(server), True)
+    firebase.put('/' + FIREBASE_NAME + '/censor/', str(server), True)
     await bot.change_presence(
         # "you all code"
         # "myself break over & over"
