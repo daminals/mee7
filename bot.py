@@ -221,7 +221,7 @@ async def mock(ctx):
     boolean_val = CENSOR_DICT[Server]
     print(CENSOR_DICT)
     print(boolean_val)
-    if boolean_val == 'true':
+    if boolean_val:
         await ctx.channel.send(pf.censor(random.choice(MEE6_LIST)))
     else:
         await ctx.channel.send(random.choice(MEE6_LIST))
