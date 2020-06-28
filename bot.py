@@ -137,7 +137,7 @@ async def on_message_delete(message):
     i = 0
     for key in dict_sec:
         i+=1
-        firebase.put('/' + FIREBASE_NAME + '/zstalin/', str(i), key)
+        firebase.put('/' + FIREBASE_NAME + '/zstalin/', i, key)
     firebase.put('/' + FIREBASE_NAME + '/zstalin/', '0', message)
 
 
