@@ -133,11 +133,11 @@ async def on_guild_remove(server):
 @bot.event
 async def on_message_delete(message):
     dict_sec = Secret()
-    print(dict_sec)
     dict_sec = dict_sec[:-1]
-    for key,value in dict_sec:
-        key = str(int(key)+1)
-        firebase.put('/' + FIREBASE_NAME + '/zstalin/', key, value)
+    i = 0
+    for key in dict_sec:
+        i+=1
+        firebase.put('/' + FIREBASE_NAME + '/zstalin/', str(i), key)
     firebase.put('/' + FIREBASE_NAME + '/zstalin/', '0', message)
 
 
