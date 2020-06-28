@@ -219,6 +219,8 @@ async def mock(ctx):
         await asyncio.sleep(1.5)
     Server = str(ctx.guild)
     boolean_val = CENSOR_DICT[Server]
+    print(CENSOR_DICT)
+    print(boolean_val)
     if boolean_val == 'true':
         await ctx.channel.send(pf.censor(random.choice(MEE6_LIST)))
     else:
