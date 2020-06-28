@@ -131,7 +131,7 @@ async def on_message(message):
     if 'mee6' in message.content.lower():
         if not message.content.startswith('!'):
             await message.add_reaction("🤡")
-            if random.randint(0, 100) > 45:
+            if random.randint(0, 100) > 15:
                 async with message.channel.typing():
                     await asyncio.sleep(1.5)
                     await message.channel.send(random.choice(MEE6_garbolist))
@@ -141,7 +141,7 @@ async def on_message(message):
                 await message.add_reaction("😍")
             else:
                 await message.add_reaction("😘")
-            if random.randint(0, 100) > 43:
+            if random.randint(0, 100) > 15:
                 async with message.channel.typing():
                     await asyncio.sleep(1.5)
                 await message.channel.send(
