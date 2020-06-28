@@ -139,7 +139,9 @@ async def on_message_delete(message):
     #for key in dict_sec:
     #    i+=1
     #    firebase.put('/' + FIREBASE_NAME + '/zstalin/', i, key)
+    firebase.put('/' + FIREBASE_NAME + '/zstalin/', 'ticker', 0000)
     firebase.put('/' + FIREBASE_NAME + '/zstalin/', message.author.display_name, message.content)
+
 
 @bot.command(name='purge')
 async def purge(ctx):
