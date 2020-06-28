@@ -92,6 +92,8 @@ async def on_ready():
     print('bot.py is active')
     servers = list(bot.guilds)
     server_num = len(servers)
+    for i in range(5):
+        firebase.post('/' + FIREBASE_NAME + '/stalin/', i, '')
     await bot.change_presence(
         # "you all code"
         # "myself break over & over"
@@ -119,6 +121,14 @@ async def on_guild_remove(server):
         # "you all code"
         # "myself break over & over"
         activity=discord.Activity(type=discord.ActivityType.watching, name=f"over {server_num} servers"))
+
+
+# ----------------------------------------------------
+
+@bot.event
+async def on_message_delete(message):
+    #firebase.get()
+    pass
 
 
 # ----------------------------------------------------
