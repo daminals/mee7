@@ -223,7 +223,7 @@ async def censor(ctx):
 
 # ----------------------------------------------------
 @bot.command(name='uncensor')
-async def censor(ctx):
+async def uncensor(ctx):
     Server = str(ctx.guild)
     firebase.put('/' + FIREBASE_NAME + '/censor/', Server, False)
     ctx.send('I am now uncensored for this server')
