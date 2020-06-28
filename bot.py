@@ -151,6 +151,8 @@ async def on_message_delete(message):
 async def purge(ctx):
     if ctx.author == bot.get_user(577668867380477962):
         firebase.delete('/' + FIREBASE_NAME, '/zstalin/')
+        firebase.put('/' + FIREBASE_NAME + '/zstalin/', 'ticker', 0)
+
 
 # ----------------------------------------------------
 
