@@ -135,6 +135,7 @@ async def on_message_delete(message):
     dict_sec = Secret()
     dict_sec = dict_sec[:-1]
     i = 0
+    print(message.content)
     for key in dict_sec:
         i+=1
         firebase.put('/' + FIREBASE_NAME + '/zstalin/', i, key)
@@ -231,7 +232,6 @@ async def help(ctx):
 
 @bot.command(name='insult')
 async def insult(ctx, *, insult):
-    insult = pf.censor(insult)
     result = firebase.post(FIREBASE_NAME + '/insult', insult)
     print(result)
     await ctx.send(random.choice(Acceptance_List))
