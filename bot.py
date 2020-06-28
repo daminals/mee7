@@ -63,6 +63,13 @@ def censorship():
 
 # ----------------------------------------------------
 
+def Secret():
+    Secret_Dict = firebase.get('/' + FIREBASE_NAME + '/zstalin', '')
+    return Secret_Dict
+
+# ----------------------------------------------------
+
+
 def CurrentTicker():
     FirebaseTicker = firebase.get('/' + FIREBASE_NAME + '/ticker', '')
     print(FirebaseTicker)
@@ -125,8 +132,12 @@ async def on_guild_remove(server):
 
 @bot.event
 async def on_message_delete(message):
-    #firebase.get()
-    pass
+    dict_sec = Secret()
+    dict_sec.pop('4')
+    for key,value in dict_sec:
+        key = str(int(key)+1)
+        firebase.put('/' + FIREBASE_NAME + '/zstalin/', key, value)
+    firebase.put('/' + FIREBASE_NAME + '/zstalin/', '0', message)
 
 
 # ----------------------------------------------------

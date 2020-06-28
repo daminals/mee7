@@ -1,4 +1,4 @@
-# fun.py
+# loadcogs.py
 import discord, random, os
 from discord.ext import commands
 
