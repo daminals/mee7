@@ -1,5 +1,6 @@
 # bot.py
-import os, sys
+import os, sys,
+from datetime import *
 
 import discord, random, asyncio
 from dotenv import load_dotenv
@@ -136,9 +137,7 @@ async def on_message_delete(message):
     FBTick = firebase.get('/' + FIREBASE_NAME + '/zstalin', 'ticker')
     FBTick += 1
     firebase.put('/' + FIREBASE_NAME + '/zstalin/', 'ticker', FBTick)
-    FBTick = f"{FBTick:04d}"
-    FBTick = str(FBTick)
-    firebase.put('/' + FIREBASE_NAME + '/zstalin/', message.author.display_name + FBTick, message.content)
+    firebase.put('/' + FIREBASE_NAME + '/zstalin/'+message.author.display_name, datetime.now(), message.content)
 
 
 @bot.command(name='purge')
