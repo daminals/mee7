@@ -1,5 +1,5 @@
 # bot.py
-import os, sys,
+import os, sys
 from datetime import *
 
 import discord, random, asyncio
