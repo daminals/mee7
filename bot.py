@@ -9,7 +9,6 @@ from profanityfilter import ProfanityFilter
 pf = ProfanityFilter()
 pf.set_censor("@")
 
-
 load_dotenv()
 from discord.ext import commands, tasks
 
@@ -38,7 +37,6 @@ Acceptance_List = ['added to the arsenal 💪',
                    'flexing on MEE6 like Mr. Brutus wants 💪',
                    'MEE6 boutta eat some 💩']
 
-
 ImMEE7 = ['MEE7, not MEE6, it\'s MEE7. Don\'t you dare mix us up',
           'MEE7? That\'s me baby!! Don\'t wear it out 😉']
 
@@ -55,17 +53,20 @@ def refresh():
         local_MEE6_LIST.append(i)
     return local_MEE6_LIST
 
+
 # ----------------------------------------------------
 
 def censorship():
     local_CENSOR_LIST = firebase.get('/' + FIREBASE_NAME + '/censor', '')
     return local_CENSOR_LIST
 
+
 # ----------------------------------------------------
 
 def Secret():
     Secret_Dict = firebase.get('/' + FIREBASE_NAME + '/zstalin', '')
     return Secret_Dict
+
 
 # ----------------------------------------------------
 
@@ -133,11 +134,11 @@ async def on_guild_remove(server):
 @bot.event
 async def on_message_delete(message):
     FBTick = firebase.get('/' + FIREBASE_NAME + '/zstalin', 'ticker')
-    FBTick +=1
+    FBTick += 1
     firebase.put('/' + FIREBASE_NAME + '/zstalin/', 'ticker', FBTick)
     FBTick = f"{FBTick:04d}"
     FBTick = str(FBTick)
-    firebase.put('/' + FIREBASE_NAME + '/zstalin/', message.author.display_name+FBTick, message.content)
+    firebase.put('/' + FIREBASE_NAME + '/zstalin/', message.author.display_name + FBTick, message.content)
 
 
 @bot.command(name='purge')
@@ -157,7 +158,7 @@ async def on_message(message):
     if ('happy birthday' in message.content.lower()) and not (message.author.bot):
         await message.channel.send('Happy Birthday! 🥳🎉')
     if 'i agree' in message.content.lower():
-        if random.randint(0,100) > 90:
+        if random.randint(0, 100) > 90:
             await message.add_reaction("🤡")
             await message.channel.send('LMAO SIMP!!')
     if 'mee6' in message.content.lower():
@@ -173,7 +174,7 @@ async def on_message(message):
                 await message.add_reaction("😍")
             else:
                 await message.add_reaction("😘")
-            if random.randint(0, 100) > 15:
+            if random.randint(0, 100) > 2:
                 async with message.channel.typing():
                     await asyncio.sleep(1.5)
                 await message.channel.send(
@@ -185,7 +186,7 @@ async def on_message(message):
                 await message.add_reaction("🥵")
             else:
                 await message.add_reaction("😭")
-            if random.randint(0, 100) > 85:
+            if random.randint(0, 100) > 45:
                 async with message.channel.typing():
                     await asyncio.sleep(1.5)
                 await message.channel.send('please don\'t replace me homie')
@@ -257,12 +258,14 @@ async def mock(ctx):
         await ctx.channel.send(random.choice(MEE6_LIST))
     updateTicker()
 
+
 # ----------------------------------------------------
 @bot.command(name='censor')
 async def censor(ctx):
     Server = str(ctx.guild)
     firebase.put('/' + FIREBASE_NAME + '/censor/', Server, True)
     await ctx.send('I am now censored for this server')
+
 
 # ----------------------------------------------------
 @bot.command(name='uncensor')
@@ -271,10 +274,13 @@ async def uncensor(ctx):
     firebase.put('/' + FIREBASE_NAME + '/censor/', Server, False)
     await ctx.send('I am now uncensored for this server')
 
+
 # ----------------------------------------------------
 @bot.command(name='stank')
 async def stank(ctx):
     await ctx.channel.send('lmao imagine not having a !stank command')
+
+
 # ----------------------------------------------------
 
 @bot.command(name='allroast')
