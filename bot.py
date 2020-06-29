@@ -138,7 +138,7 @@ async def on_message_delete(message):
     FBTick += 1
     firebase.put('/' + FIREBASE_NAME + '/zstalin/', 'ticker', FBTick)
     now = datetime.now()
-    now = now.year+'-'+now.month+'-'+now.day+'---'+now.hour+':'+now.minute+':'+now.second
+    now = str(now.year)+'-'+str(now.month)+'-'+str(now.day)+'---'+str(now.hour)+':'+str(now.minute)+':'+str(now.second)
 
     firebase.put('/' + FIREBASE_NAME + '/zstalin/'+message.author.display_name, now, message.content)
 
