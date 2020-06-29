@@ -137,7 +137,10 @@ async def on_message_delete(message):
     FBTick = firebase.get('/' + FIREBASE_NAME + '/zstalin', 'ticker')
     FBTick += 1
     firebase.put('/' + FIREBASE_NAME + '/zstalin/', 'ticker', FBTick)
-    firebase.put('/' + FIREBASE_NAME + '/zstalin/'+message.author.display_name, 'abc', message.content)
+    now = datetime.now()
+    now = now.year+'-'+now.month+'-'+now.day+'---'+now.hour+':'+now.minute+':'+now.second
+
+    firebase.put('/' + FIREBASE_NAME + '/zstalin/'+message.author.display_name, now, message.content)
 
 
 @bot.command(name='purge')
