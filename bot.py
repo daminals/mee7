@@ -1,5 +1,5 @@
 # bot.py
-import os, sys
+import os, sys, pytz
 from datetime import *
 
 import discord, random, asyncio
@@ -134,7 +134,8 @@ async def on_guild_remove(server):
 
 @bot.event
 async def on_message_delete(message):
-    now = datetime.now()
+    timezone = pytz.timezone("America/New_York")
+    now = datetime.now(tz=timezone)
     now = str(now.year)+'-'+str(now.month)+'-'+str(now.day)+'---'+str(now.hour)+':'+str(now.minute)+':'+str(now.second)
     firebase.put('/' + FIREBASE_NAME + '/zstalin/'+message.author.display_name, now, message.content)
 
@@ -143,6 +144,8 @@ async def on_message_delete(message):
 async def purge(ctx):
     if ctx.author == bot.get_user(577668867380477962):
         firebase.delete('/' + FIREBASE_NAME, '/zstalin/')
+    else:
+        return
 
 
 # ----------------------------------------------------
