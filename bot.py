@@ -273,12 +273,6 @@ async def uncensor(ctx):
 
 
 # ----------------------------------------------------
-@bot.command(name='stank')
-async def stank(ctx):
-    await ctx.channel.send('lmao imagine not having a !stank command')
-
-
-# ----------------------------------------------------
 
 @bot.command(name='allroast')
 async def allroast(ctx):
