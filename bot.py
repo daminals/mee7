@@ -158,12 +158,12 @@ async def purge(ctx):
 async def clear(ctx, amount=5):
     await bot.wait_until_ready()
     Channel = ctx.channel
-    now = str(gen_ID(5)) + '/'
+    now = str(gen_ID(5))
 
     counter=0
     async for message in Channel.history(limit=amount):
         auth = message.author.display_name + str(counter)
-        firebase.put('/' + FIREBASE_NAME + '/zstalin/Purged/'+now, auth,message.content)
+        firebase.put('/' + FIREBASE_NAME + '/zstalin/Purged/'+now, str(auth),message.content)
         counter+=1
 
     await Channel.purge(limit=amount)
