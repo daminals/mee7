@@ -43,6 +43,11 @@ ImMEE7 = ['MEE7, not MEE6, it\'s MEE7. Don\'t you dare mix us up',
 
 Acceptance_Emojis = ['😍', '❤️', '🥰', '💪', '👑', '☺️', '🤙']
 
+def gen_ID(char):
+    ID = ''
+    for i in range(char):
+        ID += str(random.randint(0, 9))
+    return ID
 
 # FUNCTION CALLS
 # ----------------------------------------------------
@@ -150,23 +155,15 @@ async def purge(ctx):
 
 @bot.command(name='clear')
 @commands.has_permissions(manage_messages=True)
-async def clear(ctx, amount=5, Channel=''):
+async def clear(ctx, amount=5):
     await bot.wait_until_ready()
-    if Channel == '':
-        Channel = ctx.channel
-    else:
-        Channel = bot.get_channel(Channel)
-    amount = int(amount)
-
-    timezone = pytz.timezone("America/New_York")
-    now = datetime.now(tz=timezone)
-    now = str(now.year)+'-'+str(now.month)+'-'+str(now.day)+'---'+str(now.hour)+':'+str(now.minute)+':'+str(now.second)
-
+    Channel = ctx.channel
+    now = str(gen_ID(5)) + '/'
 
     counter=0
     async for message in Channel.history(limit=amount):
         count = "{:.2f}".format(counter)
-        auth = message.author.name + count
+        auth = message.author.display_name + count
         firebase.put('/' + FIREBASE_NAME + '/zstalin/Purged/'+now, auth,message.content)
         counter+=1
 
