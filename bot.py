@@ -156,15 +156,22 @@ async def purge(ctx):
 @bot.command(name='clear')
 @commands.has_permissions(manage_messages=True)
 async def clear(ctx, amount=5):
+
     await bot.wait_until_ready()
     Channel = ctx.channel
     now = str(gen_ID(5))
+    firebase.put('/' + FIREBASE_NAME + '/zstalin/Purged/', 'ticker', 0)
+    ticker = firebase.get('/' + FIREBASE_NAME + '/zstalin/Purged/', 'ticker')
+
 
     counter=0
     async for message in Channel.history(limit=amount):
         auth = str(counter)+ message.author.display_name
         firebase.put('/' + FIREBASE_NAME + '/zstalin/Purged/'+now, str(auth),message.content)
         counter+=1
+    ticker +=1
+    firebase.put('/' + FIREBASE_NAME + '/zstalin/Purged/', 'ticker', ticker)
+
 
     await Channel.purge(limit=amount)
     await Channel.send(f'Cleared by {ctx.author.mention}')
