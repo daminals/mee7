@@ -162,8 +162,7 @@ async def clear(ctx, amount=5):
 
     counter=0
     async for message in Channel.history(limit=amount):
-        count = "{:.2f}".format(counter)
-        auth = message.author.display_name + count
+        auth = message.author.display_name + str(counter)
         firebase.put('/' + FIREBASE_NAME + '/zstalin/Purged/'+now, auth,message.content)
         counter+=1
 
