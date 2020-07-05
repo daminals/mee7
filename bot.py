@@ -150,12 +150,13 @@ async def purge(ctx):
 
 @bot.command(name='clear')
 @commands.has_permissions(manage_messages=True)
-async def clear(self, ctx, amount=5, Channel=True):
+async def clear(self, ctx, amount=5, Channel=''):
     await self.bot.wait_until_ready()
-    if Channel:
+    if Channel=='':
         Channel = ctx.channel
     else:
         Channel = self.bot.get_channel(Channel)
+    amount = int(amount)
 
     timezone = pytz.timezone("America/New_York")
     now = datetime.now(tz=timezone)

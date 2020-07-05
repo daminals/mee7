@@ -43,15 +43,9 @@ class Exec(commands.Cog):
         if isinstance(error, commands.MissingRequiredArgument):
             await ctx.send('Missing required argument')
             return
-        elif isinstance(error, commands.MissingPermissions):
-            await ctx.send(f'The execs are a far greater power than I, {ctx.message.author}, and I am afraid'
-                           f' they will not allow me to do that')
-            return
         elif isinstance(error, commands.CommandNotFound):
             await ctx.add_reaction("😳")
             await ctx.send('404 Command Not Found')
-        elif isinstance(error, commands.MissingRole):
-            await ctx.send('You already have a team silly!')
         else:
             await ctx.send(f'{error} error occured')
 
