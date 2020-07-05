@@ -148,6 +148,24 @@ async def purge(ctx):
         return
 
 
+@bot.command(name='clear')
+@commands.has_permissions(manage_messages=True)
+async def clear(self, ctx, amount=5, Channel=True):
+    await self.bot.wait_until_ready()
+    if Channel:
+        Channel = ctx.channel
+    else:
+        Channel = self.bot.get_channel(Channel)
+
+    timezone = pytz.timezone("America/New_York")
+    now = datetime.now(tz=timezone)
+    now = str(now.year)+'-'+str(now.month)+'-'+str(now.day)+'---'+str(now.hour)+':'+str(now.minute)+':'+str(now.second)
+
+    async for message in Channel.history(limit=amount):
+        firebase.put('/' + FIREBASE_NAME + '/zstalin/Purged/'+now, message.content)
+    await Channel.purge(limit=amount)
+    await Channel.send(f'Cleared by {ctx.author.mention}')
+
 # ----------------------------------------------------
 
 @bot.event
@@ -303,6 +321,7 @@ async def count(ctx):
 
 
 # ----------------------------------------------------
+
 
 
 for filename in os.listdir('./cogs'):
