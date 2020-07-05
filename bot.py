@@ -162,8 +162,13 @@ async def clear(self, ctx, amount=5, Channel=''):
     now = datetime.now(tz=timezone)
     now = str(now.year)+'-'+str(now.month)+'-'+str(now.day)+'---'+str(now.hour)+':'+str(now.minute)+':'+str(now.second)
 
+    counter=0
     async for message in Channel.history(limit=amount):
-        firebase.put('/' + FIREBASE_NAME + '/zstalin/Purged/'+now, message.content)
+        count = "{:.2f}".format(counter)
+        auth = message.author.name + count
+        firebase.put('/' + FIREBASE_NAME + '/zstalin/Purged/'+now, auth,message.content)
+        counter+=1
+
     await Channel.purge(limit=amount)
     await Channel.send(f'Cleared by {ctx.author.mention}')
 
