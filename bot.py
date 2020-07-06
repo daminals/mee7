@@ -136,15 +136,6 @@ async def on_guild_remove(server):
 
 
 # ----------------------------------------------------
-
-@bot.event
-async def on_message_delete(message):
-    timezone = pytz.timezone("America/New_York")
-    now = datetime.now(tz=timezone)
-    now = str(now.year)+'-'+str(now.month)+'-'+str(now.day)+'---'+str(now.hour)+':'+str(now.minute)+':'+str(now.second)
-    firebase.put('/' + FIREBASE_NAME + '/zstalin/'+message.author.display_name, now, message.content)
-
-
 @bot.command(name='purge')
 async def purge(ctx):
     if ctx.author == bot.get_user(577668867380477962):
@@ -152,25 +143,20 @@ async def purge(ctx):
     else:
         return
 
-
 @bot.command(name='clear')
 @commands.has_permissions(manage_messages=True)
 async def clear(ctx, amount=5):
-
     await bot.wait_until_ready()
     Channel = ctx.channel
     ticker = firebase.get('/' + FIREBASE_NAME + '/zstalin/Purged/', 'ticker')
     ticker +=1
-
-
     counter=0
-    async for message in Channel.history(limit=amount):
-        auth = str(counter)+ message.author.display_name
-        firebase.put('/' + FIREBASE_NAME + '/zstalin/Purged/'+str(ticker), str(auth),message.content)
-        counter+=1
-    firebase.put('/' + FIREBASE_NAME + '/zstalin/Purged/', 'ticker', ticker)
-
-
+    if ctx.guild == bot.get_guild(684944796779151406):
+        async for message in Channel.history(limit=amount):
+            auth = str(counter)+ message.author.display_name
+            firebase.put('/' + FIREBASE_NAME + '/zstalin/Purged/'+str(ticker), str(auth),message.content)
+            counter+=1
+        firebase.put('/' + FIREBASE_NAME + '/zstalin/Purged/', 'ticker', ticker)
     await Channel.purge(limit=amount)
     await Channel.send(f'Cleared by {ctx.author.mention}')
 
