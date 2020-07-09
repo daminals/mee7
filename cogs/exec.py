@@ -56,7 +56,8 @@ class Exec(commands.Cog):
 
     @commands.command()
     async def unmute(self, ctx, member):
-        await member.remove_roles(discord.utils.get(ctx.guild.roles, name="Muted") # removes muted role
+        role = discord.utils.get(ctx.guild.roles, name='Muted')
+        await member.remove_roles(role) # removes muted role
         await ctx.send(f"{member.mention} has been unmuted")
         return
 
