@@ -52,7 +52,7 @@ class Exec(commands.Cog):
 
     @commands.command()
     async def mute(self, ctx, *, member):
-        await self.mute(member)
+        await self.mute(ctx,member)
 
     @commands.command()
     async def unmute(self, ctx, member):
