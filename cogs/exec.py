@@ -50,6 +50,16 @@ class Exec(commands.Cog):
                 await ctx.send(f'Unbanned {user.mention}')
                 return
 
+    @commands.command()
+    async def mute(self, ctx, *, member):
+        await self.mute(ctx, member)
+
+    @commands.command()
+    async def unmute(self, ctx, member):
+        await member.remove_roles(discord.utils.get(ctx.guild.roles, name="Muted") # removes muted role
+        await ctx.send(f"{member.mention} has been unmuted")
+        return
+
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
@@ -62,9 +72,7 @@ class Exec(commands.Cog):
             await ctx.send(f'{error} error occured')
 
 
-    @commands.command()
-    async def mute(self, ctx, *, member):
-        await self.mute(ctx,member)
+
 
 def setup(bot):
     bot.add_cog(Exec(bot))
