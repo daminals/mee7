@@ -52,14 +52,13 @@ class Exec(commands.Cog):
 
     @commands.command()
     async def mute(self, ctx, *, member):
-        await self.mute(ctx, member)
+        await self.mute(member)
 
     @commands.command()
     async def unmute(self, ctx, member):
         role = discord.utils.get(ctx.guild.roles, name='Muted')
         await member.remove_roles(role) # removes muted role
         await ctx.send(f"{member.mention} has been unmuted")
-        return
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
