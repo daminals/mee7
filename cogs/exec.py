@@ -12,20 +12,6 @@ class Exec(commands.Cog):
     async def on_ready(self):
         print('exec.py is active')
 
-    async def mute(self, ctx, user, reason):
-        role = discord.utils.get(ctx.guild.roles, name="Muted")  # retrieves muted role returns none if there isn't
-        if not role:  # checks if there is muted role
-            try:  # creates muted role
-                muted = await ctx.guild.create_role(name="Muted", reason="To use for muting")
-                for channel in ctx.guild.channels:  # removes permission to view and send in the channels
-                    await channel.set_permissions(muted, send_messages=False,read_message_history=False,read_messages=False)
-            except discord.Forbidden:
-                return await ctx.send("I have no permissions to make a muted role") # self-explainatory
-            await user.add_roles(muted) # adds newly created muted role
-
-
-
-
     @commands.command()
     async def kick(self, ctx, member: Member, *, reason=None):
         await self.bot.wait_until_ready()
@@ -50,15 +36,6 @@ class Exec(commands.Cog):
                 await ctx.send(f'Unbanned {user.mention}')
                 return
 
-    @commands.command()
-    async def mute(self, ctx, *, member):
-        await self.mute(ctx,member)
-
-    @commands.command()
-    async def unmute(self, ctx, member):
-        role = discord.utils.get(ctx.guild.roles, name='Muted')
-        await member.remove_roles(role) # removes muted role
-        await ctx.send(f"{member.mention} has been unmuted")
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
