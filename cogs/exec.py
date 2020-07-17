@@ -19,6 +19,18 @@ class Exec(commands.Cog):
         await ctx.send(f'Kicked {member.mention} for: {reason}')
 
     @commands.command()
+    @commands.has_permissions(manage_messages=True)
+    async def clear(self, ctx, amount=5, Channel=''):
+        await self.bot.wait_until_ready()
+        if Channel == '':
+            Channel = ctx.channel
+        else:
+            Channel = self.bot.get_channel(Channel)
+
+        await Channel.purge(limit=amount)
+        await Channel.send(f'Cleared by {ctx.author.mention}')
+
+    @commands.command()
     async def ban(self, ctx, member: Member, *, reason=None):
         await self.bot.wait_until_ready()
         await member.ban(reason=reason)
