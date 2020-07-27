@@ -156,6 +156,9 @@ async def on_message(message):
         if random.randint(0, 100) > 90:
             await message.add_reaction("🤡")
             await message.channel.send('LMAO SIMP!!')
+    if 'this is so sad' in message.content.lower():
+	    await message.add_reaction("😢")
+	    await message.channel.send("alexa play despacito", file=discord.File("despacito/despacito.mp4"))
     if 'mee6' in message.content.lower():
         if not message.content.startswith('!'):
             await message.add_reaction("🤡")
