@@ -70,14 +70,6 @@ def censorship():
 
 # ----------------------------------------------------
 
-def Secret():
-    Secret_Dict = firebase.get('/' + FIREBASE_NAME + '/zstalin', '')
-    return Secret_Dict
-
-
-# ----------------------------------------------------
-
-
 def CurrentTicker():
     FirebaseTicker = firebase.get('/' + FIREBASE_NAME + '/ticker', '')
     print(FirebaseTicker)
