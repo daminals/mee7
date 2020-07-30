@@ -191,8 +191,8 @@ async def on_message(message):
                 await message.channel.send('please don\'t replace me homie')
     for i in banned:
 	    if i in message.content.lower():
-		    await bot.delete_message(message)
-		    await message.channel.send(f'{i} is banned please shut the fuck up already {message.author.mention}')
+		    await message.delete()
+		    await message.channel.send(f'*{i}* is banned please shut the fuck up already {message.author.mention}')
 
     if message.author == MEE6:
         MEE6_LIST = refresh()
