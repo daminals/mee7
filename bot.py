@@ -42,6 +42,7 @@ ImMEE7 = ['MEE7, not MEE6, it\'s MEE7. Don\'t you dare mix us up',
           'MEE7? That\'s me baby!! Don\'t wear it out 😉']
 
 Acceptance_Emojis = ['😍', '❤️', '🥰', '💪', '👑', '☺️', '🤙']
+banned = ['vermont']
 
 def gen_ID(char):
     ID = ''
@@ -188,6 +189,10 @@ async def on_message(message):
                 async with message.channel.typing():
                     await asyncio.sleep(1.5)
                 await message.channel.send('please don\'t replace me homie')
+    for i in banned:
+	    if i in message.content.lower():
+		    await bot.delete_message(message)
+		    await message.channel.send(f'{i} is banned please shut the fuck up already {message.author.mention}')
 
     if message.author == MEE6:
         MEE6_LIST = refresh()
