@@ -42,7 +42,7 @@ ImMEE7 = ['MEE7, not MEE6, it\'s MEE7. Don\'t you dare mix us up',
           'MEE7? That\'s me baby!! Don\'t wear it out 😉']
 
 Acceptance_Emojis = ['😍', '❤️', '🥰', '💪', '👑', '☺️', '🤙']
-banned = ['vermont','green mountain state', 'v e r m o n t']
+# banned = ['vermont','green mountain state', 'v e r m o n t']
 
 def gen_ID(char):
     ID = ''
@@ -66,7 +66,6 @@ def refresh():
 def censorship():
     local_CENSOR_LIST = firebase.get('/' + FIREBASE_NAME + '/censor', '')
     return local_CENSOR_LIST
-
 
 # ----------------------------------------------------
 
@@ -129,14 +128,6 @@ async def on_guild_remove(server):
 
 
 # ----------------------------------------------------
-@bot.command(name='purge')
-async def purge(ctx):
-    if ctx.author == bot.get_user(577668867380477962):
-        firebase.delete('/' + FIREBASE_NAME, '/zstalin/')
-    else:
-        return
-
-# ----------------------------------------------------
 
 @bot.event
 async def on_message(message):
@@ -181,6 +172,9 @@ async def on_message(message):
                 async with message.channel.typing():
                     await asyncio.sleep(1.5)
                 await message.channel.send('please don\'t replace me homie')
+
+     banned  = firebase.get('/' + FIREBASE_NAME + '/banned/'+ str(message.guild), '')
+
     for i in banned:
 	    if i in message.content.lower():
 		    await message.delete()
