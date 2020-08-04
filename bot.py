@@ -173,7 +173,7 @@ async def on_message(message):
                     await asyncio.sleep(1.5)
                 await message.channel.send('please don\'t replace me homie')
 
-     banned  = firebase.get('/' + FIREBASE_NAME + '/banned/'+ str(message.guild), '')
+    banned  = firebase.get('/' + FIREBASE_NAME + '/banned/'+ str(message.guild), '')
 
     for i in banned:
 	    if i in message.content.lower():
