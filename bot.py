@@ -42,7 +42,7 @@ ImMEE7 = ['MEE7, not MEE6, it\'s MEE7. Don\'t you dare mix us up',
           'MEE7? That\'s me baby!! Don\'t wear it out 😉']
 
 Acceptance_Emojis = ['😍', '❤️', '🥰', '💪', '👑', '☺️', '🤙']
-# banned = ['vermont','green mountain state', 'v e r m o n t']
+banned = ['vermont','green mountain state', 'v e r m o n t']
 
 def gen_ID(char):
     ID = ''
