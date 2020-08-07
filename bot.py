@@ -14,7 +14,7 @@ load_dotenv()
 from discord.ext import commands, tasks
 
 bot = commands.Bot(command_prefix='!')
-TOKEN = os.environ.get('TOKEN', 3)
+TOKEN = os.environ.get('TOKEN',3)
 FIREBASE = os.environ.get('FIREBASE', 3)
 FIREBASE_NAME = os.environ.get('FIREBASE_NAME', 3)
 firebase = firebase.FirebaseApplication(FIREBASE, None)
