@@ -55,7 +55,7 @@ class Exec(commands.Cog):
             await ctx.send('Missing required argument')
             return
         elif isinstance(error, commands.CommandNotFound):
-            await ctx.add_reaction("😳")
+            await ctx.message.add_reaction("😳")
             await ctx.send('404 Command Not Found')
         else:
             await ctx.send(f'{error} error occured')
