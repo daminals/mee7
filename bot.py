@@ -236,9 +236,9 @@ async def insult(ctx, *, insult):
 @bot.command(name='flip')
 async def flip(ctx):
     if random.choice([1,2]) == 1:
-        await ctx.channel.send("heads")
+        await ctx.channel.send(file="coin/heads.png")
     else:
-        await ctx.channel.send("tails")
+        await ctx.channel.send(file="coin/tails.png")
 
 
 # ----------------------------------------------------
