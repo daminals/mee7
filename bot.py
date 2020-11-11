@@ -275,7 +275,7 @@ async def mock(ctx):
 # ----------------------------------------------------
 @bot.command(name='censor')
 async def censor(ctx):
-    Server = str(ctx.guild)
+    Server = str(ctx.guild.id)
     firebase.put('/' + FIREBASE_NAME + '/censor/', Server, True)
     await ctx.send('I am now censored for this server')
 
