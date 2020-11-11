@@ -14,7 +14,7 @@ load_dotenv()
 from discord.ext import commands, tasks
 
 bot = commands.Bot(command_prefix='!')
-TOKEN = os.environ.get('TOKEN',3)
+TOKEN = os.environ.get('TOKEN', 3)
 FIREBASE = os.environ.get('FIREBASE', 3)
 FIREBASE_NAME = os.environ.get('FIREBASE_NAME', 3)
 firebase = firebase.FirebaseApplication(FIREBASE, None)
@@ -42,13 +42,15 @@ ImMEE7 = ['MEE7, not MEE6, it\'s MEE7. Don\'t you dare mix us up',
           'MEE7? That\'s me baby!! Don\'t wear it out 😉']
 
 Acceptance_Emojis = ['😍', '❤️', '🥰', '💪', '👑', '☺️', '🤙']
-banned = ['vermont','green mountain state', 'v e r m o n t']
+banned = ['vermont', 'green mountain state', 'v e r m o n t']
+
 
 def gen_ID(char):
     ID = ''
     for i in range(char):
         ID += str(random.randint(0, 9))
     return ID
+
 
 # FUNCTION CALLS
 # ----------------------------------------------------
@@ -66,6 +68,7 @@ def refresh():
 def censorship():
     local_CENSOR_LIST = firebase.get('/' + FIREBASE_NAME + '/censor', '')
     return local_CENSOR_LIST
+
 
 # ----------------------------------------------------
 
@@ -141,26 +144,26 @@ async def on_message(message):
             await message.add_reaction("🤡")
             await message.channel.send('LMAO SIMP!!')
     if 'this is so sad' in message.content.lower():
-	    await message.add_reaction("😢")
-	    await message.channel.send("alexa play despacito", file=discord.File("despacito/despacito.mp4"))
+        await message.add_reaction("😢")
+        await message.channel.send("alexa play despacito", file=discord.File("despacito/despacito.mp4"))
     if 'mee6' in message.content.lower():
         if not message.content.startswith('!'):
             await message.add_reaction("🤡")
-            #if random.randint(0, 100) > 2:
-                #async with message.channel.typing():
-                #    await asyncio.sleep(1.5)
-                #    await message.channel.send(random.choice(MEE6_garbolist))
+            # if random.randint(0, 100) > 2:
+            # async with message.channel.typing():
+            #    await asyncio.sleep(1.5)
+            #    await message.channel.send(random.choice(MEE6_garbolist))
     if 'mee7' in message.content.lower():
         if not message.content.startswith('!'):
             if random.randint(0, 10) > 5:
                 await message.add_reaction("😍")
             else:
                 await message.add_reaction("😘")
-            #if random.randint(0, 100) > 2:
-                #async with message.channel.typing():
-                #    await asyncio.sleep(1.5)
-                #await message.channel.send(
-                #    random.choice(ImMEE7))
+            # if random.randint(0, 100) > 2:
+            # async with message.channel.typing():
+            #    await asyncio.sleep(1.5)
+            # await message.channel.send(
+            #    random.choice(ImMEE7))
 
     if 'mee8' in message.content.lower():
         if not message.content.startswith('!'):
@@ -173,18 +176,17 @@ async def on_message(message):
                     await asyncio.sleep(1.5)
                 await message.channel.send('please don\'t replace me homie')
 
-    #banned  = firebase.get('/' + FIREBASE_NAME + '/banned/'+ str(message.guild), '')
-    # 
+    # banned  = firebase.get('/' + FIREBASE_NAME + '/banned/'+ str(message.guild), '')
     CENSOR_DICT = censorship()
     Server = str(message.guild.id)
-    for i in banned:
-	    if i in message.content.lower():
-		    await message.delete()
-            if CENSOR_DICT(Server):
-		        await message.channel.send(f'*{i}* is banned please shut the f@@k up already {message.author.mention}')
-            else:
-                await message.channel.send(f'*{i}* is banned please shut the fuck up already {message.author.mention}')
 
+    for i in banned:
+        if i in message.content.lower():
+            await message.delete()
+        if CENSOR_DICT(Server):
+            await message.channel.send(f'*{i}* is banned please shut the f@@k up already {message.author.mention}')
+        else:
+            await message.channel.send(f'*{i}* is banned please shut the fuck up already {message.author.mention}')
 
     if message.author == MEE6:
         Server = str(message.guild.id)
@@ -203,12 +205,13 @@ async def on_message(message):
 
     await bot.process_commands(message)
 
+
 @bot.event
-async def on_message_edit(old, message): 
+async def on_message_edit(old, message):
     for i in banned:
-	    if i in message.content.lower():
-		    await old.delete()
-		    await message.channel.send(f'*{i}* is banned please shut the fuck up already {message.author.mention}')
+        if i in message.content.lower():
+            await old.delete()
+            await message.channel.send(f'*{i}* is banned please shut the fuck up already {message.author.mention}')
 
 
 # THE COMMANDS
@@ -242,11 +245,12 @@ async def insult(ctx, *, insult):
     print(result)
     await ctx.send(random.choice(Acceptance_List))
 
+
 # ------------------------------------------------------
 
 @bot.command(name='flip')
 async def flip(ctx):
-    if random.choice([1,2]) == 1:
+    if random.choice([1, 2]) == 1:
         await ctx.channel.send(file=discord.File("coin/heads.png"))
     else:
         await ctx.channel.send(file=discord.File("coin/tails.png"))
@@ -312,8 +316,6 @@ async def count(ctx):
 
 
 # ----------------------------------------------------
-
-
 
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
