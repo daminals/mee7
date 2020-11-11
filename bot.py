@@ -201,7 +201,7 @@ async def on_message(message):
 
     if len(message.attachments) > 0:
         #upvote = '<:upvote:776162574349500448>'
-        upvote = discord.Emoji(name='upvote', id=776162574349500448, guild=706202537434284083)
+        upvote = discord.Emoji(guild=706202537434284083,state='<:upvote:776162574349500448>',data=None)
         await message.channel.send(upvote)
         downvote = bot.get_emoji(776162606229618688)
         await message.add_reaction(upvote)
