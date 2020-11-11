@@ -181,7 +181,7 @@ async def on_message(message):
 	    if i in message.content.lower():
 		    await message.delete()
             if CENSOR_DICT(Server):
-		        await message.channel.send(pf.censor(f'*{i}* is banned please shut the fuck up already {message.author.mention}'))
+		        await message.channel.send(f'*{i}* is banned please shut the f@@k up already {message.author.mention}')
             else:
                 await message.channel.send(f'*{i}* is banned please shut the fuck up already {message.author.mention}')
 
