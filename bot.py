@@ -200,7 +200,11 @@ async def on_message(message):
         updateTicker()
 
     if len(message.attachments) > 0:
-        await message.add_reaction("🙂")
+        upvote = bot.get_emoji(776162574349500448)
+        downvote = bot.get_emoji(776162606229618688)
+        await message.add_reaction(upvote)
+        await message.add_reaction(downvote)
+
 
     # if (message.guild == None) and not (message.author.bot):
     #    await message.author.send('bruh whats poppin')
