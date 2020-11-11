@@ -174,15 +174,19 @@ async def on_message(message):
                 await message.channel.send('please don\'t replace me homie')
 
     #banned  = firebase.get('/' + FIREBASE_NAME + '/banned/'+ str(message.guild), '')
-
+    # 
+    CENSOR_DICT = censorship()
+    Server = str(message.guild.id)
     for i in banned:
 	    if i in message.content.lower():
 		    await message.delete()
-		    await message.channel.send(f'*{i}* is banned please shut the fuck up already {message.author.mention}')
+            if CENSOR_DICT(Server):
+		        await message.channel.send(pf.censor(f'*{i}* is banned please shut the fuck up already {message.author.mention}'))
+            else:
+                await message.channel.send(f'*{i}* is banned please shut the fuck up already {message.author.mention}')
+
 
     if message.author == MEE6:
-        MEE6_LIST = refresh()
-        CENSOR_DICT = censorship()
         Server = str(message.guild.id)
         await message.add_reaction('🤡')
         async with message.channel.typing():
