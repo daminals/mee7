@@ -200,7 +200,7 @@ async def on_message(message):
     await bot.process_commands(message)
 
 @bot.event
-async def on_message_edit(message):
+async def on_message_edit():
     for i in banned:
 	    if i in message.content.lower():
 		    await message.delete()
