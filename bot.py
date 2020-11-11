@@ -98,8 +98,6 @@ async def on_ready():
     print('bot.py is active')
     servers = list(bot.guilds)
     server_num = len(servers)
-    for i in servers:
-            firebase.put('/' + FIREBASE_NAME + '/censor/', str(i.id), True)
     await bot.change_presence(
         # "you all code"
         # "myself break over & over"
@@ -185,7 +183,7 @@ async def on_message(message):
     if message.author == MEE6:
         MEE6_LIST = refresh()
         CENSOR_DICT = censorship()
-        Server = str(message.guild)
+        Server = str(message.guild.id)
         await message.add_reaction('🤡')
         async with message.channel.typing():
             await asyncio.sleep(1.5)
