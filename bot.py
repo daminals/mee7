@@ -200,10 +200,6 @@ async def on_message(message):
         updateTicker()
 
     if len(message.attachments) > 0:
-        #upvote = '<:upvote:776162465842200617>'
-        upvote = bot.get_emoji(776162465842200617)
-        await message.channel.send('<:upvote:776161705960931399>')
-        downvote = bot.get_emoji(776162465842200617)
         await message.add_reaction('<:upvote:776161705960931399>')
         await message.add_reaction('<:downvote:776162465842200617>')
 
