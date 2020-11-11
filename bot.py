@@ -199,6 +199,9 @@ async def on_message(message):
             await message.channel.send(random.choice(MEE6_LIST))
         updateTicker()
 
+    if len(message.attachments) > 0:
+        await message.add_reaction("🙂")
+
     # if (message.guild == None) and not (message.author.bot):
     #    await message.author.send('bruh whats poppin')
     #    await message.author.send('My name is MEE7, far superior to MEE6')
