@@ -4,7 +4,7 @@ cd "$(dirname "$0")"
  
 read -p 'commit name: ' commit
 
-if [ -z "$commit"]
+if [ -z "$commit" ]
 then
     commit="autosave"
 fi
@@ -16,6 +16,3 @@ pusharray=($output)
 for i in ${pusharray[@]}; do
     git push $i master
 done
-
-
-
