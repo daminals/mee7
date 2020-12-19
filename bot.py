@@ -179,15 +179,15 @@ async def on_message(message):
     # banned  = firebase.get('/' + FIREBASE_NAME + '/banned/'+ str(message.guild), '')
     CENSOR_DICT = censorship()
     Server = str(message.guild.id)
-    #if message.guild.id == '684944796779151406':
-    for i in banned:
-        await message.channel.send(message.guild.id)
-        if i in message.content.lower():
-            await message.delete()
-            if CENSOR_DICT[Server]:
-                await message.channel.send(f'*{i}* is banned please shut the f@@k up already {message.author.mention}')
-            else:
-                await message.channel.send(f'*{i}* is banned please shut the fuck up already {message.author.mention}')
+    if message.guild.id == 706202537434284083:
+        for i in banned:
+            await message.channel.send(message.guild.id)
+            if i in message.content.lower():
+                await message.delete()
+                if CENSOR_DICT[Server]:
+                    await message.channel.send(f'*{i}* is banned please shut the f@@k up already {message.author.mention}')
+                else:
+                    await message.channel.send(f'*{i}* is banned please shut the fuck up already {message.author.mention}')
 
     if message.author == MEE6:
         Server = str(message.guild.id)
