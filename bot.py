@@ -131,13 +131,13 @@ async def on_guild_remove(server):
 
 
 # ----------------------------------------------------
-
+"""
 @bot.event
 async def on_reaction_add(reaction,user):
     if (reaction.emoji in ['💌','❣️','💓','💕','💗','💘','💙','💚','💖','💛','💜','💝','💞','💟','🧡','🏩','👩‍❤️‍👨','❤️','👩‍❤️‍💋‍👨','🖤','♥️','😍','🤍','🤎','😘','😻','🥰','😚','😙',':wedding:','<33']) and (user.id == 360610199498915850 or user.id == 398279965172432896):
         await reaction.remove(user)
         
-    
+"""    
 
 @bot.event
 async def on_message(message):
@@ -212,9 +212,11 @@ async def on_message(message):
     if len(message.attachments) > 0 or 'https://cdn.discordapp.com/attachments/' in message.content:
         await message.add_reaction('<:upvote:776161705960931399>')
         await message.add_reaction('<:downvote:776162465842200617>')
+        """
         if message.author.id == 360610199498915850 or message.author.id == 398279965172432896:
             await message.delete()
             await message.channel.send("a final solution to the tinerald problem")
+        """    
 
 
     # if (message.guild == None) and not (message.author.bot):
