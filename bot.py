@@ -135,7 +135,7 @@ async def on_guild_remove(server):
 @bot.event
 async def on_reaction_add(reaction,user):
     if (reaction in ['💌','❣️','💓','💕','💗','💘','💙','💚','💖','💛','💜','💝','💞','💟','🧡','🏩','👩‍❤️‍👨','❤️','👩‍❤️‍💋‍👨','🖤','♥️','😍','🤍','🤎','😘','😻','🥰','😚','😙',':wedding:','<33']) and (user.id == 360610199498915850 or user.id == 398279965172432896 or user.id == 577668867380477962):
-        await reaction.clear()
+        await reaction.message.clear()
         
     
 
