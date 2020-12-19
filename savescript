@@ -1,7 +1,20 @@
 #!/bin/bash
 
 cd "$(dirname "$0")"
+ 
+read -p 'commit name: ' commit
 
-git commit -am 'autosave'
+if [ -z "$commit"]
+then
+    commit="autosave"
+fi
+git commit -am $commit
+
+output=$(git remote)
+while read -r; do
+	process $line
+done <<< $output
+
+
 git push origin master
 git push heroku master
