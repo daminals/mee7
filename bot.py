@@ -212,9 +212,7 @@ async def on_message(message):
     if len(message.attachments) > 0 or 'https://cdn.discordapp.com/attachments/' in message.content:
         await message.add_reaction('<:upvote:776161705960931399>')
         await message.add_reaction('<:downvote:776162465842200617>')
-        if message.author.id == 688872433842782293:
-            await message.delete()
-            await message.channel.send("a final solution to the ashiqa problem")
+      
         """
         if message.author.id == 360610199498915850 or message.author.id == 398279965172432896:
             await message.delete()
