@@ -179,7 +179,7 @@ async def on_message(message):
     # banned  = firebase.get('/' + FIREBASE_NAME + '/banned/'+ str(message.guild), '')
     CENSOR_DICT = censorship()
     Server = str(message.guild.id)
-    if message.guild.id == 706202537434284083:
+    if message.guild.id == 684944796779151406:
         for i in banned:
             #await message.channel.send(message.guild.id)
             if i in message.content.lower():
