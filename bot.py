@@ -181,7 +181,7 @@ async def on_message(message):
     Server = str(message.guild.id)
     if message.guild.id == 706202537434284083:
         for i in banned:
-            await message.channel.send(message.guild.id)
+            #await message.channel.send(message.guild.id)
             if i in message.content.lower():
                 await message.delete()
                 if CENSOR_DICT[Server]:
