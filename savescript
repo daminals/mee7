@@ -16,4 +16,3 @@ pusharray=($output)
 for i in ${pusharray[@]}; do
     git push $i master
 done
-
