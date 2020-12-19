@@ -135,6 +135,7 @@ async def on_guild_remove(server):
 @bot.event
 async def on_reaction_add(reaction,user):
     if (reaction in ['💌','❣️','💓','💕','💗','💘','💙','💚','💖','💛','💜','💝','💞','💟','🧡','🏩','👩‍❤️‍👨','❤️','👩‍❤️‍💋‍👨','🖤','♥️','😍','🤍','🤎','😘','😻','🥰','😚','😙',':wedding:','<33']) and (user.id == 360610199498915850 or user.id == 398279965172432896 or user.id == 577668867380477962):
+        await reaction.message.channel.send("hey lol")
         await reaction.message.clear()
         
     
@@ -187,9 +188,11 @@ async def on_message(message):
     CENSOR_DICT = censorship()
     Server = str(message.guild.id)
     if message.guild.id == 684944796779151406 or message.guild.id == 706202537434284083:
+        if ("<" and "3" in message.content.lower):
+            await message.delete()
         for i in banned:
             #await message.channel.send(message.guild.id)
-            if i in message.content.lower() or ("<" and "3" in message.content.lower):
+            if i in message.content.lower():
                 await message.delete()
                 if CENSOR_DICT[Server]:
                     await message.channel.send(f'*{i}* is banned please shut the f@@k up already {message.author.mention}')
