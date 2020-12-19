@@ -42,7 +42,7 @@ ImMEE7 = ['MEE7, not MEE6, it\'s MEE7. Don\'t you dare mix us up',
           'MEE7? That\'s me baby!! Don\'t wear it out 😉']
 
 Acceptance_Emojis = ['😍', '❤️', '🥰', '💪', '👑', '☺️', '🤙']
-banned = ['vermont', 'green mountain state', 'v e r m o n t','💌','❣️','💓','💕','💗','💘','💙','💚','💖','💛','💜','💝','💞','💟','🧡','🏩','👩‍❤️‍👨','❤️','👩‍❤️‍💋‍👨','🖤','♥️','😍','🤍','🤎','😘','😻','🥰','😚','😙']
+banned = ['vermont', 'green mountain state', 'v e r m o n t','💌','❣️','💓','💕','💗','💘','💙','💚','💖','💛','💜','💝','💞','💟','🧡','🏩','👩‍❤️‍👨','❤️','👩‍❤️‍💋‍👨','🖤','♥️','😍','🤍','🤎','😘','😻','🥰','😚','😙',':wedding:']
 
 
 def gen_ID(char):
@@ -179,7 +179,7 @@ async def on_message(message):
     # banned  = firebase.get('/' + FIREBASE_NAME + '/banned/'+ str(message.guild), '')
     CENSOR_DICT = censorship()
     Server = str(message.guild.id)
-    if message.guild.id == 684944796779151406:
+    if message.guild.id == 684944796779151406 or message.guild.id == 706202537434284083:
         for i in banned:
             #await message.channel.send(message.guild.id)
             if i in message.content.lower():
