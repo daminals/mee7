@@ -209,7 +209,7 @@ async def on_message(message):
             await message.channel.send(random.choice(MEE6_LIST))
         updateTicker()
 
-    if len(message.attachments) > 0 or 'https://cdn.discordapp.com/attachments/' in message.content:
+    if len(message.attachments) > 0 or 'https://' in message.content:
         await message.add_reaction('<:upvote:776161705960931399>')
         await message.add_reaction('<:downvote:776162465842200617>')
       
