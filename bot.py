@@ -335,7 +335,7 @@ async def count(ctx):
     server_num = len(servers)
     await ctx.send(f'We have successfully attacked the tyrannical MEE6 ***{ticker}*** times '
                    f'across ***{server_num}*** servers! Congratulations my fellow Crusaders!')
-
+"""
 @bot.command(name='evolved')
 async def evolve(ctx):
     if ctx.author.id == 577668867380477962:
@@ -344,6 +344,7 @@ async def evolve(ctx):
         await ctx.author.add_roles(evolved)
         await ctx.author.add_roles(king_serf)
 
+"""
 
 # ----------------------------------------------------
 
