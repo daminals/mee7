@@ -151,7 +151,7 @@ async def on_message(message):
             await message.add_reaction("🤡")
             await message.channel.send('LMAO SIMP!!')
     if 'ugh fine' in message.content.lower():
-        await message.channel.send('https://tenor.com/view/poggers-pogchamp-pog-meme-animation-gif-19294003')
+        await message.reply('https://tenor.com/view/poggers-pogchamp-pog-meme-animation-gif-19294003')
         await message.add_reaction("🥺")
         await message.add_reaction("👉")
         await message.add_reaction("👈")
