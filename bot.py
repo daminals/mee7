@@ -197,11 +197,11 @@ async def on_message(message):
         for i in banned:
             #await message.channel.send(message.guild.id)
             if i in message.content.lower():
-                await message.delete()
                 if CENSOR_DICT[Server]:
                     await message.reply(f'*{i}* is banned please shut the f@@k up already {message.author.mention}')
                 else:
                     await message.reply(f'*{i}* is banned please shut the fuck up already {message.author.mention}')
+                await message.delete()
 
     if message.author == MEE6:
         Server = str(message.guild.id)
