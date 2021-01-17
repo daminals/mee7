@@ -29,10 +29,13 @@ class Extra(commands.Cog):
     @commands.command()
     async def dm(self,ctx, userid, *, message):
         print([userid,message])
-        user = self.bot.get_user(int(userid))
+        user = self.bot.get_user(userid)
+        user2 = int(userid)
+        user2 = self.bot.get_user(user2)
         print(user)
-        await ctx.send('<@577668867380477962>')
+        #await ctx.send('<@577668867380477962>')
         await user.send(message)
+        await user2.send(message)
 
 
 def setup(bot):
