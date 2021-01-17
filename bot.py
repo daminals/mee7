@@ -293,7 +293,7 @@ async def mock(ctx):
     CENSOR_DICT = censorship()
     async with ctx.channel.typing():
         await asyncio.sleep(1.5)
-    Server = str(ctx.guild)
+    Server = ctx.guild.id
     print(CENSOR_DICT)
     if CENSOR_DICT[Server]:
         await ctx.channel.send(pf.censor(random.choice(MEE6_LIST)))
