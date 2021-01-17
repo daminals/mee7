@@ -1,5 +1,5 @@
 # fun.py
-import discord, random
+import discord, random, asyncio
 from discord.ext import commands
 
 emojis = ["😎", "😍", "😂", "🥶", "😱", "😳", "🤢", "🥱", "🤐", "🤯", "🤠", "💀", "🤏", "👀", "🌵", "⚡️", "💦", "🎉",
@@ -21,6 +21,7 @@ class Extra(commands.Cog):
         if random.randint(0, 100) > 5:
             print("supposed to be emote just so yk")
             print(message.reactions)
+            await asyncio.sleep(2.5)
             if '<:upvote:776161705960931399>' not in message.reactions:
                 await message.add_reaction(random.choice(emojis))
 
