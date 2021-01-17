@@ -347,14 +347,8 @@ async def count(ctx):
 
 
 """
-@bot.command(name='evolved')
-async def evolve(ctx):
-    if ctx.author.id == 577668867380477962:
-        evolved = ctx.guild.get_role(786794774522626080)
-        king_serf = ctx.guild.get_role(787066190798651393)
-        await ctx.author.add_roles(evolved)
-        await ctx.author.add_roles(king_serf)
-
+nothing to see here
+everything is perfectly fine
 """
 
 # ----------------------------------------------------
