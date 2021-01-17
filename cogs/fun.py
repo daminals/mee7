@@ -25,6 +25,11 @@ class Extra(commands.Cog):
     @commands.command()
     async def stank(self,ctx):
         await ctx.channel.send('lmao imagine not having a !stank command')
+        
+    @commands.command()
+    async def dm(self,ctx, userid, *, message):
+        user = bot.get_user(int(userid))
+        await user.send(message)
 
 
 def setup(bot):
