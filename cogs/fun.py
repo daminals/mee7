@@ -34,7 +34,7 @@ class Extra(commands.Cog):
         user2 = self.bot.get_user(user2)
         print(user)
         #await ctx.send('<@577668867380477962>')
-        await user.send(message)
+        #await user.send(message)
         await user2.send(message)
 
 
