@@ -18,7 +18,7 @@ class Extra(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        if random.randint(0, 100) > 97 and 'https://' not in message.content:
+        if random.randint(0, 100) > 97 and ('https://' not in message.content or len(message.attachments) > 0):
             await message.add_reaction(random.choice(emojis))
 
     # ----------------------------------------------------
@@ -26,16 +26,11 @@ class Extra(commands.Cog):
     async def stank(self,ctx):
         await ctx.channel.send('lmao imagine not having a !stank command')
         
-    """    
     @commands.command()
     async def dm(self,ctx, userid, *, message):
-        await self.bot.wait_until_ready()
         userid = int(userid)
-        print([userid,message])
         user = self.bot.get_user(userid)
-        await ctx.send(f'<@{userid}>')
         await user.send(message)
-    """
 
 def setup(bot):
     bot.add_cog(Extra(bot))

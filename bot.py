@@ -143,8 +143,11 @@ async def on_reaction_add(reaction,user):
 @bot.event
 async def on_message(message):
     MEE6 = bot.get_user(159985870458322944)
+    me = bot.get_user(577668867380477962)
     if message.author.bot and message.author != MEE6:
         return
+    if message.guild == None:
+        await me.send(message.content)
     if ('happy birthday' in message.content.lower()) and not (message.author.bot):
         await message.channel.send('Happy Birthday! 🥳🎉')
     if 'i agree' in message.content.lower():
@@ -342,16 +345,7 @@ async def count(ctx):
     await ctx.send(f'We have successfully attacked the tyrannical MEE6 ***{ticker}*** times '
                    f'across ***{server_num}*** servers! Congratulations my fellow Crusaders!')
 
-@bot.command()
-async def dm(ctx, userid):
-    await bot.wait_until_ready()
-    userid = int(userid)
-    print(bot.users)
-    user = bot.get_user(577668867380477962)
-    print(user)
-    await ctx.send(f'<@{userid}>')
-    await user.send('message')
-    #await ctx.author.send('hey lol')
+
 """
 @bot.command(name='evolved')
 async def evolve(ctx):
