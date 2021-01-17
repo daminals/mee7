@@ -20,7 +20,7 @@ class Extra(commands.Cog):
     async def on_message(self, message):
         if random.randint(0, 100) > 97:
             print("supposed to be emote just so yk")
-            if '<:upvote:776161705960931399>' not in message.reaction:
+            if '<:upvote:776161705960931399>' not in message.reactions:
                 await message.add_reaction(random.choice(emojis))
 
     # ----------------------------------------------------
