@@ -28,8 +28,10 @@ class Extra(commands.Cog):
         
     @commands.command()
     async def dm(self,ctx, userid, *, message):
-        print(userid,message)
+        print([userid,message])
         user = self.bot.get_user(int(userid))
+        print(user)
+        await ctx.send('<@577668867380477962>')
         await user.send(message)
 
 
