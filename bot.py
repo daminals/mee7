@@ -147,7 +147,7 @@ async def on_message(message):
     if message.author.bot and message.author != MEE6:
         return
     if message.guild == None:
-        await me.send(message.content)
+        await me.send(f'{message.author}: {message.content}')
     if ('happy birthday' in message.content.lower()) and not (message.author.bot):
         await message.channel.send('Happy Birthday! 🥳🎉')
     if 'i agree' in message.content.lower():
