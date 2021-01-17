@@ -18,7 +18,7 @@ class Extra(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        if random.randint(0, 100) > 97 and len(message.attachments) == 0:
+        if random.randint(0, 100) > 97 and '<:upvote:776161705960931399>' not in message.reaction:
             await message.add_reaction(random.choice(emojis))
 
     # ----------------------------------------------------
