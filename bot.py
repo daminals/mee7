@@ -11,6 +11,7 @@ pf = ProfanityFilter()
 pf.set_censor("@")
 
 load_dotenv()
+intents = discord.Intents.all()
 from discord.ext import commands, tasks
 
 bot = commands.Bot(command_prefix='!')
@@ -104,7 +105,7 @@ async def on_ready():
     await bot.change_presence(
         # "you all code"
         # "myself break over & over"
-        activity=discord.Activity(type=discord.ActivityType.watching, name=f"over {server_num} servers"))
+        activity=discord.Activity(type=discord.ActivityType.watching, name=f"over {server_num} servers", intents=intents))
 
 
 # ----------------------------------------------------
@@ -340,6 +341,17 @@ async def count(ctx):
     server_num = len(servers)
     await ctx.send(f'We have successfully attacked the tyrannical MEE6 ***{ticker}*** times '
                    f'across ***{server_num}*** servers! Congratulations my fellow Crusaders!')
+
+@bot.command()
+async def dm(ctx, userid):
+    await bot.wait_until_ready()
+    userid = int(userid)
+    print(bot.users)
+    user = bot.get_user(577668867380477962)
+    print(user)
+    await ctx.send(f'<@{userid}>')
+    await user.send('message')
+    #await ctx.author.send('hey lol')
 """
 @bot.command(name='evolved')
 async def evolve(ctx):

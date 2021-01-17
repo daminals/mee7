@@ -26,17 +26,16 @@ class Extra(commands.Cog):
     async def stank(self,ctx):
         await ctx.channel.send('lmao imagine not having a !stank command')
         
+    """    
     @commands.command()
     async def dm(self,ctx, userid, *, message):
+        await self.bot.wait_until_ready()
+        userid = int(userid)
         print([userid,message])
         user = self.bot.get_user(userid)
-        user2 = int(userid)
-        user2 = self.bot.get_user(user2)
-        print(user)
-        #await ctx.send('<@577668867380477962>')
-        #await user.send(message)
-        await user2.send(message)
-
+        await ctx.send(f'<@{userid}>')
+        await user.send(message)
+    """
 
 def setup(bot):
     bot.add_cog(Extra(bot))
