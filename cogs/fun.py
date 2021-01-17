@@ -28,6 +28,7 @@ class Extra(commands.Cog):
         
     @commands.command()
     async def dm(self,ctx, userid, *, message):
+        print(userid,message)
         user = self.bot.get_user(int(userid))
         await user.send(message)
 
