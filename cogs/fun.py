@@ -18,12 +18,8 @@ class Extra(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        if random.randint(0, 100) > 5:
-            print("supposed to be emote just so yk")
-            print(message.reactions)
-            await asyncio.sleep(2.5)
-            if '<:upvote:776161705960931399>' not in message.reactions:
-                await message.add_reaction(random.choice(emojis))
+        if random.randint(0, 100) > 97 and 'https://' not in message.content:
+            await message.add_reaction(random.choice(emojis))
 
     # ----------------------------------------------------
     @commands.command()
