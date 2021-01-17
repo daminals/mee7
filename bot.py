@@ -213,9 +213,9 @@ async def on_message(message):
         async with message.channel.typing():
             await asyncio.sleep(1.5)
         if CENSOR_DICT[Server]:
-            await message.channel.send(pf.censor(random.choice(MEE6_LIST)))
+            await message.reply(pf.censor(random.choice(MEE6_LIST)))
         else:
-            await message.channel.send(random.choice(MEE6_LIST))
+            await message.reply(random.choice(MEE6_LIST))
         updateTicker()
 
     if len(message.attachments) > 0 or 'https://' in message.content:
