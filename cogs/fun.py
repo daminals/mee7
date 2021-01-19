@@ -18,7 +18,7 @@ class Extra(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        if random.randint(0, 100) > 97 and ('https://' not in message.content or len(message.attachments) > 0):
+        if random.randint(0, 100) > 97 and not ('https://' in message.content or len(message.attachments) > 0):
             await message.add_reaction(random.choice(emojis))
 
     # ----------------------------------------------------
