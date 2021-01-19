@@ -18,8 +18,15 @@ class Extra(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
+        if 'ugh fine' in message.content.lower():
+            await message.reply('https://tenor.com/view/poggers-pogchamp-pog-meme-animation-gif-19294003')
+            await message.add_reaction("🥺")
+            await message.add_reaction("👉")
+            await message.add_reaction("👈")
+            return
         if random.randint(0, 100) > 97 and not ('https://' in message.content or len(message.attachments) > 0):
             await message.add_reaction(random.choice(emojis))
+
 
     # ----------------------------------------------------
     @commands.command()

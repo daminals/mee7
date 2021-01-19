@@ -154,11 +154,6 @@ async def on_message(message):
         if random.randint(0, 100) > 90:
             await message.reply('LMAO SIMP!!')
             await message.add_reaction("🤡")
-    if 'ugh fine' in message.content.lower():
-        await message.reply('https://tenor.com/view/poggers-pogchamp-pog-meme-animation-gif-19294003')
-        await message.add_reaction("🥺")
-        await message.add_reaction("👉")
-        await message.add_reaction("👈")
     if 'this is so sad' in message.content.lower():
         await message.add_reaction("😢")
         await message.reply("alexa play despacito", file=discord.File("despacito/despacito.mp4"))
