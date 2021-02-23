@@ -105,7 +105,10 @@ async def on_ready():
     await bot.change_presence(
         # "you all code"
         # "myself break over & over"
-        activity=discord.Activity(type=discord.ActivityType.watching, name=f"over {server_num} servers"))
+        # LAS SERVER SHENANIGANS
+        #activity=discord.Activity(type=discord.ActivityType.watching, name=f"over {server_num} servers"))
+
+        activity=discord.Activity(name=f"committed to {server_num} servers"))
 
 
 # ----------------------------------------------------
