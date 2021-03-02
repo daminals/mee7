@@ -1,5 +1,5 @@
 # bot.py
-import os, sys, pytz
+import os, sys, pytz, re
 from datetime import *
 
 import discord, random, asyncio
@@ -266,6 +266,9 @@ async def help(ctx):
 
 @bot.command(name='insult')
 async def insult(ctx, *, insult):
+    if len(insult) < 4:
+        if re.search("^<{18}>$"):
+            return
     result = firebase.post(FIREBASE_NAME + '/insult', insult)
     print(result)
     await ctx.send(random.choice(Acceptance_List))
