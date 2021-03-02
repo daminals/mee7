@@ -266,9 +266,8 @@ async def help(ctx):
 
 @bot.command(name='insult')
 async def insult(ctx, *, insult):
-    if len(insult) < 4:
-        if re.search("^<!{18}>$"):
-            return
+    if len(insult) < 4 or re.search("<@!\d{18}>", insult):
+        return
     result = firebase.post(FIREBASE_NAME + '/insult', insult)
     print(result)
     await ctx.send(random.choice(Acceptance_List))
