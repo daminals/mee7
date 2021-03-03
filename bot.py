@@ -146,9 +146,10 @@ async def on_message(message):
     me = bot.get_user(577668867380477962)
     if message.author.bot and message.author != MEE6:
         return
-    if not message.author.bot and "thanon" in message.content and message.channel.id == 684944797546577920:
+    """if not message.author.bot and "thanon" in message.content and message.channel.id == 684944797546577920:
         for i in range(20):
             await message.channel.send("thanon")
+    """
     if message.guild == None:
         await me.send(f'{message.author}: {message.content}')
     if ('happy birthday' in message.content.lower()) and not (message.author.bot):
@@ -221,10 +222,10 @@ async def on_message(message):
         await message.add_reaction('<:downvote:776162465842200617>')
       
 
-    if message.author.id == 283788007407091712:
+    """if message.author.id == 283788007407091712:
         await message.delete()
         await message.channel.send("a final solution to the dev spam problem")
-
+    """
 
 
     # if (message.guild == None) and not (message.author.bot):
