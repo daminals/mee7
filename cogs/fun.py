@@ -40,6 +40,15 @@ class Extra(commands.Cog):
             userid = int(userid)
             user = self.bot.get_user(userid)
             await user.send(message)
+            
+    @commands.command()
+    async def message(self,ctx, channelid, *, message):    
+     me = self.bot.get_user(577668867380477962)
+     if ctx.author == me:
+        channelid = int(channelid)
+        channel = self.bot.get_channel(channelid)
+        await channel.send(message)
+    
 
 def setup(bot):
     bot.add_cog(Extra(bot))

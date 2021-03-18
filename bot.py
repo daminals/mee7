@@ -234,14 +234,14 @@ async def on_message(message):
 
     await bot.process_commands(message)
 
-
+"""
 @bot.event
 async def on_message_edit(old, message):
     for i in banned:
         if i in message.content.lower():
             await old.delete()
             await message.reply(f'*{i}* is banned please shut the fuck up already {message.author.mention}')
-
+"""
 
 # THE COMMANDS
 # ----------------------------------------------------
