@@ -186,10 +186,12 @@ async def on_message(message):
                 await message.add_reaction("🥵")
             else:
                 await message.add_reaction("😭")
+                """
             if random.randint(0, 100) > 45:
                 async with message.channel.typing():
                     await asyncio.sleep(1.5)
                 await message.reply('please don\'t replace me homie')
+                """
 
     # banned  = firebase.get('/' + FIREBASE_NAME + '/banned/'+ str(message.guild), '')
     CENSOR_DICT = censorship()
