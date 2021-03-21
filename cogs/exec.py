@@ -31,12 +31,14 @@ class Exec(commands.Cog):
         await Channel.send(f'Cleared by {ctx.author.mention}')
 
     @commands.command()
+    @commands.has_permissions(ban_members=True)
     async def ban(self, ctx, member: Member, *, reason=None):
         await self.bot.wait_until_ready()
         await member.ban(reason=reason)
         await ctx.send(f'Banned {member.mention} for: {reason}')
 
     @commands.command()
+    @commands.has_permissions(ban_members=True)
     async def unban(self, ctx, *, member):
         await self.bot.wait_until_ready()
         banned_users = await ctx.guild.bans()
