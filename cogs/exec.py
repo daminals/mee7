@@ -13,6 +13,7 @@ class Exec(commands.Cog):
         print('exec.py is active')
 
     @commands.command()
+    @commands.has_permissions(ban_members=True)
     async def kick(self, ctx, member: Member, *, reason=None):
         await self.bot.wait_until_ready()
         await member.kick(reason=reason)
