@@ -151,7 +151,7 @@ async def on_reaction_add(reaction,user):
         if user != mee7 and user != me:
             if reaction.message.author == me:
                 await reaction.remove(user)
-    if reaction.emoji == upvote and user == reaction.message.author:
+    if reaction.emoji == upvote and user == reaction.message.author and reaction.message.author != me:
         await reaction.remove(user)
 
 @bot.event
