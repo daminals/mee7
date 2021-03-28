@@ -144,12 +144,15 @@ async def on_reaction_add(reaction,user):
     mee7 = bot.get_user(706194661366300753)
     me = bot.get_user(577668867380477962)
     downvote = bot.get_emoji(776162465842200617) # '<:downvote:776162465842200617>'
+    upvote = bot.get_emoji(776161705960931399)
     #await reaction.message.reply(reaction.emoji)
     if reaction.emoji == downvote:
         #await reaction.message.channel.send("bruh")
         if user != mee7 and user != me:
             if reaction.message.author == me:
                 await reaction.remove(user)
+    if reaction.emoji == upvote and user == reaction.message.author:
+        await reaction.remove(user)
 
 @bot.event
 async def on_message(message):
