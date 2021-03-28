@@ -141,10 +141,12 @@ async def on_reaction_add(reaction,user):
 """    
 @bot.event
 async def on_reaction_add(reaction,user):
+    if reaction.message.guild != bot.get_guild(706202537434284083):
+        return
     mee7 = bot.get_user(706194661366300753)
     me = bot.get_user(577668867380477962)
-    await reaction.message.reply("hey lol")
-    if reaction == '<:downvote:776162465842200617>':
+    await reaction.message.reply(reaction.emoji)
+    if reaction.emoji == '<:downvote:776162465842200617>':
         if user != mee7: #or user != me:
             if reaction.message.author == me:
                 await reaction.remove(user)
