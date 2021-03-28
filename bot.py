@@ -139,6 +139,14 @@ async def on_reaction_add(reaction,user):
         await reaction.remove(user)
         
 """    
+@bot.event
+async def on_reaction_add(reaction,user):
+    mee7 = bot.get_user(706194661366300753)
+    me = bot.get_user(577668867380477962)
+    if reaction == '<:downvote:776162465842200617>':
+        if user != mee7: #or user != me:
+            if reaction.message.author == me:
+                await reaction.remove(user)
 
 @bot.event
 async def on_message(message):
@@ -244,6 +252,8 @@ async def on_message_edit(old, message):
             await old.delete()
             await message.reply(f'*{i}* is banned please shut the fuck up already {message.author.mention}')
 """
+
+
 
 # THE COMMANDS
 # ----------------------------------------------------
