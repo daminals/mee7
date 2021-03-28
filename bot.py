@@ -143,6 +143,7 @@ async def on_reaction_add(reaction,user):
 async def on_reaction_add(reaction,user):
     mee7 = bot.get_user(706194661366300753)
     me = bot.get_user(577668867380477962)
+    await reaction.message.reply("hey lol")
     if reaction == '<:downvote:776162465842200617>':
         if user != mee7: #or user != me:
             if reaction.message.author == me:
