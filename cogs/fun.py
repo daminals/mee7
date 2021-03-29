@@ -28,6 +28,9 @@ class Extra(commands.Cog):
             await message.reply('https://tenor.com/view/urmom-your-mom-baldi-defaultdance-gif-19665250')
             await message.add_reaction("<:lmao:758747233075200000>")
             return
+        if 'lmao' in message.content.lower():
+            await message.add_reaction("<:lmao:758747233075200000>")
+            return
         if random.randint(0, 100) > 97 and not ('https://' in message.content or len(message.attachments) > 0):
             await message.add_reaction(random.choice(emojis))
 
