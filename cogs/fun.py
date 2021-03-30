@@ -29,7 +29,6 @@ class Extra(commands.Cog):
             return
         if 'lmao' in message.content.lower():
             await message.add_reaction("<:lmao:758747233075200000>")
-            return
         if random.randint(0, 100) > 97 and not ('https://' in message.content or len(message.attachments) > 0):
             await message.add_reaction(random.choice(emojis))
         if random.randint(0,100) > 94 and message.author == self.bot.get_user(688872433842782293):
@@ -41,6 +40,8 @@ class Extra(commands.Cog):
                 await referenced.add_reaction('<:based:764140006640975922>')
             if 'so true' in message.content.lower():
                 await referenced.add_reaction('<:sotrue:825473477837848598>')
+            if 'lmao' in message.content.lower():
+                await referenced.add_reaction('<:lmao:758747233075200000>')
                 
     @commands.Cog.listener()
     async def on_message_edit(self, old, message):
@@ -53,7 +54,9 @@ class Extra(commands.Cog):
             if 'so true' in message.content.lower():
                 await referenced.add_reaction('<:sotrue:825473477837848598>')
             if 'based' in message.content.lower():
-                await referenced.add_reaction('<:based:764140006640975922>')            
+                await referenced.add_reaction('<:based:764140006640975922>')    
+            if 'lmao' in message.content.lower():
+                await referenced.add_reaction("<:lmao:758747233075200000>")        
 
 
 
