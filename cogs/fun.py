@@ -7,7 +7,6 @@ emojis = ["😎", "😍", "😂", "🥶", "😱", "😳", "🤢", "🥱", "🤐"
           "⛓", "🔪","😕","👺","🐸","💅","🤦‍♀️","💆‍♀️","🧏‍♀️","💁‍♀️","🤒","🤮","🤥","🤤","😬","😰","🤭","🤫","😓","🥺"]
 
 # testing file lol
-# TODO: if someone replies with based, based react the message they are replying to
 class Extra(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -33,7 +32,7 @@ class Extra(commands.Cog):
             return
         if random.randint(0, 100) > 97 and not ('https://' in message.content or len(message.attachments) > 0):
             await message.add_reaction(random.choice(emojis))
-        if random.randint(0,100) > 94 and message.author == bot.get_user(688872433842782293):
+        if random.randint(0,100) > 94 and message.author == self.bot.get_user(688872433842782293):
             await message.add_reaction("😻")
         if message.reference != None:
             messageid = message.reference.message_id
@@ -42,6 +41,20 @@ class Extra(commands.Cog):
                 await referenced.add_reaction('<:based:764140006640975922>')
             if 'so true' in message.content.lower():
                 await referenced.add_reaction('<:sotrue:825473477837848598>')
+                
+    @commands.Cog.listener()
+    async def on_message_edit(self, old, message):
+        if (len(message.attachments) > 0 or 'https://' in message.content) and not (self.bot.get_emoji('<:upvote:776161705960931399>') in message.reactions):
+            await message.add_reaction('<:upvote:776161705960931399>')
+            await message.add_reaction('<:downvote:776162465842200617>')
+        if message.reference != None:
+            messageid = message.reference.message_id
+            referenced = await message.channel.fetch_message(messageid)
+            if 'so true' in message.content.lower():
+                await referenced.add_reaction('<:sotrue:825473477837848598>')
+            if 'based' in message.content.lower():
+                await referenced.add_reaction('<:based:764140006640975922>')            
+
 
 
     # ----------------------------------------------------

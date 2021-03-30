@@ -224,6 +224,7 @@ async def on_message(message):
 
     if message.author == MEE6:
         Server = str(message.guild.id)
+        MEE6_LIST=refresh()
         await message.add_reaction('🤡')
         async with message.channel.typing():
             await asyncio.sleep(1.5)
