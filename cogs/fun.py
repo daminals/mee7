@@ -34,7 +34,7 @@ class Extra(commands.Cog):
         if random.randint(0, 100) > 97 and not ('https://' in message.content or len(message.attachments) > 0):
             await message.add_reaction(random.choice(emojis))
         if random.randint(0,100) > 94 and message.author == bot.get_user(688872433842782293):
-            await message.add_reaction(😻)
+            await message.add_reaction("😻")
         if message.reference != None:
             messageid = message.reference.message_id
             referenced = await message.channel.fetch_message(messageid)
