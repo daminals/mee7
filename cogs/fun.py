@@ -37,7 +37,6 @@ class Extra(commands.Cog):
             if message.reference != None:
                 messageid = message.reference.message_id
                 referenced = await message.channel.fetch_message(messageid)
-                #await message.channel.send(referenced)
                 await referenced.add_reaction('<:based:764140006640975922>')
 
 
