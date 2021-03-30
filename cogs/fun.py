@@ -7,7 +7,7 @@ emojis = ["😎", "😍", "😂", "🥶", "😱", "😳", "🤢", "🥱", "🤐"
           "⛓", "🔪","😕","👺","🐸","💅","🤦‍♀️","💆‍♀️","🧏‍♀️","💁‍♀️","🤒","🤮","🤥","🤤","😬","😰","🤭","🤫","😓","🥺"]
 
 # testing file lol
-
+# TODO: if someone replies with based, based react the message they are replying to
 class Extra(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -15,7 +15,7 @@ class Extra(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         print('fun.py is active')
-
+        
     @commands.Cog.listener()
     async def on_message(self, message):
         if 'ugh fine' in message.content.lower():
@@ -33,6 +33,12 @@ class Extra(commands.Cog):
             return
         if random.randint(0, 100) > 97 and not ('https://' in message.content or len(message.attachments) > 0):
             await message.add_reaction(random.choice(emojis))
+        if 'based' in message.content.lower():
+            if message.reference != None:
+                messageid = message.reference.message_id
+                referenced = await message.channel.fetch_message(messageid)
+                #await message.channel.send(referenced)
+                await referenced.add_reaction('<:based:764140006640975922>')
 
 
     # ----------------------------------------------------
