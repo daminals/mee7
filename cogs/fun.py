@@ -22,7 +22,7 @@ async def refEm(search, searchbar, message):
     if search in searchbar.content.lower():
         await message.add_reaction(react)
 
-
+search_list = ['based', 'so true', 'lmao']
 
 class Extra(commands.Cog):
     def __init__(self, bot):
@@ -57,14 +57,13 @@ class Extra(commands.Cog):
             if message.reference != None: # I wanted to make this more simple and just add the emotes as part of the function, but i can't await
                 messageid = message.reference.message_id
                 referenced = await message.channel.fetch_message(messageid)
-                for search in ['based', 'so true', 'lmao']:
+                for search in search_list:
                     await refEm(search,message, referenced)
             else:
                 if random.randint(0, 100) > 97:
                     await message.add_reaction(random.choice(emojis))
-                await refEm('lmao', message,message)
-                await refEm('based',message, message)
-                await refEm('so true',message, message)
+                for search in search_list:
+                    await refEm(search, message, message)
                 
                 
     @commands.Cog.listener()
@@ -75,9 +74,8 @@ class Extra(commands.Cog):
         if message.reference != None:
             messageid = message.reference.message_id
             referenced = await message.channel.fetch_message(messageid)
-            await refEm('so true', message, referenced)
-            await refEm('based',message, referenced)
-            await refEm('lmao', message, referenced)
+            for search in search_list:
+                await refEm(search, message, referenced)
 
 
 
