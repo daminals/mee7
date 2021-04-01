@@ -42,6 +42,13 @@ class Extra(commands.Cog):
                 await referenced.add_reaction('<:sotrue:825473477837848598>')
             if 'lmao' in message.content.lower():
                 await referenced.add_reaction('<:lmao:758747233075200000>')
+        else:
+            if 'lmao' in message.content.lower():
+                await message.add_reaction("<:lmao:758747233075200000>")
+            if 'based' in message.content.lower():
+                await message.add_reaction('<:based:764140006640975922>')
+            if 'so true' in message.content.lower():
+                await message.add_reaction('<:sotrue:825473477837848598>')
                 
     @commands.Cog.listener()
     async def on_message_edit(self, old, message):
