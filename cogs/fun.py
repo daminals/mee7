@@ -26,7 +26,7 @@ async def refEm(search, searchbar, message):
         for emote in react:
             await message.add_reaction(emote)
 
-search_list = ['based', 'so true', 'lmao', 'bruh']
+search_list = ['based', 'so true', 'lmao', 'bruh', 'sexy']
 # when adding to the search list, remember to add it to the dictionary as well
 
 class Extra(commands.Cog):
