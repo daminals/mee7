@@ -11,10 +11,28 @@ def attachm(message):
         return True
     else:
         return False
-    
+ 
+async def refEm(search, searchbar, message, react): 
+    emote_ref = {
+        "based": '<:based:764140006640975922>',
+        "so true": '<:sotrue:825473477837848598>',
+        "lmao" : '<:lmao:758747233075200000>'
+    }
+    if search in searchbar.content.lower():
+        await message.add_reaction(react)
+
+
+
 class Extra(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+    
+    # Emotes
+    based = '<:based:764140006640975922>'
+    sotrue = '<:sotrue:825473477837848598>'
+    lmao = '<:lmao:758747233075200000>'
+    upvote = '<:upvote:776161705960931399>'
+    downvote = '<:downvote:776162465842200617>'
 
     @commands.Cog.listener()
     async def on_ready(self):
@@ -35,40 +53,31 @@ class Extra(commands.Cog):
         if random.randint(0,100) > 94 and message.author == self.bot.get_user(688872433842782293):
             await message.add_reaction("😻")
         if not attachm(message):
-            if message.reference != None:
+            if message.reference != None: # I wanted to make this more simple and just add the emotes as part of the function, but i can't await
                 messageid = message.reference.message_id
                 referenced = await message.channel.fetch_message(messageid)
-                if 'based' in message.content.lower():
-                    await referenced.add_reaction('<:based:764140006640975922>')
-                if 'so true' in message.content.lower():
-                    await referenced.add_reaction('<:sotrue:825473477837848598>')
-                if 'lmao' in message.content.lower():
-                    await referenced.add_reaction('<:lmao:758747233075200000>')
+                refEm('based',message, referenced, based)
+                refEm('so true', message, referenced, sotrue)
+                refEm('lmao', message, referenced, lmao)
             else:
                 if random.randint(0, 100) > 97:
                     await message.add_reaction(random.choice(emojis))
-                if 'lmao' in message.content.lower():
-                    await message.add_reaction("<:lmao:758747233075200000>")
-                if 'based' in message.content.lower():
-                    await message.add_reaction('<:based:764140006640975922>')
-                if 'so true' in message.content.lower():
-                    await message.add_reaction('<:sotrue:825473477837848598>')
+                refEm('lmao', message,message, lmao)
+                refEm('based',message, message, based)
+                refEm('so true',message, message, sotrue)
                 
                 
     @commands.Cog.listener()
     async def on_message_edit(self, old, message):
-        if attachm(message) and not (self.bot.get_emoji('<:upvote:776161705960931399>') in message.reactions):
-            await message.add_reaction('<:upvote:776161705960931399>')
-            await message.add_reaction('<:downvote:776162465842200617>')
+        if attachm(message) and not (self.bot.get_emoji(upvote) in message.reactions):
+            await message.add_reaction(upvote)
+            await message.add_reaction(downvote)
         if message.reference != None:
             messageid = message.reference.message_id
             referenced = await message.channel.fetch_message(messageid)
-            if 'so true' in message.content.lower():
-                await referenced.add_reaction('<:sotrue:825473477837848598>')
-            if 'based' in message.content.lower():
-                await referenced.add_reaction('<:based:764140006640975922>')    
-            if 'lmao' in message.content.lower():
-                await referenced.add_reaction("<:lmao:758747233075200000>")        
+            refEm('so true', message, referenced, sotrue)
+            refEm('based',message, referenced, sotrue)
+            refEm('lmao', message, referenced, lmao)
 
 
 
