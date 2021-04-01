@@ -13,16 +13,18 @@ def attachm(message):
         return False
  
 async def refEm(search, searchbar, message): 
-    emote_ref = {
+    emote_ref = { # when adding an emote to the dictionary, remember to add it to the search list as well
         "based": '<:based:764140006640975922>',
         "so true": '<:sotrue:825473477837848598>',
-        "lmao" : '<:lmao:758747233075200000>'
+        "lmao": '<:lmao:758747233075200000>',
+        "bruh": '🗿'
     }
     react = emote_ref[search]
     if search in searchbar.content.lower():
         await message.add_reaction(react)
 
-search_list = ['based', 'so true', 'lmao']
+search_list = ['based', 'so true', 'lmao', 'bruh']
+# when adding to the search list, remember to add it to the dictionary as well
 
 class Extra(commands.Cog):
     def __init__(self, bot):
