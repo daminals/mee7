@@ -12,12 +12,13 @@ def attachm(message):
     else:
         return False
  
-async def refEm(search, searchbar, message, react): 
+async def refEm(search, searchbar, message): 
     emote_ref = {
         "based": '<:based:764140006640975922>',
         "so true": '<:sotrue:825473477837848598>',
         "lmao" : '<:lmao:758747233075200000>'
     }
+    react = emote_ref[search]
     if search in searchbar.content.lower():
         await message.add_reaction(react)
 
@@ -56,15 +57,15 @@ class Extra(commands.Cog):
             if message.reference != None: # I wanted to make this more simple and just add the emotes as part of the function, but i can't await
                 messageid = message.reference.message_id
                 referenced = await message.channel.fetch_message(messageid)
-                refEm('based',message, referenced, based)
-                refEm('so true', message, referenced, sotrue)
-                refEm('lmao', message, referenced, lmao)
+                await refEm('based',message, referenced)
+                await refEm('so true', message, referenced)
+                await refEm('lmao', message, referenced)
             else:
                 if random.randint(0, 100) > 97:
                     await message.add_reaction(random.choice(emojis))
-                refEm('lmao', message,message, lmao)
-                refEm('based',message, message, based)
-                refEm('so true',message, message, sotrue)
+                await refEm('lmao', message,message)
+                await refEm('based',message, message)
+                await refEm('so true',message, message)
                 
                 
     @commands.Cog.listener()
@@ -75,9 +76,9 @@ class Extra(commands.Cog):
         if message.reference != None:
             messageid = message.reference.message_id
             referenced = await message.channel.fetch_message(messageid)
-            refEm('so true', message, referenced, sotrue)
-            refEm('based',message, referenced, sotrue)
-            refEm('lmao', message, referenced, lmao)
+            await refEm('so true', message, referenced)
+            await refEm('based',message, referenced)
+            await refEm('lmao', message, referenced)
 
 
 
