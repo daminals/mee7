@@ -6,7 +6,7 @@ import discord, random, asyncio
 from dotenv import load_dotenv
 from firebase import firebase
 from profanityfilter import ProfanityFilter
-
+from cogs.fun import attachm
 pf = ProfanityFilter()
 pf.set_censor("@")
 
@@ -234,7 +234,7 @@ async def on_message(message):
             await message.reply(random.choice(MEE6_LIST))
         updateTicker()
 
-    if len(message.attachments) > 0 or 'https://' in message.content:
+    if attachm(message):
         await message.add_reaction('<:upvote:776161705960931399>')
         await message.add_reaction('<:downvote:776162465842200617>')
       
@@ -374,7 +374,7 @@ everything is perfectly fine
 # ----------------------------------------------------
 
 for filename in os.listdir('./cogs'):
-    if filename.endswith('.py'):
+    if filename.endswith('.py') and not filename.startswith('__'):
         bot.load_extension(f'cogs.{filename[:-3]}')
 
 bot.run(TOKEN)
