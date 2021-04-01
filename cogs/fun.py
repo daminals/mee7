@@ -66,10 +66,12 @@ class Extra(commands.Cog):
                 for search in search_list:
                     await refEm(search,message, referenced)
             else:
-                if random.randint(0, 100) > 97:
-                    await message.add_reaction(random.choice(emojis))
                 for search in search_list:
                     await refEm(search, message, message)
+                if random.randint(0, 100) > 97:
+                    await message.add_reaction(random.choice(emojis))
+
+
                 
                 
     @commands.Cog.listener()
