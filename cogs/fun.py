@@ -60,6 +60,7 @@ class Extra(commands.Cog):
             await message.add_reaction("<:lmao:758747233075200000>")
             return
         if random.randint(0,100) > 94 and message.author == self.bot.get_user(688872433842782293):
+            await asyncio.sleep(0.5)
             await message.add_reaction("😻")
         if not attachm(message):
             if message.reference != None: # I wanted to make this more simple and just add the emotes as part of the function, but i can't await
