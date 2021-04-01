@@ -177,7 +177,7 @@ async def on_message(message):
         await message.reply("praise mark", file=discord.File("video/despacito.mp4"))
     if 'praise mark' in message.content.lower():
         await message.add_reaction('<:mark:827291387719712779>')
-        await message.reply("alexa play despacito", file=discord.File("vidsaveo/mark.mp4"))
+        await message.reply("alexa play despacito", file=discord.File("video/mark.mp4"))
     if 'mee6' in message.content.lower():
         if not message.content.startswith('!'):
             await message.add_reaction("🤡")
