@@ -22,6 +22,7 @@ async def refEm(search, searchbar, message):
     }
     react = emote_ref[search]
     if search in searchbar.content.lower():
+        await asyncio.sleep(0.5)
         for emote in react:
             await message.add_reaction(emote)
 
