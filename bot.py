@@ -165,7 +165,7 @@ async def on_message(message):
             await message.channel.send("thanon")
     """
     if message.guild == None:
-        await me.send(f'{message.author}: {message.content}')
+        await me.send(f'{message.author} [{message.author.id}]: {message.content}')
     if ('happy birthday' in message.content.lower()) and not (message.author.bot):
         await message.channel.send('Happy Birthday! 🥳🎉')
     if 'i agree' in message.content.lower():
