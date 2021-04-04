@@ -94,6 +94,40 @@ def updateTicker():
     firebase.put('/' + FIREBASE_NAME + '/ticker/' + key, 'ticker', ticker)
 
 
+@bot.command(name='based')
+async def based(ctx):
+    id_ = ctx.author.id
+    basedCount = firebase.get('/' + FIREBASE_NAME + '/basedcount/', '')
+    based_leader = []
+    countss = []
+    #await ctx.send(basedCount.items())
+    #await ctx.send(sorted(basedCount.values()))
+    
+    for based_users in basedCount.items():
+        #await ctx.send(based_users)
+        user, count = based_users
+        thePerson = bot.get_user(int(user))
+        if thePerson in ctx.guild.members:
+            lname = str(thePerson.name) + '#' + str(thePerson.discriminator) + ':' + str(count) + '\n'
+            based_leader.append([count, lname])
+    based_leader = sorted(based_leader)
+    based_leader = based_leader[::-1]
+    leaderboard = "```"
+    for i in based_leader:
+        leaderboard += i[1]
+    await ctx.send(leaderboard + '```')
+    """ 
+    if countss != []
+        for i in countss
+            if count < i: 
+    """
+    #await ctx.send(basedCount)
+    
+    #newBasedCount = int(basedCount) + 1
+    #basedUpdate = firebase.put('/' + FIREBASE_NAME + '/basedcount', str(id_), newBasedCount)
+    #await ctx.send(f'based count {newBasedCount}')
+    
+    
 # EVENTS
 # ----------------------------------------------------
 
@@ -132,19 +166,30 @@ async def on_guild_remove(server):
 
 
 # ----------------------------------------------------
+
 """
 @bot.event
-async def on_reaction_add(reaction,user):
-    if (reaction.emoji in ['💌','❣️','💓','💕','💗','💘','💙','💚','💖','💛','💜','💝','💞','💟','🧡','🏩','👩‍❤️‍👨','❤️','👩‍❤️‍💋‍👨','🖤','♥️','😍','🤍','🤎','😘','😻','🥰','😚','😙',':wedding:','<33']) and (user.id == 360610199498915850 or user.id == 398279965172432896):
-        await reaction.remove(user)
+async def on_reaction_add(reaction, user):
+    await reaction.channel.send(f"kk, {reaction}")
+    if reaction == bot.get_emoji('<:based:764140006640975922>'):
+        id_ = reaction.message.author.id
+        try:
+            basedCount = firebase.get('/' + FIREBASE_NAME + '/basedcount/' + str(id_), '')
+            newBasedCount = int(basedCount) + 1
+            basedUpdate = firebase.put('/' + FIREBASE_NAME + '/basedcount', str(id_), newBasedCount)
+            #await ctx.send(f'based count {newBasedCount}')
+        except:
+            based1 = firebase.put('/' + FIREBASE_NAME + '/basedcount', str(id_), 1)
         
-"""    
+"""   
+        
 @bot.event
 async def on_reaction_add(reaction,user):
     mee7 = bot.get_user(706194661366300753)
     me = bot.get_user(577668867380477962)
     downvote = bot.get_emoji(776162465842200617) # '<:downvote:776162465842200617>'
     upvote = bot.get_emoji(776161705960931399)
+    based = bot.get_emoji(764140006640975922)
     #await reaction.message.reply(reaction.emoji)
     if reaction.emoji == downvote:
         #await reaction.message.channel.send("bruh")
@@ -153,6 +198,17 @@ async def on_reaction_add(reaction,user):
                 await reaction.remove(user)
     if reaction.emoji == upvote and user == reaction.message.author and reaction.message.author != me:
         await reaction.remove(user)
+    
+    if reaction.emoji == based:
+        #await reaction.message.channel.send(f"kk, {reaction}")
+        id_ = reaction.message.author.id
+        try:
+            basedCount = firebase.get('/' + FIREBASE_NAME + '/basedcount/' + str(id_), '')
+            newBasedCount = int(basedCount) + 1
+            basedUpdateCount = firebase.put('/' + FIREBASE_NAME + '/basedcount', str(id_), newBasedCount)
+            #await ctx.send(f'based count {newBasedCount}')
+        except:
+            basedStartCount = firebase.put('/' + FIREBASE_NAME + '/basedcount', str(id_), 1)
 
 @bot.event
 async def on_message(message):
