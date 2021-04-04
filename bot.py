@@ -126,7 +126,29 @@ async def based(ctx):
     #newBasedCount = int(basedCount) + 1
     #basedUpdate = firebase.put('/' + FIREBASE_NAME + '/basedcount', str(id_), newBasedCount)
     #await ctx.send(f'based count {newBasedCount}')
+
+@bot.command(name='upvote')
+async def based(ctx):
+    id_ = ctx.author.id
+    basedCount = firebase.get('/' + FIREBASE_NAME + '/upvotecount/', '')
+    based_leader = []
+    countss = []
+    #await ctx.send(basedCount.items())
+    #await ctx.send(sorted(basedCount.values()))
     
+    for based_users in basedCount.items():
+        #await ctx.send(based_users)
+        user, count = based_users
+        thePerson = bot.get_user(int(user))
+        if thePerson in ctx.guild.members:
+            lname = str(thePerson.name) + '#' + str(thePerson.discriminator) + ':' + str(count) + '\n'
+            based_leader.append([count, lname])
+    based_leader = sorted(based_leader)
+    based_leader = based_leader[::-1]
+    leaderboard = "```"
+    for i in based_leader:
+        leaderboard += i[1]
+    await ctx.send(leaderboard + '```')
     
 # EVENTS
 # ----------------------------------------------------
