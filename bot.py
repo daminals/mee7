@@ -184,24 +184,48 @@ async def on_reaction_add(reaction, user):
 """   
         
 @bot.event
-async def on_reaction_add(reaction,user):
+async def on_reaction_add(reaction, user):
     mee7 = bot.get_user(706194661366300753)
     me = bot.get_user(577668867380477962)
     downvote = bot.get_emoji(776162465842200617) # '<:downvote:776162465842200617>'
     upvote = bot.get_emoji(776161705960931399)
     based = bot.get_emoji(764140006640975922)
     #await reaction.message.reply(reaction.emoji)
+    id_ = reaction.message.author.id
     if reaction.emoji == downvote:
-        #await reaction.message.channel.send("bruh")
-        if user != mee7 and user != me:
-            if reaction.message.author == me:
-                await reaction.remove(user)
+        if user != mee7:
+            if reaction.message.author == me and user != me:
+                await reaction.remove(user) 
+                return
+    #"""
+        #await reaction.message.channel.send("lol. did you just 'downvote' this post? I didn't know you had no taste")
+        try:
+            await asyncio.sleep(0.5)
+            upCount = firebase.get('/' + FIREBASE_NAME + '/upvotecount/' + str(id_), '')
+            newUpCount = int(upCount) + - 1
+            UpUpdateCount = firebase.put('/' + FIREBASE_NAME + '/upvotecount', str(id_), newUpCount)
+            #await reaction.message.channel.send(f'upvote count {newUpCount}')
+        except:
+            upStartCount = firebase.put('/' + FIREBASE_NAME + '/upvotecount', str(id_), -1)
+    #"""
+    if reaction.emoji == upvote:
+        if user != reaction.message.author:
+            #"""
+            #await reaction.message.channel.send("lol. did you just 'upvote' this post? I didn't know you had no taste")
+            try:
+                upCount = firebase.get('/' + FIREBASE_NAME + '/upvotecount/' + str(id_), '')
+                newUpCount = int(upCount) + 1
+                UpUpdateCount = firebase.put('/' + FIREBASE_NAME + '/upvotecount', str(id_), newUpCount)
+                #await ctx.send(f'based count {newUpCount}')
+            except:
+                upStartCount = firebase.put('/' + FIREBASE_NAME + '/upvotecount', str(id_), 1)
+            #"""
+                
     if reaction.emoji == upvote and user == reaction.message.author and reaction.message.author != me:
         await reaction.remove(user)
     
     if reaction.emoji == based:
-        #await reaction.message.channel.send(f"kk, {reaction}")
-        id_ = reaction.message.author.id
+        await reaction.message.channel.send("yes honey, i did register that you reacted to this message with 'based' ")
         try:
             basedCount = firebase.get('/' + FIREBASE_NAME + '/basedcount/' + str(id_), '')
             newBasedCount = int(basedCount) + 1
