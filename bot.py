@@ -225,7 +225,7 @@ async def on_reaction_add(reaction, user):
         await reaction.remove(user)
     
     if reaction.emoji == based:
-        await reaction.message.channel.send("yes honey, i did register that you reacted to this message with 'based' ")
+        #await reaction.message.channel.send("yes honey, i did register that you reacted to this message with 'based' ")
         try:
             basedCount = firebase.get('/' + FIREBASE_NAME + '/basedcount/' + str(id_), '')
             newBasedCount = int(basedCount) + 1
