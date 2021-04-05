@@ -321,6 +321,9 @@ async def on_message(message):
                     basedestp = thePerson
                     #await message.channel.send(f"{basedest}, {basedestp}")
         await message.reply(f"well of course, ***{basedestp.mention}*** is the most based of them all!")
+        retribution = firebase.get('/' + FIREBASE_NAME + '/basedcount/' + str(message.author.id), '')
+        retribution = int(retribution) - 1
+        basedStartCount = firebase.put('/' + FIREBASE_NAME + '/basedcount', str(message.author.id), retribution)
         return
     
     if "mirror mirror on the wall, who is the most upvoted of them all" in message.content.lower():
