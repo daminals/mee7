@@ -320,7 +320,7 @@ async def on_message(message):
                     basedest = count
                     basedestp = thePerson
                     #await message.channel.send(f"{basedest}, {basedestp}")
-        await message.reply(f"well of course, ***{basedestp.name}#{basedestp.discriminator}*** is the most based of them all!")
+        await message.reply(f"well of course, ***{basedestp.mention}*** is the most based of them all!")
         return
     
     if "mirror mirror on the wall, who is the most upvoted of them all" in message.content.lower():
@@ -336,7 +336,7 @@ async def on_message(message):
                     basedest = count
                     basedestp = thePerson
                     #await message.channel.send(f"{basedest}, {basedestp}")
-        await message.reply(f"well of course, ***{basedestp.name}#{basedestp.discriminator}*** is the most upvoted of them all!")
+        await message.reply(f"well of course, ***{basedestp.mention}*** is the most upvoted of them all!")
         return
         
         
