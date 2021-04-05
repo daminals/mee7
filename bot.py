@@ -93,9 +93,15 @@ def updateTicker():
     ticker += 1
     firebase.put('/' + FIREBASE_NAME + '/ticker/' + key, 'ticker', ticker)
 
+# LEADER BOARDS
+# ----------------------------------------------------
 
 @bot.command(name='based')
-async def based(ctx):
+async def based(ctx, server_track="no id"):
+    if server_track == "no id":
+        server_track = ctx.guild
+    else:
+        server_track = bot.get_guild(int(server_track))
     id_ = ctx.author.id
     basedCount = firebase.get('/' + FIREBASE_NAME + '/basedcount/', '')
     based_leader = []
@@ -107,7 +113,7 @@ async def based(ctx):
         #await ctx.send(based_users)
         user, count = based_users
         thePerson = bot.get_user(int(user))
-        if thePerson in ctx.guild.members:
+        if thePerson in server_track.members:
             lname = str(thePerson.name) + '#' + str(thePerson.discriminator) + ':' + str(count) + '\n'
             based_leader.append([count, lname])
     based_leader = sorted(based_leader)
@@ -116,19 +122,13 @@ async def based(ctx):
     for i in based_leader:
         leaderboard += i[1]
     await ctx.send(leaderboard + '```')
-    """ 
-    if countss != []
-        for i in countss
-            if count < i: 
-    """
-    #await ctx.send(basedCount)
-    
-    #newBasedCount = int(basedCount) + 1
-    #basedUpdate = firebase.put('/' + FIREBASE_NAME + '/basedcount', str(id_), newBasedCount)
-    #await ctx.send(f'based count {newBasedCount}')
 
 @bot.command(name='upvote')
-async def based(ctx):
+async def upvote(ctx, server_track="no id"):
+    if server_track == "no id":
+        server_track = ctx.guild
+    else:
+        server_track = bot.get_guild(int(server_track))
     id_ = ctx.author.id
     basedCount = firebase.get('/' + FIREBASE_NAME + '/upvotecount/', '')
     based_leader = []
@@ -140,7 +140,7 @@ async def based(ctx):
         #await ctx.send(based_users)
         user, count = based_users
         thePerson = bot.get_user(int(user))
-        if thePerson in ctx.guild.members:
+        if thePerson in server_track.members:
             lname = str(thePerson.name) + '#' + str(thePerson.discriminator) + ':' + str(count) + '\n'
             based_leader.append([count, lname])
     based_leader = sorted(based_leader)
@@ -149,6 +149,7 @@ async def based(ctx):
     for i in based_leader:
         leaderboard += i[1]
     await ctx.send(leaderboard + '```')
+    
     
 # EVENTS
 # ----------------------------------------------------
