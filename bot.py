@@ -307,18 +307,20 @@ async def on_message(message):
                     await asyncio.sleep(1.5)
                 await message.reply('please don\'t replace me homie')
                 """
-    if "mirror mirror on the wall, who is the most based of them all?" in message.content.lower():
+    if "mirror mirror on the wall, who is the most based of them all" in message.content.lower():
         basedCount = firebase.get('/' + FIREBASE_NAME + '/basedcount/', '')
         basedest = 0
         basedestp = ""
         for based_users in basedCount.items():
+            #await message.channel.send(based_users)
             user, count = based_users
             thePerson = bot.get_user(int(user))
-            if thePerson in server_track.members:
+            if thePerson in message.guild.members:
                 if count > basedest:
                     basedest = count
-                    basedestp = user
-        await message.channel.send(f"well of course {basedestp.name}#{basedestp.discriminator} is the most based of them all!")
+                    basedestp = thePerson
+                    #await message.channel.send(f"{basedest}, {basedestp}")
+        await message.reply(f"well of course, ***{basedestp.name}#{basedestp.discriminator}*** is the most based of them all!")
     # banned  = firebase.get('/' + FIREBASE_NAME + '/banned/'+ str(message.guild), '')
     CENSOR_DICT = censorship()
     Server = str(message.guild.id)
