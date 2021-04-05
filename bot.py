@@ -321,6 +321,25 @@ async def on_message(message):
                     basedestp = thePerson
                     #await message.channel.send(f"{basedest}, {basedestp}")
         await message.reply(f"well of course, ***{basedestp.name}#{basedestp.discriminator}*** is the most based of them all!")
+        return
+    
+    if "mirror mirror on the wall, who is the most upvoted of them all" in message.content.lower():
+        basedCount = firebase.get('/' + FIREBASE_NAME + '/upvotecount/', '')
+        basedest = 0
+        basedestp = ""
+        for based_users in basedCount.items():
+            #await message.channel.send(based_users)
+            user, count = based_users
+            thePerson = bot.get_user(int(user))
+            if thePerson in message.guild.members:
+                if count > basedest:
+                    basedest = count
+                    basedestp = thePerson
+                    #await message.channel.send(f"{basedest}, {basedestp}")
+        await message.reply(f"well of course, ***{basedestp.name}#{basedestp.discriminator}*** is the most upvoted of them all!")
+        return
+        
+        
     # banned  = firebase.get('/' + FIREBASE_NAME + '/banned/'+ str(message.guild), '')
     CENSOR_DICT = censorship()
     Server = str(message.guild.id)
