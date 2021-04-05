@@ -106,9 +106,6 @@ async def based(ctx, server_track="no id"):
     basedCount = firebase.get('/' + FIREBASE_NAME + '/basedcount/', '')
     based_leader = []
     countss = []
-    #await ctx.send(basedCount.items())
-    #await ctx.send(sorted(basedCount.values()))
-    
     for based_users in basedCount.items():
         #await ctx.send(based_users)
         user, count = based_users
@@ -133,9 +130,6 @@ async def upvote(ctx, server_track="no id"):
     basedCount = firebase.get('/' + FIREBASE_NAME + '/upvotecount/', '')
     based_leader = []
     countss = []
-    #await ctx.send(basedCount.items())
-    #await ctx.send(sorted(basedCount.values()))
-    
     for based_users in basedCount.items():
         #await ctx.send(based_users)
         user, count = based_users
@@ -313,7 +307,18 @@ async def on_message(message):
                     await asyncio.sleep(1.5)
                 await message.reply('please don\'t replace me homie')
                 """
-
+    if "mirror mirror on the wall, who is the most based of them all?" in message.content.lower():
+        basedCount = firebase.get('/' + FIREBASE_NAME + '/basedcount/', '')
+        basedest = 0
+        basedestp = ""
+        for based_users in basedCount.items():
+            user, count = based_users
+            thePerson = bot.get_user(int(user))
+            if thePerson in server_track.members:
+                if count > basedest:
+                    basedest = count
+                    basedestp = user
+        await message.channel.send(f"well of course {basedestp.name}#{basedestp.discriminator} is the most based of them all!")
     # banned  = firebase.get('/' + FIREBASE_NAME + '/banned/'+ str(message.guild), '')
     CENSOR_DICT = censorship()
     Server = str(message.guild.id)
