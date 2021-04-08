@@ -225,7 +225,7 @@ async def giveb(ctx, recip: discord.Member, amount):
     upCountCTX = int(firebase.get('/' + FIREBASE_NAME + '/basedcount/' + str(ctx_id), ''))
     upCountR = int(firebase.get('/' + FIREBASE_NAME + '/basedcount/' + str(r_id), ''))
     if upCountCTX < amount:
-        await ctx.send(f"You don't have enough upvotes. Lmao poor loser")
+        await ctx.send(f"You don't have enough baseds. Lmao poor loser")
         return
     upCountCTX -= amount
     upCountR += amount
