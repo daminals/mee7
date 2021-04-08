@@ -199,7 +199,42 @@ async def on_reaction_add(reaction, user):
             based1 = firebase.put('/' + FIREBASE_NAME + '/basedcount', str(id_), 1)
         
 """   
-        
+#TODO: make it possible to trade baseds and upvotes
+@bot.command(name="giveu")
+async def giveu(ctx, recip: discord.Member, amount):
+    amount = int(amount)
+    ctx_id = ctx.author.id
+    r_id = recip.id
+    upCountCTX = int(firebase.get('/' + FIREBASE_NAME + '/upvotecount/' + str(ctx_id), ''))
+    upCountR = int(firebase.get('/' + FIREBASE_NAME + '/upvotecount/' + str(r_id), ''))
+    if upCountCTX < amount:
+        await ctx.send(f"You don't have enough upvotes. Lmao poor loser")
+        return
+    upCountCTX -= amount
+    upCountR += amount
+    UpUpdateCountCTX = firebase.put('/' + FIREBASE_NAME + '/upvotecount', str(ctx_id), upCountCTX)
+    UpUpdateCountR = firebase.put('/' + FIREBASE_NAME + '/upvotecount', str(r_id), upCountR)
+    
+    await ctx.send(f"Transferred {amount} upvotes into {recip.mention}'s balance")
+    
+@bot.command(name="giveb")
+async def giveb(ctx, recip: discord.Member, amount):
+    amount = int(amount)
+    ctx_id = ctx.author.id
+    r_id = recip.id
+    upCountCTX = int(firebase.get('/' + FIREBASE_NAME + '/basedcount/' + str(ctx_id), ''))
+    upCountR = int(firebase.get('/' + FIREBASE_NAME + '/basedcount/' + str(r_id), ''))
+    if upCountCTX < amount:
+        await ctx.send(f"You don't have enough upvotes. Lmao poor loser")
+        return
+    upCountCTX -= amount
+    upCountR += amount
+    UpUpdateCountCTX = firebase.put('/' + FIREBASE_NAME + '/basedcount', str(ctx_id), upCountCTX)
+    UpUpdateCountR = firebase.put('/' + FIREBASE_NAME + '/basedcount', str(r_id), upCountR)
+    
+    await ctx.send(f"Transferred {amount} baseds into {recip.mention}'s balance")
+
+    
 @bot.event
 async def on_reaction_add(reaction, user):
     mee7 = bot.get_user(706194661366300753)
@@ -325,6 +360,8 @@ async def on_message(message):
         retribution = int(retribution) - 1
         basedStartCount = firebase.put('/' + FIREBASE_NAME + '/basedcount', str(message.author.id), retribution)
         return
+    
+    #TODO: ADD A MIRROR IMAGE, AND PUT THE USERNAME AND DISCRIMINATOR ON IT
     
     if "mirror mirror on the wall, who is the most upvoted of them all" in message.content.lower():
         basedCount = firebase.get('/' + FIREBASE_NAME + '/upvotecount/', '')
