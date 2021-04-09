@@ -87,6 +87,9 @@ class Extra(commands.Cog):
             referenced = await message.channel.fetch_message(messageid)
             for search in search_list:
                 await refEm(search, message, referenced)
+        else:
+            for search in search_list[1:]:
+                await refEm(search, message, message)
 
 
 
