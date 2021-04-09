@@ -246,7 +246,7 @@ async def on_reaction_add(reaction, user):
     id_ = reaction.message.author.id
     if reaction.emoji == downvote:
         if user != mee7:
-            if reaction.message.author == me and user != me:
+            if reaction.message.author == me:
                 await reaction.remove(user) 
                 return
     #"""
