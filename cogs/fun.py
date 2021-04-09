@@ -63,7 +63,7 @@ class Extra(commands.Cog):
             await asyncio.sleep(0.5)
             await message.add_reaction("😻")
         if not attachm(message):
-            if message.reference != None: # I wanted to make this more simple and just add the emotes as part of the function, but i can't await
+            if (message.reference != None) and (message.reference.author != message.author): 
                 messageid = message.reference.message_id
                 referenced = await message.channel.fetch_message(messageid)
                 for search in search_list:
