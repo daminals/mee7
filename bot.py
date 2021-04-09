@@ -229,6 +229,7 @@ async def on_raw_reaction_add(payload):
     user = guild.get_member(payload.user_id)
     message_ = await channel.fetch_message(payload.message_id)
     me = bot.get_user(577668867380477962)
+    mee7 = bot.get_user(706194661366300753)
 
     downvote = bot.get_emoji(776162465842200617) # '<:downvote:776162465842200617>'
     upvote = bot.get_emoji(776161705960931399)
@@ -243,8 +244,8 @@ async def on_raw_reaction_add(payload):
                 upStartCount = firebase.put('/' + FIREBASE_NAME + '/upvotecount', str(message_.author.id), 1)
                 
         if payload.emoji == downvote:
-            if message_.author == me:
-                await payload.reaction.remove()
+            if message_.author == me and user != mee7:
+                await message_.remove_reaction(downvote, user)
                 return
             try:
                 await asyncio.sleep(0.5)
