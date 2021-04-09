@@ -183,23 +183,7 @@ async def on_guild_remove(server):
 
 
 # ----------------------------------------------------
-
-"""
-@bot.event
-async def on_reaction_add(reaction, user):
-    await reaction.channel.send(f"kk, {reaction}")
-    if reaction == bot.get_emoji('<:based:764140006640975922>'):
-        id_ = reaction.message.author.id
-        try:
-            basedCount = firebase.get('/' + FIREBASE_NAME + '/basedcount/' + str(id_), '')
-            newBasedCount = int(basedCount) + 1
-            basedUpdate = firebase.put('/' + FIREBASE_NAME + '/basedcount', str(id_), newBasedCount)
-            #await ctx.send(f'based count {newBasedCount}')
-        except:
-            based1 = firebase.put('/' + FIREBASE_NAME + '/basedcount', str(id_), 1)
-        
-"""   
-#TODO: make it possible to trade baseds and upvotes
+ 
 @bot.command(name="giveu")
 async def giveu(ctx, recip: discord.Member, amount):
     amount = int(amount)
@@ -245,7 +229,9 @@ async def on_reaction_add(reaction, user):
     #await reaction.message.reply(reaction.emoji)
     id_ = reaction.message.author.id
     if reaction.emoji == downvote:
+        #await reaction.message.channel.send(downvote)
         if user != mee7:
+            #await reaction.message.channel.send(user)
             if reaction.message.author == me:
                 await reaction.remove(user) 
                 return
