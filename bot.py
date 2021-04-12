@@ -130,6 +130,7 @@ async def on_guild_remove(server):
         activity=discord.Activity(type=discord.ActivityType.watching, name=f"over {server_num} servers"))
 
 
+# PAYLOAD REACTION --> BASED AND UPVOTE TRACKER
 # ----------------------------------------------------
 
 @bot.event
@@ -177,7 +178,8 @@ async def on_raw_reaction_add(payload):
             except:
                 basedStartCount = firebase.put('/' + FIREBASE_NAME + '/basedcount', str(message_.author.id), 1)
 
-
+# ON MESSAGE BRO
+# ----------------------------------------------------
 
 @bot.event
 async def on_message(message):
