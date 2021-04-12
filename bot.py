@@ -281,50 +281,8 @@ async def on_message(message):
                 await message.add_reaction("🥵")
             else:
                 await message.add_reaction("😭")
-                """
-            if random.randint(0, 100) > 45:
-                async with message.channel.typing():
-                    await asyncio.sleep(1.5)
-                await message.reply('please don\'t replace me homie')
-                """
-    if "mirror mirror on the wall, who is the most based of them all" in message.content.lower():
-        basedCount = firebase.get('/' + FIREBASE_NAME + '/basedcount/', '')
-        basedest = 0
-        basedestp = ""
-        for based_users in basedCount.items():
-            #await message.channel.send(based_users)
-            user, count = based_users
-            thePerson = bot.get_user(int(user))
-            if thePerson in message.guild.members:
-                if count > basedest:
-                    basedest = count
-                    basedestp = thePerson
-                    #await message.channel.send(f"{basedest}, {basedestp}")
-        await message.reply(f"well of course, ***{basedestp.mention}*** is the most based of them all!")
-        retribution = firebase.get('/' + FIREBASE_NAME + '/basedcount/' + str(message.author.id), '')
-        retribution = int(retribution) - 1
-        basedStartCount = firebase.put('/' + FIREBASE_NAME + '/basedcount', str(message.author.id), retribution)
-        return
+
     
-    #TODO: ADD A MIRROR IMAGE, AND PUT THE USERNAME AND DISCRIMINATOR ON IT
-    
-    if "mirror mirror on the wall, who is the most upvoted of them all" in message.content.lower():
-        basedCount = firebase.get('/' + FIREBASE_NAME + '/upvotecount/', '')
-        basedest = 0
-        basedestp = ""
-        for based_users in basedCount.items():
-            #await message.channel.send(based_users)
-            user, count = based_users
-            thePerson = bot.get_user(int(user))
-            if thePerson in message.guild.members:
-                if count > basedest:
-                    basedest = count
-                    basedestp = thePerson
-                    #await message.channel.send(f"{basedest}, {basedestp}")
-        await message.reply(f"well of course, ***{basedestp.mention}*** is the most upvoted of them all!")
-        return
-        
-        
     # banned  = firebase.get('/' + FIREBASE_NAME + '/banned/'+ str(message.guild), '')
     CENSOR_DICT = censorship()
     Server = str(message.guild.id)
