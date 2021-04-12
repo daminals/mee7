@@ -183,42 +183,6 @@ async def on_guild_remove(server):
 
 
 # ----------------------------------------------------
- 
-@bot.command(name="giveu")
-async def giveu(ctx, recip: discord.Member, amount):
-    amount = int(amount)
-    ctx_id = ctx.author.id
-    r_id = recip.id
-    upCountCTX = int(firebase.get('/' + FIREBASE_NAME + '/upvotecount/' + str(ctx_id), ''))
-    upCountR = int(firebase.get('/' + FIREBASE_NAME + '/upvotecount/' + str(r_id), ''))
-    if upCountCTX < amount:
-        await ctx.send(f"You don't have enough upvotes. Lmao poor loser")
-        return
-    upCountCTX -= amount
-    upCountR += amount
-    UpUpdateCountCTX = firebase.put('/' + FIREBASE_NAME + '/upvotecount', str(ctx_id), upCountCTX)
-    UpUpdateCountR = firebase.put('/' + FIREBASE_NAME + '/upvotecount', str(r_id), upCountR)
-    
-    await ctx.send(f"Transferred {amount} upvotes into {recip.mention}'s balance")
-    
-@bot.command(name="giveb")
-async def giveb(ctx, recip: discord.Member, amount):
-    amount = int(amount)
-    ctx_id = ctx.author.id
-    r_id = recip.id
-    upCountCTX = int(firebase.get('/' + FIREBASE_NAME + '/basedcount/' + str(ctx_id), ''))
-    upCountR = int(firebase.get('/' + FIREBASE_NAME + '/basedcount/' + str(r_id), ''))
-    if upCountCTX < amount:
-        await ctx.send(f"You don't have enough baseds. Lmao poor loser")
-        return
-    upCountCTX -= amount
-    upCountR += amount
-    UpUpdateCountCTX = firebase.put('/' + FIREBASE_NAME + '/basedcount', str(ctx_id), upCountCTX)
-    UpUpdateCountR = firebase.put('/' + FIREBASE_NAME + '/basedcount', str(r_id), upCountR)
-    
-    await ctx.send(f"Transferred {amount} baseds into {recip.mention}'s balance")
-
-
 
 @bot.event
 async def on_raw_reaction_add(payload):
@@ -264,7 +228,6 @@ async def on_raw_reaction_add(payload):
                 #await ctx.send(f'based count {newBasedCount}')
             except:
                 basedStartCount = firebase.put('/' + FIREBASE_NAME + '/basedcount', str(message_.author.id), 1)
-
 
 
 
