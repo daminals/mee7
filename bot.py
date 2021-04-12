@@ -92,58 +92,6 @@ def updateTicker():
     ticker = Dict_Tick[1]
     ticker += 1
     firebase.put('/' + FIREBASE_NAME + '/ticker/' + key, 'ticker', ticker)
-
-# LEADER BOARDS
-# ----------------------------------------------------
-
-@bot.command(name='based')
-async def based(ctx, server_track="no id"):
-    if server_track == "no id":
-        server_track = ctx.guild
-    else:
-        server_track = bot.get_guild(int(server_track))
-    id_ = ctx.author.id
-    basedCount = firebase.get('/' + FIREBASE_NAME + '/basedcount/', '')
-    based_leader = []
-    countss = []
-    for based_users in basedCount.items():
-        #await ctx.send(based_users)
-        user, count = based_users
-        thePerson = bot.get_user(int(user))
-        if thePerson in server_track.members:
-            lname = str(thePerson.name) + '#' + str(thePerson.discriminator) + ':' + str(count) + '\n'
-            based_leader.append([count, lname])
-    based_leader = sorted(based_leader)
-    based_leader = based_leader[::-1]
-    leaderboard = "```"
-    for i in based_leader:
-        leaderboard += i[1]
-    await ctx.send(leaderboard + '```')
-
-@bot.command(name='upvote')
-async def upvote(ctx, server_track="no id"):
-    if server_track == "no id":
-        server_track = ctx.guild
-    else:
-        server_track = bot.get_guild(int(server_track))
-    id_ = ctx.author.id
-    basedCount = firebase.get('/' + FIREBASE_NAME + '/upvotecount/', '')
-    based_leader = []
-    countss = []
-    for based_users in basedCount.items():
-        #await ctx.send(based_users)
-        user, count = based_users
-        thePerson = bot.get_user(int(user))
-        if thePerson in server_track.members:
-            lname = str(thePerson.name) + '#' + str(thePerson.discriminator) + ':' + str(count) + '\n'
-            based_leader.append([count, lname])
-    based_leader = sorted(based_leader)
-    based_leader = based_leader[::-1]
-    leaderboard = "```"
-    for i in based_leader:
-        leaderboard += i[1]
-    await ctx.send(leaderboard + '```')
-    
     
 # EVENTS
 # ----------------------------------------------------

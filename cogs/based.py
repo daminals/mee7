@@ -53,6 +53,58 @@ class Based(commands.Cog):
             basedStartCount = firebase.put('/' + FIREBASE_NAME + '/basedcount', str(message.author.id), retribution)
             return
         
+    # ------------- Leaderboard -----------------------------
+        
+    @commands.command(name='based')
+    async def based(self,ctx, server_track="no id"):
+        if server_track == "no id":
+            server_track = ctx.guild
+        else:
+            server_track = self.bot.get_guild(int(server_track))
+        id_ = ctx.author.id
+        basedCount = firebase.get('/' + FIREBASE_NAME + '/basedcount/', '')
+        based_leader = []
+        countss = []
+        for based_users in basedCount.items():
+            #await ctx.send(based_users)
+            user, count = based_users
+            thePerson = self.bot.get_user(int(user))
+            if thePerson in server_track.members:
+                lname = str(thePerson.name) + '#' + str(thePerson.discriminator) + ':' + str(count) + '\n'
+                based_leader.append([count, lname])
+        based_leader = sorted(based_leader)
+        based_leader = based_leader[::-1]
+        leaderboard = "```"
+        for i in based_leader:
+            leaderboard += i[1]
+        await ctx.send(leaderboard + '```')
+
+    @commands.command(name='upvote')
+    async def upvote(self, ctx, server_track="no id"):
+        if server_track == "no id":
+            server_track = ctx.guild
+        else:
+            server_track = self.bot.get_guild(int(server_track))
+        id_ = ctx.author.id
+        basedCount = firebase.get('/' + FIREBASE_NAME + '/upvotecount/', '')
+        based_leader = []
+        countss = []
+        for based_users in basedCount.items():
+            #await ctx.send(based_users)
+            user, count = based_users
+            thePerson = self.bot.get_user(int(user))
+            if thePerson in server_track.members:
+                lname = str(thePerson.name) + '#' + str(thePerson.discriminator) + ':' + str(count) + '\n'
+                based_leader.append([count, lname])
+        based_leader = sorted(based_leader)
+        based_leader = based_leader[::-1]
+        leaderboard = "```"
+        for i in based_leader:
+            leaderboard += i[1]
+        await ctx.send(leaderboard + '```')
+        
+        
+    # ------------ Trades and Bartering ----------------------
     
     @commands.command(name="giveu")
     async def giveu(self, ctx, recip: discord.Member, amount):
@@ -93,7 +145,6 @@ class Based(commands.Cog):
         UpUpdateCountR = firebase.put('/' + FIREBASE_NAME + '/basedcount', str(r_id), upCountR)
         
         await ctx.send(f"Transferred {amount} baseds into {recip.mention}'s balance")
-
 
 
 def setup(bot):
