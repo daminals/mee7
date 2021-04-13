@@ -7,6 +7,8 @@ import sys, os.path
 sys.path.append(os.path.abspath('../'))
 from bot import firebase, FIREBASE_NAME
 
+# TODO: SET UP A STORE FUNCTION. POSSIBLE BUYING OPTIONS: MUTE SOMEONE FOR 5 MINUTES, BOT FEATURE REQUEST
+
 class Based(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -65,6 +67,8 @@ class Based(commands.Cog):
         basedCount = firebase.get('/' + FIREBASE_NAME + '/basedcount/', '')
         based_leader = []
         countss = []
+        downvote = self.bot.get_emoji(776162465842200617)
+        upvote = self.bot.get_emoji(776161705960931399)
         for based_users in basedCount.items():
             #await ctx.send(based_users)
             user, count = based_users
@@ -77,7 +81,10 @@ class Based(commands.Cog):
         leaderboard = "```"
         for i in based_leader:
             leaderboard += i[1]
-        await ctx.send(leaderboard + '```')
+        ud = await ctx.send(leaderboard + '```')
+        await ud.add_reaction(upvote)
+        await ud.add_reaction(downvote)
+
 
     @commands.command(name='upvote')
     async def upvote(self, ctx, server_track="no id"):
@@ -89,6 +96,8 @@ class Based(commands.Cog):
         basedCount = firebase.get('/' + FIREBASE_NAME + '/upvotecount/', '')
         based_leader = []
         countss = []
+        downvote = self.bot.get_emoji(776162465842200617)
+        upvote = self.bot.get_emoji(776161705960931399)
         for based_users in basedCount.items():
             #await ctx.send(based_users)
             user, count = based_users
@@ -101,8 +110,10 @@ class Based(commands.Cog):
         leaderboard = "```"
         for i in based_leader:
             leaderboard += i[1]
-        await ctx.send(leaderboard + '```')
-        
+        bas = await ctx.send(leaderboard + '```')
+        await bas.add_reaction(upvote)
+        await bas.add_reaction(downvote)
+    
         
     # ------------ Trades and Bartering ----------------------
     
