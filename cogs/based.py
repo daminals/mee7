@@ -17,44 +17,6 @@ class Based(commands.Cog):
     async def on_ready(self):
         print('exec.py is active')
         
-    @commands.Cog.listener()
-    async def on_message(self, message):
-        #TODO: ADD A MIRROR IMAGE, AND PUT THE USERNAME AND DISCRIMINATOR ON IT
-        if "mirror mirror on the wall, who is the upvotedest of them all" in message.content.lower():
-            basedCount = firebase.get('/' + FIREBASE_NAME + '/upvotecount/', '')
-            basedest = 0
-            basedestp = ""
-            for based_users in basedCount.items():
-                #await message.channel.send(based_users)
-                user, count = based_users
-                thePerson = self.bot.get_user(int(user))
-                if thePerson in message.guild.members:
-                    if count > basedest:
-                        basedest = count
-                        basedestp = thePerson
-                        #await message.channel.send(f"{basedest}, {basedestp}")
-            await message.reply(f"well of course, ***{basedestp.mention}*** is the most upvoted of them all!")
-            return
-        
-        if "mirror mirror on the wall, who is the basedest of them all" in message.content.lower():
-            basedCount = firebase.get('/' + FIREBASE_NAME + '/basedcount/', '')
-            basedest = 0
-            basedestp = ""
-            for based_users in basedCount.items():
-                #await message.channel.send(based_users)
-                user, count = based_users
-                thePerson = self.bot.get_user(int(user))
-                if thePerson in message.guild.members:
-                    if count > basedest:
-                        basedest = count
-                        basedestp = thePerson
-                        #await message.channel.send(f"{basedest}, {basedestp}")
-            await message.reply(f"well of course, ***{basedestp.mention}*** is the most based of them all!")
-            retribution = firebase.get('/' + FIREBASE_NAME + '/basedcount/' + str(message.author.id), '')
-            retribution = int(retribution) - 1
-            basedStartCount = firebase.put('/' + FIREBASE_NAME + '/basedcount', str(message.author.id), retribution)
-            return
-        
     # ------------- Leaderboard -----------------------------
         
     @commands.command(name='based')
