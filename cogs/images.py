@@ -29,13 +29,18 @@ class Images(commands.Cog):
         
     @commands.Cog.listener()
     async def on_message(self, message):
+        downvote = self.bot.get_emoji(776162465842200617)
+        upvote = self.bot.get_emoji(776161705960931399)
+        
         if message.reference != None: # if message has reference
                 messageid = message.reference.message_id
                 referenced = await message.channel.fetch_message(messageid)
                 if "always has been" in message.content.lower():
                     content = referenced.content
                     alwaysHasBeen(content)
-                    await message.reply(file=discord.File(f"images/{content}.png"))
+                    ud = await message.reply(file=discord.File(f"images/{content}.png"))
+                    await ud.add_reaction(upvote)
+                    await ud.add_reaction(downvote)
                     
             
         
