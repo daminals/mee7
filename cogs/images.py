@@ -6,7 +6,7 @@ from PIL import Image, ImageFilter, ImageFont, ImageDraw
 
 def image_text(img, title_text, x, y, font_size):
     my_image = Image.open(f"static/{img}.png")
-    title_font = ImageFont.truetype('fonts/arial-black.ttf', font_size) # can make further robust and change fonts if needed
+    title_font = ImageFont.truetype('static/fonts/arial-black.ttf', font_size) # can make further robust and change fonts if needed
     image_editable = ImageDraw.Draw(my_image)
     image_editable.text((x,y), title_text, (237, 230, 211), font=title_font)
     my_image.save(f"static/{title_text}.png")
