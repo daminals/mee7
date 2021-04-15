@@ -75,7 +75,6 @@ class Images(commands.Cog):
             return
     
         if "mirror mirror on the wall who" in message.content.lower():
-            await message.reply("prob broken lol")
             server = message.guild
             all_members = server.members
             member = random.choice(all_members)
