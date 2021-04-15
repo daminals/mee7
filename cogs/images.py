@@ -15,7 +15,9 @@ def alwaysHasBeen(title_text):
     # TODO: make location and stuff based on size, as well as breaking up txt into lines
     image_text("ahb",title_text, 400,175,15)
 
-
+def mirror():
+    # TODO: whenever someone says mirror mirror on the wall whos the {} of them all, return a random user on a mirror pic
+    pass
 
 class Images(commands.Cog):
     def __init__(self, bot):
