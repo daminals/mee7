@@ -5,11 +5,11 @@ from discord import Member
 from PIL import Image, ImageFilter, ImageFont, ImageDraw
 
 def image_text(img, title_text, x, y, font_size):
-    my_image = Image.open(f"images/{img}.png")
+    my_image = Image.open(f"static/{img}.png")
     title_font = ImageFont.truetype('fonts/arial-black.ttf', font_size) # can make further robust and change fonts if needed
     image_editable = ImageDraw.Draw(my_image)
     image_editable.text((x,y), title_text, (237, 230, 211), font=title_font)
-    my_image.save(f"images/{title_text}.png")
+    my_image.save(f"static/{title_text}.png")
     
 def alwaysHasBeen(title_text):
     # TODO: make location and stuff based on size, as well as breaking up txt into lines
@@ -38,7 +38,7 @@ class Images(commands.Cog):
                 if "always has been" in message.content.lower():
                     content = referenced.content
                     alwaysHasBeen(content)
-                    ud = await message.reply(file=discord.File(f"images/{content}.png"))
+                    ud = await message.reply(file=discord.File(f"static/{content}.png"))
                     await ud.add_reaction(upvote)
                     await ud.add_reaction(downvote)
                     
