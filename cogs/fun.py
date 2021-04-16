@@ -16,6 +16,7 @@ async def refEm(search, searchbar, message):
     emote_ref = { # when adding an emote to the dictionary, remember to add it to the search list as well
         "based": ['<:based:764140006640975922>'],
         "so true": ['<:sotrue:825473477837848598>'],
+        "sotrue": ['<:sotrue:825473477837848598>'],
         "lmao": ['<:lmao:758747233075200000>'],
         "bruh": ['🗿'],
         "sexy": ["<:lip_biting_2:771376430566342716>", "<:lip_biting:771375731787431956>", "<:NSFW:771375278626832394>"],
@@ -29,7 +30,7 @@ async def refEm(search, searchbar, message):
         for emote in react:
             await message.add_reaction(emote)
 
-search_list = ['based', 'so true', 'lmao', 'bruh', 'sexy', 'ahaha','sad!','mark']
+search_list = ['based', 'so true','sotrue', 'lmao', 'bruh', 'sexy', 'ahaha','sad!','mark']
 # when adding to the search list, remember to add it to the dictionary as well
 
 class Extra(commands.Cog):

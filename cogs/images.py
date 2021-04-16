@@ -34,7 +34,7 @@ class Images(commands.Cog):
         downvote = self.bot.get_emoji(776162465842200617)
         upvote = self.bot.get_emoji(776161705960931399)
         
-        if "mirror mirror on the wall who is the upvotedest of them all" in message.content.lower():
+        if "mirror mirror on the wall whos the upvotedest of them all" in message.content.lower():
             basedCount = firebase.get('/' + FIREBASE_NAME + '/upvotecount/', '')
             basedest = 0
             basedestp = ""
@@ -54,7 +54,7 @@ class Images(commands.Cog):
             await ud.add_reaction(downvote)
             return
                 
-        if "mirror mirror on the wall who is the basedest of them all" in message.content.lower():
+        if "mirror mirror on the wall whos the basedest of them all" in message.content.lower():
             basedCount = firebase.get('/' + FIREBASE_NAME + '/basedcount/', '')
             basedest = 0
             basedestp = ""
