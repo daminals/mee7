@@ -31,6 +31,12 @@ def mirror(user_disc):
 def get_attach(message):
     return message.attachments[0]
 
+#def
+
+
+
+
+
 class Images(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -115,7 +121,10 @@ class Images(commands.Cog):
                 # ------------------ ADD HEADER ------------------------------
                 
                 if "caption:" in message.content.lower():
-                    await get_attach(referenced).save("static/")
+                    caption = message.content[9:].upper()
+                    #await message.channel.send(caption)
+                    await get_attach(referenced).save(f"static/saved/{caption[:5]}.png")
+                    await message.reply(file=discord.File(f"static/saved/{caption[:5]}.png"))
                     pass
                     
             
