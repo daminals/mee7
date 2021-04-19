@@ -173,8 +173,10 @@ class Images(commands.Cog):
                     await get_attach(referenced).save(f"static/created/{caption[:2]}.png")
                     add_top(f"static/created/{caption[:2]}.png",caption)
                     print(Fore.YELLOW + Style.BRIGHT + "sending image ⏳"+ Style.RESET_ALL)
-                    await message.reply(file=discord.File(f"static/created/{caption[:2]}.png"))
+                    ud = await message.reply(file=discord.File(f"static/created/{caption[:2]}.png"))
                     print(Fore.GREEN + Style.BRIGHT + "complete ✔︎ " + Style.RESET_ALL)
+                    await ud.add_reaction(upvote)
+                    await ud.add_reaction(downvote)
                     
             
         
