@@ -3,6 +3,7 @@ import discord,time,random,sys,os
 from discord.ext import commands
 from discord import Member
 from PIL import Image, ImageFilter, ImageFont, ImageDraw
+from random import randint
 
 import colorama
 from colorama import Fore
@@ -83,11 +84,11 @@ def add_top(img,caption):
 
 def deepfry(img):
     current = Image.open(img)
-    current = current.filter(ImageFilter.UnsharpMask())
+    current = current.filter(ImageFilter.UnsharpMask(radius=randint(5,20),percent=randint(105,550),threshold=randint(1,5)))
     layer = Image.new(current.mode, current.size, 'red') # "hue" selection is done by choosing a color...
     current = Image.blend(current, layer, 0.20)
-    current = current.filter(ImageFilter.UnsharpMask(radius=10,percent=200,threshold=5))
-    current = current.filter(ImageFilter.UnsharpMask(radius=2,percent=450,threshold=2))
+    for i in range(2):
+        current = current.filter(ImageFilter.UnsharpMask(radius=randint(5,25),percent=randint(105,550),threshold=randint(1,5)))
     current.save(img)
 
 class Images(commands.Cog):
