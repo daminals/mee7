@@ -187,15 +187,21 @@ class Images(commands.Cog):
                     await ud.add_reaction(downvote)
                     
                 if "deepfry" in message.content.lower():
-                        print(Fore.RED + Style.BRIGHT+"\n---------------\n"+Style.RESET_ALL)
-                        print(Style.BRIGHT+"Call me McDonalds cuz be be deep fryin this mf"+Style.RESET_ALL)
-                        await get_attach(referenced).save(f"static/created/deepfry.png")
+                    print(Fore.RED + Style.BRIGHT+"\n---------------\n"+Style.RESET_ALL)
+                    repeat = 1
+                    if message.content[7:]:
+                        repeat = int(message.content[8:])
+                    print(Style.BRIGHT+f"Call me McDonalds cuz be be deep fryin this mf {repeat} times"+Style.RESET_ALL)
+                    await get_attach(referenced).save(f"static/created/deepfry.png")
+                    for i in range(repeat):
                         deepfry(f"static/created/deepfry.png")
-                        print(Fore.YELLOW + Style.BRIGHT + "sending image ⏳"+ Style.RESET_ALL)
-                        ud = await message.reply(file=discord.File(f"static/created/deepfry.png"))
-                        print(Fore.GREEN + Style.BRIGHT + "complete ✔︎ " + Style.RESET_ALL)
-                        await ud.add_reaction(upvote)
-                        await ud.add_reaction(downvote)
+                        print(Style.DIM+ f"deepfried it {i} times bestie" + Style.RESET_ALL)
+                    ud = await message.reply(file=discord.File(f"static/created/deepfry.png"))
+                    print(Fore.YELLOW + Style.BRIGHT + "sending image ⏳"+ Style.RESET_ALL)
+                    print(Fore.GREEN + Style.BRIGHT + "complete ✔︎ " + Style.RESET_ALL)
+                    await ud.add_reaction(upvote)
+                    await ud.add_reaction(downvote)
+                            
                 
         
     
