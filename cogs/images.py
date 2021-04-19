@@ -192,6 +192,7 @@ class Images(commands.Cog):
                     repeat = 1
                     if message.content[7:]:
                         repeat = int(message.content[8:])
+                        if repeat > 20: repeat = 20
                     print(Style.BRIGHT+f"Call me McDonalds cuz be be deep fryin this mf {repeat} times"+Style.RESET_ALL)
                     await get_attach(referenced).save(f"static/created/deepfry.png")
                     for i in range(repeat):
