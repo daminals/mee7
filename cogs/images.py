@@ -7,6 +7,11 @@ from PIL import Image, ImageFilter, ImageFont, ImageDraw
 sys.path.append(os.path.abspath('../'))
 from bot import firebase, FIREBASE_NAME
 
+
+# ------------------ IMAGE MANIPULATION -------------------
+
+# TODO: VIRGIN VS CHAD MEME TEMPLATE 
+
 def image_text(img, title_text, x, y, font_size,ext="png", color=(237, 230, 211)):
     my_image = Image.open(f"static/{img}.{ext}")
     title_font = ImageFont.truetype('static/fonts/arial-black.ttf', font_size) # can make further robust and change fonts if needed
@@ -21,6 +26,11 @@ def alwaysHasBeen(title_text):
 def mirror(user_disc):
     image_text("mirror", user_disc, 175,175,30,"jpg",(0,0,0))
 
+# ---------------------------------------------------------------
+
+def get_attach(message):
+    return message.attachments[0]
+
 class Images(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -33,6 +43,8 @@ class Images(commands.Cog):
     async def on_message(self, message):
         downvote = self.bot.get_emoji(776162465842200617)
         upvote = self.bot.get_emoji(776161705960931399)
+        
+        # ----------- MIRROR MIRROR --------------------------
         
         if "mirror mirror on the wall whos the upvotedest of them all" in message.content.lower():
             basedCount = firebase.get('/' + FIREBASE_NAME + '/upvotecount/', '')
@@ -85,11 +97,14 @@ class Images(commands.Cog):
             await ud.add_reaction(downvote)
                 
                 
-
+        # -----------------------------------------------------------------
         
         if message.reference != None: # if message has reference
                 messageid = message.reference.message_id
                 referenced = await message.channel.fetch_message(messageid)
+                
+                # --------------- ALWAYS HAS BEEN ---------------------------
+                
                 if "always has been" in message.content.lower():
                     content = referenced.content
                     alwaysHasBeen(content)
@@ -97,7 +112,11 @@ class Images(commands.Cog):
                     await ud.add_reaction(upvote)
                     await ud.add_reaction(downvote)
                     
-        
+                # ------------------ ADD HEADER ------------------------------
+                
+                if "caption:" in message.content.lower():
+                    await get_attach(referenced).save("static/")
+                    pass
                     
             
         
