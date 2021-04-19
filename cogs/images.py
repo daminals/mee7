@@ -12,9 +12,9 @@ from bot import firebase, FIREBASE_NAME
 
 # TODO: VIRGIN VS CHAD MEME TEMPLATE 
 
-def image_text(img, title_text, x, y, font_size,ext="png", color=(237, 230, 211)):
+def image_text(img, title_text, x, y, font_size,ext="png", color=(237, 230, 211), font='static/fonts/arial-black.ttf'):
     my_image = Image.open(f"static/{img}.{ext}")
-    title_font = ImageFont.truetype('static/fonts/arial-black.ttf', font_size) # can make further robust and change fonts if needed
+    title_font = ImageFont.truetype(font, font_size) # can make further robust and change fonts if needed
     image_editable = ImageDraw.Draw(my_image)
     image_editable.text((x,y), title_text, color, font=title_font)
     my_image.save(f"static/created/{title_text}.{ext}")
@@ -31,13 +31,24 @@ def mirror(user_disc):
 def get_attach(message):
     return message.attachments[0]
 
-def add_top(img):
+def add_top(img,caption):
+    print("loading image")
     current = Image.open(img)
     ch = current.height
+    difference = current.height
     cw = current.width
-    ch += 40
-    top = Image.new('RGBA', (ch,cw), 'white')
+    ch *= 1.2
+    ch = int(ch)
+    difference = ch - difference
+    print("making new image")
+    top = Image.new('RGBA', (cw,ch), 'white')
+    top.paste(current, (0,difference))
+    print("captioning")
+    font = ImageFont.truetype('static/fonts/impact.ttf', int(cw*0.07))
+    image_editable = ImageDraw.Draw(top)
+    image_editable.text((cw*0.01,difference/4), caption, (0,0,0), font=font)
     top.save(img)
+    print("image created")
 
 
 
@@ -126,11 +137,15 @@ class Images(commands.Cog):
                 # ------------------ ADD HEADER ------------------------------
                 
                 if "caption:" in message.content.lower():
+                    print("\n\n\n\n")
                     caption = message.content[9:].upper()
+                    print(caption)
                     #await message.channel.send(caption)
-                    await get_attach(referenced).save(f"static/saved/{caption[:5]}.png")
-                    add_top(f"static/saved/{caption[:5]}.png")
-                    await message.reply(file=discord.File(f"static/saved/{caption[:5]}.png"))
+                    print("downloading attachment")
+                    await get_attach(referenced).save(f"static/created/{caption[:2]}.png")
+                    add_top(f"static/created/{caption[:2]}.png",caption)
+                    print("sending image")
+                    await message.reply(file=discord.File(f"static/created/{caption[:2]}.png"))
                     pass
                     
             

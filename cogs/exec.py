@@ -61,7 +61,7 @@ class Exec(commands.Cog):
             await ctx.message.add_reaction("😳")
             await ctx.send('404 Command Not Found')
         else:
-            await ctx.send(f'{error} error occured')
+            await ctx.send(f'{error} error occurred')
 
 
 
