@@ -61,9 +61,9 @@ class Extra(commands.Cog):
             await message.add_reaction("👈")
             return
         if 'ur mom' in message.content.lower():
-            await message.reply('https://tenor.com/view/urmom-your-mom-baldi-defaultdance-gif-19665250')
-            await message.add_reaction("<:lmao:758747233075200000>")
-            return
+            #await message.reply('https://tenor.com/view/urmom-your-mom-baldi-defaultdance-gif-19665250')
+            #await message.add_reaction("<:lmao:758747233075200000>")
+            return #disabled
         if random.randint(0,100) > 94 and message.author == self.bot.get_user(688872433842782293):
             await asyncio.sleep(0.5)
             await message.add_reaction("😻")
