@@ -3,6 +3,9 @@ import discord,time,random
 from discord.ext import commands
 from discord import Member
 
+import colorama
+from colorama import Fore
+from colorama import Style
 
 class Exec(commands.Cog):
     def __init__(self, bot):
@@ -10,7 +13,7 @@ class Exec(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print('exec.py is active')
+        print(Fore.RED + Style.BRIGHT +'exec.py is active' + Style.RESET_ALL)
 
     @commands.command()
     @commands.has_permissions(ban_members=True)

@@ -7,6 +7,10 @@ import sys, os.path
 sys.path.append(os.path.abspath('../'))
 from bot import firebase, FIREBASE_NAME
 
+import colorama
+from colorama import Fore
+from colorama import Style
+
 # TODO: SET UP A STORE FUNCTION. POSSIBLE BUYING OPTIONS: MUTE SOMEONE FOR 5 MINUTES, BOT FEATURE REQUEST
 
 class Based(commands.Cog):
@@ -15,7 +19,7 @@ class Based(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print('exec.py is active')
+        print(Fore.YELLOW + Style.BRIGHT + 'based.py is active'+ Style.RESET_ALL)
         
     # ------------- Leaderboard -----------------------------
         

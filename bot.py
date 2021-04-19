@@ -10,6 +10,10 @@ from cogs.fun import attachm
 pf = ProfanityFilter()
 pf.set_censor("@")
 
+import colorama
+from colorama import Fore
+from colorama import Style
+
 load_dotenv()
 intents = discord.Intents.all()
 from discord.ext import commands, tasks
@@ -98,7 +102,7 @@ def updateTicker():
 
 @bot.event
 async def on_ready():
-    print('bot.py is active')
+    print(Fore.GREEN + Style.BRIGHT + 'bot.py is active' + Style.RESET_ALL)
     servers = list(bot.guilds)
     server_num = len(servers)
     await bot.change_presence(

@@ -2,6 +2,9 @@
 import discord, random, os
 from discord.ext import commands
 
+import colorama
+from colorama import Fore
+from colorama import Style
 
 class LoadCogs(commands.Cog):
     def __init__(self, bot):
@@ -9,7 +12,7 @@ class LoadCogs(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print('loadcogs.py is active')
+        print(Fore.WHITE + Style.BRIGHT  +'loadcogs.py is active' + Style.RESET_ALL)
 
     @commands.Cog.listener()
     async def load(self, ctx):

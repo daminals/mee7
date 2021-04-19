@@ -4,6 +4,10 @@ from discord.ext import commands
 from discord import Member
 from PIL import Image, ImageFilter, ImageFont, ImageDraw
 
+import colorama
+from colorama import Fore
+from colorama import Style
+
 sys.path.append(os.path.abspath('../'))
 from bot import firebase, FIREBASE_NAME
 
@@ -40,13 +44,37 @@ def add_top(img,caption):
     ch *= 1.2
     ch = int(ch)
     difference = ch - difference
-    print("making new image")
+    print(Fore.RED + Style.BRIGHT + "making new image 💄" + Style.RESET_ALL)
     top = Image.new('RGBA', (cw,ch), 'white')
     top.paste(current, (0,difference))
+    
     print("captioning")
-    font = ImageFont.truetype('static/fonts/impact.ttf', int(cw*0.07))
+    font_size = int(cw*0.085)
+    font = ImageFont.truetype('static/fonts/impact.ttf', font_size)
     image_editable = ImageDraw.Draw(top)
-    image_editable.text((cw*0.01,difference/4), caption, (0,0,0), font=font)
+    w,h = image_editable.textsize(caption, font=font)
+    
+    temp = cw / w
+    temp *= 0.85
+    font_size *= temp
+    font_size = int(font_size)
+    font = ImageFont.truetype('static/fonts/impact.ttf', font_size)
+    w,h = image_editable.textsize(caption, font=font)
+    
+    if h > difference:
+        hedit = h
+        ch -= difference
+        hedit += int(difference * 0.25)
+        ch += hedit
+        top = Image.new('RGBA', (cw,ch), 'white')
+        font = ImageFont.truetype('static/fonts/impact.ttf', font_size)
+        w,h = image_editable.textsize(caption, font=font)
+        image_editable = ImageDraw.Draw(top)
+        top.paste(current, (0,hedit))
+        difference = current.height
+        difference = ch - difference
+    
+    image_editable.text(((cw - w)/2,(difference-h)/2), caption, (0,0,0), font=font)
     top.save(img)
     print("image created")
 
@@ -59,7 +87,7 @@ class Images(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print('images.py is active')
+        print(Fore.MAGENTA + Style.BRIGHT  + 'images.py is active' + Style.RESET_ALL)
         
     @commands.Cog.listener()
     async def on_message(self, message):
@@ -137,16 +165,16 @@ class Images(commands.Cog):
                 # ------------------ ADD HEADER ------------------------------
                 
                 if "caption:" in message.content.lower():
-                    print("\n\n\n\n")
+                    print(Fore.RED + Style.BRIGHT+"\n---------------\n"+Style.RESET_ALL)
                     caption = message.content[9:].upper()
                     print(caption)
                     #await message.channel.send(caption)
-                    print("downloading attachment")
+                    print(Fore.YELLOW + Style.BRIGHT + "downloading attachment ⏳" + Style.RESET_ALL)
                     await get_attach(referenced).save(f"static/created/{caption[:2]}.png")
                     add_top(f"static/created/{caption[:2]}.png",caption)
-                    print("sending image")
+                    print(Fore.YELLOW + Style.BRIGHT + "sending image ⏳"+ Style.RESET_ALL)
                     await message.reply(file=discord.File(f"static/created/{caption[:2]}.png"))
-                    pass
+                    print(Fore.GREEN + Style.BRIGHT + "complete ✔︎ " + Style.RESET_ALL)
                     
             
         

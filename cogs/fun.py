@@ -2,6 +2,10 @@
 import discord, random, asyncio
 from discord.ext import commands
 
+import colorama
+from colorama import Fore
+from colorama import Style
+
 emojis = ["😎", "😍", "😂", "🥶", "😱", "😳", "🤢", "🥱", "🤐", "🤯", "🤠", "💀", "🤏", "👀", "🌵", "⚡️", "💦", "🎉",
           "🥳", "😈", "🤡", "✅", "❌", "🤔", "🙄", "🥺", "🤧", "🆗", "💰", "🥰", "😜", "💪", "🤙", "👑", "✈️", "🇺🇸",
           "⛓", "🔪","😕","👺","🐸","💅","🤦‍♀️","💆‍♀️","🧏‍♀️","💁‍♀️","🤒","🤮","🤥","🤤","😬","😰","🤭","🤫","😓","🥺", "<:lip_biting_2:771376430566342716>", "<:sotrue:825473477837848598>", "<:lmao:758747233075200000>"]
@@ -46,7 +50,7 @@ class Extra(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print('fun.py is active')
+        print(Fore.BLUE + Style.BRIGHT + 'fun.py is active' + Style.RESET_ALL)
         
     @commands.Cog.listener()
     async def on_message(self, message):
