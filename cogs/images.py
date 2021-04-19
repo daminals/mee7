@@ -78,8 +78,16 @@ def add_top(img,caption):
     top.save(img)
     print("image created")
 
+# ------------------- DEEP FRY -----------------
 
-
+def deepfry(img):
+    current = Image.open(img)
+    current = current.filter(ImageFilter.UnsharpMask())
+    layer = Image.new('RGB', current.size, 'red') # "hue" selection is done by choosing a color...
+    current = Image.blend(current, layer, 0.25)
+    current = current.filter(ImageFilter.UnsharpMask(radius=10,percent=200,threshold=5))
+    current = current.filter(ImageFilter.UnsharpMask(radius=2,percent=450,threshold=2))
+    current.save(img)
 
 class Images(commands.Cog):
     def __init__(self, bot):
@@ -178,7 +186,17 @@ class Images(commands.Cog):
                     await ud.add_reaction(upvote)
                     await ud.add_reaction(downvote)
                     
-            
+                if "deepfry" in message.content.lower():
+                        print(Fore.RED + Style.BRIGHT+"\n---------------\n"+Style.RESET_ALL)
+                        print(Style.BRIGHT+"Call me McDonalds cuz be be deep fryin this mf"+Style.RESET_ALL)
+                        await get_attach(referenced).save(f"static/created/deepfry.png")
+                        deepfry(f"static/created/deepfry.png")
+                        print(Fore.YELLOW + Style.BRIGHT + "sending image ⏳"+ Style.RESET_ALL)
+                        ud = await message.reply(file=discord.File(f"static/created/deepfry.png"))
+                        print(Fore.GREEN + Style.BRIGHT + "complete ✔︎ " + Style.RESET_ALL)
+                        await ud.add_reaction(upvote)
+                        await ud.add_reaction(downvote)
+                
         
     
         
