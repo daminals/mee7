@@ -31,8 +31,13 @@ def mirror(user_disc):
 def get_attach(message):
     return message.attachments[0]
 
-#def
-
+def add_top(img):
+    current = Image.open(img)
+    ch = current.height
+    cw = current.width
+    ch += 40
+    top = Image.new('RGBA', (ch,cw), 'white')
+    top.save(img)
 
 
 
@@ -124,6 +129,7 @@ class Images(commands.Cog):
                     caption = message.content[9:].upper()
                     #await message.channel.send(caption)
                     await get_attach(referenced).save(f"static/saved/{caption[:5]}.png")
+                    add_top(f"static/saved/{caption[:5]}.png")
                     await message.reply(file=discord.File(f"static/saved/{caption[:5]}.png"))
                     pass
                     
