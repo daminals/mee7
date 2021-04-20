@@ -6,14 +6,15 @@ from PIL import Image, ImageFilter, ImageFont, ImageDraw
 from random import randint, random, uniform
 from shutil import copyfile, rmtree
 
-from cogs.images import get_attach
-
 import colorama
 from colorama import Fore
 from colorama import Style
 
 sys.path.append(os.path.abspath('../'))
 from bot import firebase, FIREBASE_NAME
+
+def get_attach(message):
+    return message.attachments[0]
 
 def deepfry(vid, repeat):
     ff = ffmpy.FFmpeg(
