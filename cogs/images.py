@@ -77,7 +77,7 @@ def add_top(img,caption):
         difference = ch - difference
     
     image_editable.text(((cw - w)/2,(difference-h)/2), caption, (0,0,0), font=font)
-    top.save(img)
+    top.save(img, optimize=True)
     print("image created")
 
 # ------------------- DEEP FRY ------------------
