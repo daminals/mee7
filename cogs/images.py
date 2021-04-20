@@ -198,7 +198,7 @@ class Images(commands.Cog):
                     await get_attach(referenced).save(f"static/created/deepfry.png")
                     for i in range(repeat):
                         deepfry(f"static/created/deepfry.png")
-                        print(Style.DIM+ f"deepfried it {i} times bestie" + Style.RESET_ALL)
+                        print(Style.DIM+ f"deepfried it {i+1} times bestie" + Style.RESET_ALL)
                     ud = await message.reply(file=discord.File(f"static/created/deepfry.png"))
                     print(Fore.YELLOW + Style.BRIGHT + "sending image ⏳"+ Style.RESET_ALL)
                     print(Fore.GREEN + Style.BRIGHT + "complete ✔︎ " + Style.RESET_ALL)
