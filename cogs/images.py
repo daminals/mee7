@@ -80,7 +80,7 @@ def add_top(img,caption):
     top.save(img)
     print("image created")
 
-# ------------------- DEEP FRY -----------------
+# ------------------- DEEP FRY ------------------
 
 def deepfry(img):
     current = Image.open(img)
