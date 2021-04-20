@@ -1,4 +1,4 @@
-#exec.py
+#images.py
 import discord,time,random,sys,os
 from discord.ext import commands
 from discord import Member
@@ -196,11 +196,22 @@ class Images(commands.Cog):
                         if repeat > 20: repeat = 20
                     print(Style.BRIGHT+f"Call me McDonalds cuz be be deep fryin this mf {repeat} times"+Style.RESET_ALL)
                     await get_attach(referenced).save(f"static/created/deepfry.png")
+                    if get_attach(referenced).filename[-4:] in ['.png', '.jpg', 'jpeg','.gif']:
+                        await get_attach(referenced).save(f"static/created/deepfried0.mp4")
+                    else:
+                        print("not a picture")
+                        print(get_attach(referenced).filename[-4:])
+                        return
                     for i in range(repeat):
                         deepfry(f"static/created/deepfry.png")
                         print(Style.DIM+ f"deepfried it {i+1} times bestie" + Style.RESET_ALL)
-                    ud = await message.reply(file=discord.File(f"static/created/deepfry.png"))
                     print(Fore.YELLOW + Style.BRIGHT + "sending image ⏳"+ Style.RESET_ALL)
+                    ud = await message.reply(file=discord.File(f"static/created/deepfry.png"))
+                    os.remove('static/created/deepfry.png')
+                    try: 
+                        os.remove('static/created/deepfry.mp4')
+                    except:
+                        pass
                     print(Fore.GREEN + Style.BRIGHT + "complete ✔︎ " + Style.RESET_ALL)
                     await ud.add_reaction(upvote)
                     await ud.add_reaction(downvote)

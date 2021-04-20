@@ -14,6 +14,7 @@ colorama==0.4.4
 cymem==2.0.3
 discord.py==1.6.0
 dnspython==1.16.0
+ffmpy==0.3.0
 google-api-core==1.21.0
 google-auth==1.18.0
 google-auth-httplib2==0.0.3
@@ -59,6 +60,7 @@ tomlkit==0.5.11
 tqdm==4.46.1
 uritemplate==3.0.1
 urllib3==1.25.8
+utils==1.0.1
 wasabi==0.7.0
 websockets==8.1
 yarl==1.4.2
