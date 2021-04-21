@@ -94,7 +94,7 @@ class Video(commands.Cog):
                         repeat = int(message.content[8:])
                         if repeat > 4: repeat = 4
                     print(Style.BRIGHT+f"Call me McDonalds cuz be be deep fryin this mf {repeat} times"+Style.RESET_ALL)
-                    if get_attach(referenced).filename[-4:] in ['.mov', '.mp4']:
+                    if get_attach(referenced).filename[-4:] in ['.mov', '.mp4','.gif']:
                         await get_attach(referenced).save(f"static/created/deepfried0.mp4")
                     else:
                         print("not a video")

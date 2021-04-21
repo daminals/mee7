@@ -196,7 +196,7 @@ class Images(commands.Cog):
                         if repeat > 20: repeat = 20
                     print(Style.BRIGHT+f"Call me McDonalds cuz be be deep fryin this mf {repeat} times"+Style.RESET_ALL)
                     await get_attach(referenced).save(f"static/created/deepfry.png")
-                    if get_attach(referenced).filename[-4:] in ['.png', '.jpg', 'jpeg','.gif']:
+                    if get_attach(referenced).filename[-4:] in ['.png', '.jpg', 'jpeg']:
                         await get_attach(referenced).save(f"static/created/deepfried0.mp4")
                     else:
                         print("not a picture")
