@@ -1,10 +1,8 @@
 #video.py
-import discord,time,random,sys,os,ffmpy
+import discord,time,random,sys,os,ffmpy,moviepy.editor
 from discord.ext import commands
 from discord import Member
-from PIL import Image, ImageFilter, ImageFont, ImageDraw
 from random import randint, random, uniform
-from shutil import copyfile, rmtree
 
 import colorama
 from colorama import Fore
@@ -106,6 +104,10 @@ class Video(commands.Cog):
                     print(Style.BRIGHT+f"Call me McDonalds cuz be be deep fryin this mf {repeat} times"+Style.RESET_ALL)
                     if get_attach(referenced).filename[-4:] in ['.mov', '.mp4','.gif']:
                         await get_attach(referenced).save(f"static/created/deepfried0.mp4")
+                        deep = moviepy.editor.VideoFileClip("static/created/deepfried0.mp4")
+                        if int(deep.duration) > 60:
+                            await message.reply("sorry bestie, but that video is over a minute. I won't do it")
+                            return
                     else:
                         print("not a video")
                         print(get_attach(referenced).filename[-4:])
