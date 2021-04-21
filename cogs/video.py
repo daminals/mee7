@@ -13,6 +13,12 @@ from colorama import Style
 sys.path.append(os.path.abspath('../'))
 from bot import firebase, FIREBASE_NAME
 
+def clutter():
+    for i in os.listdir('static/created'):
+        if not i=='.gitkeep':
+            os.remove('static/created/' + i)
+
+
 def get_attach(message):
     return message.attachments[0]
 
@@ -27,24 +33,24 @@ def create_audio_args(repeat):
     if repeat >= 1:
         return ""
     else:
-        return '-af ' + 'bass=g=18,treble=g=2,volume=10dB,' + 'acompressor=threshold=0.02:makeup=15,acontrast=79 '
+        return '-af ' + 'bass=g=18,treble=g=2,volume=10dB,' + 'acompressor=threshold=0.02:makeup=7,acontrast=45 '
 
 def create_filter_args():
     """
     Create randomized "deep fried" visual filters
     returns command line args for ffmpeg's filter flag -vf
     """
-    saturation = uniform(2, 3)
-    contrast = uniform(.5, 2)
-    noise = uniform(30, 60)
-    gamma_r = uniform(1, 3)
-    gamma_g = uniform(1, 3)
-    gamma_b = uniform(1, 3)
+    saturation = uniform(2, 5)
+    contrast = uniform(1, 8)
+    noise = uniform(5, 20)
+    gamma_r = uniform(2, 3)
+    gamma_g = uniform(1, 2)
+    gamma_b = uniform(1, 1.5)
 
     eq_str = 'eq=saturation={}:contrast={}'.format(saturation, contrast)
     eq_str += ':gamma_r={}:gamma_g={}:gamma_b={}'.format(gamma_r, gamma_g, gamma_b)
     noise_str = 'noise=alls={}:allf=t'.format(noise)
-    sharpness_str = 'unsharp=5:5:1.25:5:5:1'
+    sharpness_str = 'unsharp=3:3:1.3:3:3:1.5'
 
     return '-vf ' + eq_str + ',' + noise_str + ',' + sharpness_str
 
@@ -56,6 +62,7 @@ class Video(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         print(Fore.BLUE + Style.BRIGHT  + 'video.py is active' + Style.RESET_ALL)
+        clutter()
         
     @commands.Cog.listener()
     async def on_message(self, message):
@@ -106,9 +113,7 @@ class Video(commands.Cog):
                     print(Fore.YELLOW + Style.BRIGHT + "sending video ⏳"+ Style.RESET_ALL)
                     ud = await message.reply(file=discord.File(f"static/created/deepfried{repeat}.mp4"))
                     try:
-                        for i in range(repeat+1):
-                            os.remove(f'static/created/deepfried{i}.mp4')
-                        os.remove('static/created/deepfry.png')
+                        clutter()
                     except:
                         print(Fore.RED + "could not remove videos" + Style.RESET_ALL)
                     print(Fore.GREEN + Style.BRIGHT + "complete ✔︎ " + Style.RESET_ALL)
