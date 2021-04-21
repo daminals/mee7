@@ -12,6 +12,7 @@ from colorama import Style
 sys.path.append(os.path.abspath('../'))
 from bot import firebase, FIREBASE_NAME
 
+' ffmpeg -i allaj.mp4 -vf "pad=iw:ih+90:iw/2:90:color=white" allajj.mp4 '
 
 # ------------------ IMAGE MANIPULATION -------------------
 

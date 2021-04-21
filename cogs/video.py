@@ -17,6 +17,17 @@ def clutter():
             os.remove('static/created/' + i)
 
 
+def add_top(vid, caption, w, h):
+    newH = h * 1.35
+    placementH = h*0.35
+    font_size = h * 0.15
+    ff = ffmpy.FFmpeg(
+     inputs={vid: None},
+     outputs={f'static/created/captioned.mp4': f'-vf "pad=iw:{newH}:iw/2:{placementH}:color=white",drawtext="fontfile=static/fonts/impact.ttf":text="{caption}":fontcolor=black:fontsize={font_size}:x=(w-tw)/2:y={placementH/2} -vcodec libx264 -codec:a copy -crf 45'}
+    )
+    ff.run()
+
+
 def get_attach(message):
     return message.attachments[0]
 
@@ -71,21 +82,45 @@ class Video(commands.Cog):
             
                     
                 # ------------------ ADD HEADER ------------------------------
-                """
+                
                 if "caption:" in message.content.lower():
                     print(Fore.RED + Style.BRIGHT+"\n---------------\n"+Style.RESET_ALL)
+                    clutter()
                     caption = message.content[9:].upper()
                     print(caption)
                     #await message.channel.send(caption)
                     print(Fore.YELLOW + Style.BRIGHT + "downloading attachment ⏳" + Style.RESET_ALL)
-                    await get_attach(referenced).save(f"static/created/{caption[:2]}.png")
-                    add_top(f"static/created/{caption[:2]}.png",caption)
-                    print(Fore.YELLOW + Style.BRIGHT + "sending image ⏳"+ Style.RESET_ALL)
-                    ud = await message.reply(file=discord.File(f"static/created/{caption[:2]}.png"))
+                    try:
+                        if get_attach(referenced).filename[-4:] in ['.mov', '.mp4','.gif']:
+                            await get_attach(referenced).save(f"static/created/{caption[:2]}.mp4")
+                        else:
+                            print("not a video")
+                            print(get_attach(referenced).filename[-4:])
+                            return
+                    except:
+                        print(referenced.content)
+                        if("https://" in referenced.content):
+                            message_list = referenced.content.split(" ")
+                            matches = [image for image in message_list if "https://" in image]
+                            matches = matches[0]
+                            r = requests.get(matches, stream = True)
+                            with open(f"static/created/{caption[:2]}.mp4",'wb') as out_file:
+                                for chunk in r.iter_content(chunk_size = 1024*1024): 
+                                    if chunk: 
+                                        out_file.write(chunk) 
+                    
+                    captionClip = moviepy.editor.VideoFileClip(f"static/created/{caption[:2]}.mp4")
+                    if int(captionClip.duration) > 60:
+                        await message.reply("sorry bestie, but that video is over a minute. I won't do it")
+                        return     
+                    add_top(f"static/created/{caption[:2]}.mp4",caption,captionClip.w,captionClip.h)
+                    print(Fore.YELLOW + Style.BRIGHT + "sending video ⏳"+ Style.RESET_ALL)
+                    ud = await message.reply(file=discord.File(f"static/created/captioned.mp4"))
                     print(Fore.GREEN + Style.BRIGHT + "complete ✔︎ " + Style.RESET_ALL)
                     await ud.add_reaction(upvote)
                     await ud.add_reaction(downvote)
-                """
+                    clutter()
+                    
                 # ------------------ DEEP FRYER ------------------------------
 
                 if "deepfry" in message.content.lower():
