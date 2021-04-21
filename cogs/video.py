@@ -28,10 +28,7 @@ def deepfry(vid, repeat):
     ff.run()
 
 def create_audio_args(repeat):
-    if repeat >= 1:
-        return ""
-    else:
-        return '-af ' + 'bass=g=18,treble=g=2,volume=10dB,' + 'acompressor=threshold=0.02:makeup=9,acontrast=45 '
+    return '-af ' + 'bass=g=18,treble=g=2,volume=10dB,' + 'acompressor=threshold=0.02:makeup=5,acontrast=45 '
 
 def create_filter_args():
     """
