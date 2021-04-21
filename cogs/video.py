@@ -57,7 +57,6 @@ class Video(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         print(Fore.BLUE + Style.BRIGHT  + 'video.py is active' + Style.RESET_ALL)
-        clutter()
         
     @commands.Cog.listener()
     async def on_message(self, message):
@@ -90,6 +89,7 @@ class Video(commands.Cog):
                 # ------------------ DEEP FRYER ------------------------------
 
                 if "deepfry" in message.content.lower():
+                    clutter()
                     print(Fore.RED + Style.BRIGHT+"\n---------------\n"+Style.RESET_ALL)
                     repeat = 1
                     if message.content[7:]:
@@ -108,9 +108,9 @@ class Video(commands.Cog):
                             return
                     except:
                         print(referenced.content)
-                        if("https://cdn.discordapp.com" in referenced.content):
+                        if("https://" in referenced.content):
                             message_list = referenced.content.split(" ")
-                            matches = [image for image in message_list if "https://cdn.discordapp.com" in image]
+                            matches = [image for image in message_list if "https://" in image]
                             matches = matches[0]
                             r = requests.get(matches, stream = True)
                             with open("static/created/deepfried0.mp4",'wb') as out_file:
