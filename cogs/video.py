@@ -1,5 +1,5 @@
 #video.py
-import discord,time,random,sys,os,ffmpy,moviepy.editor
+import discord,time,random,sys,os,ffmpy,moviepy.editor, requests, shutil
 from discord.ext import commands
 from discord import Member
 from random import randint, random, uniform
@@ -102,16 +102,29 @@ class Video(commands.Cog):
                         except:
                             print("repeat failed. only once lol")
                     print(Style.BRIGHT+f"Call me McDonalds cuz be be deep fryin this mf {repeat} times"+Style.RESET_ALL)
-                    if get_attach(referenced).filename[-4:] in ['.mov', '.mp4','.gif']:
-                        await get_attach(referenced).save(f"static/created/deepfried0.mp4")
-                        deep = moviepy.editor.VideoFileClip("static/created/deepfried0.mp4")
-                        if int(deep.duration) > 60:
-                            await message.reply("sorry bestie, but that video is over a minute. I won't do it")
+                    try:
+                        if get_attach(referenced).filename[-4:] in ['.mov', '.mp4','.gif']:
+                            await get_attach(referenced).save(f"static/created/deepfried0.mp4")
+                        else:
+                            print("not a video")
+                            print(get_attach(referenced).filename[-4:])
                             return
-                    else:
-                        print("not a video")
-                        print(get_attach(referenced).filename[-4:])
-                        return
+                    except:
+                        print(referenced.content)
+                        if("https://cdn.discordapp.com" in referenced.content):
+                            message_list = referenced.content.split(" ")
+                            matches = [image for image in message_list if "https://cdn.discordapp.com" in image]
+                            matches = matches[0]
+                            r = requests.get(matches, stream = True)
+                            with open("static/created/deepfried0.mp4",'wb') as out_file:
+                                for chunk in r.iter_content(chunk_size = 1024*1024): 
+                                    if chunk: 
+                                        out_file.write(chunk) 
+                    
+                    deep = moviepy.editor.VideoFileClip("static/created/deepfried0.mp4")
+                    if int(deep.duration) > 60:
+                        await message.reply("sorry bestie, but that video is over a minute. I won't do it")
+                        return     
                     for i in range(repeat):
                         deepfry(f"static/created/deepfried{i}.mp4", i)
                         print(Style.DIM+ f"deepfried it {i+1} times bestie" + Style.RESET_ALL)

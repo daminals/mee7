@@ -1,5 +1,5 @@
 #images.py
-import discord,time,random,sys,os, requests,shutil,re
+import discord,time,random,sys,os, requests,shutil
 from discord.ext import commands
 from discord import Member
 from PIL import Image, ImageFilter, ImageFont, ImageDraw
@@ -35,6 +35,11 @@ def mirror(user_disc):
 
 def get_attach(message):
     return message.attachments[0]
+
+def clutter():
+    for i in os.listdir('static/created'):
+        if not i=='.gitkeep':
+            os.remove('static/created/' + i)
 
 def add_top(img,caption):
     print("loading image")
@@ -195,9 +200,8 @@ class Images(commands.Cog):
                         if repeat > 20: repeat = 20
                     print(Style.BRIGHT+f"Call me McDonalds cuz be be deep fryin this mf {repeat} times"+Style.RESET_ALL)
                     try:
-                        await get_attach(referenced).save(f"static/created/deepfry.png")
                         if get_attach(referenced).filename[-4:] in ['.png', '.jpg', 'jpeg']:
-                            await get_attach(referenced).save(f"static/created/deepfried0.mp4")
+                            await get_attach(referenced).save(f"static/created/deepfry.png")
                         else:
                             print("not a picture")
                             print(get_attach(referenced).filename[-4:])
@@ -217,11 +221,7 @@ class Images(commands.Cog):
                         print(Style.DIM+ f"deepfried it {i+1} times bestie" + Style.RESET_ALL)
                     print(Fore.YELLOW + Style.BRIGHT + "sending image ⏳"+ Style.RESET_ALL)
                     ud = await message.reply(file=discord.File(f"static/created/deepfry.png"))
-                    os.remove('static/created/deepfry.png')
-                    try: 
-                        os.remove('static/created/deepfry.mp4')
-                    except:
-                        pass
+                    clutter()
                     print(Fore.GREEN + Style.BRIGHT + "complete ✔︎ " + Style.RESET_ALL)
                     await ud.add_reaction(upvote)
                     await ud.add_reaction(downvote)
