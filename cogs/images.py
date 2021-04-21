@@ -208,9 +208,9 @@ class Images(commands.Cog):
                             return
                     except:
                         print(referenced.content)
-                        if("https://cdn.discordapp.com" in referenced.content):
+                        if("https://" in referenced.content):
                             message_list = referenced.content.split(" ")
-                            matches = [image for image in message_list if "https://cdn.discordapp.com" in image]
+                            matches = [image for image in message_list if "https://" in image]
                             matches = matches[0]
                             r = requests.get(matches, stream = True)
                             with open("static/created/deepfry.png",'wb') as out_file:
