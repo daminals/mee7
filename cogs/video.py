@@ -33,7 +33,7 @@ def create_audio_args(repeat):
     if repeat >= 1:
         return ""
     else:
-        return '-af ' + 'bass=g=18,treble=g=2,volume=10dB,' + 'acompressor=threshold=0.02:makeup=7,acontrast=45 '
+        return '-af ' + 'bass=g=18,treble=g=2,volume=10dB,' + 'acompressor=threshold=0.02:makeup=9,acontrast=45 '
 
 def create_filter_args():
     """
@@ -98,8 +98,11 @@ class Video(commands.Cog):
                     print(Fore.RED + Style.BRIGHT+"\n---------------\n"+Style.RESET_ALL)
                     repeat = 1
                     if message.content[7:]:
-                        repeat = int(message.content[8:])
-                        if repeat > 4: repeat = 4
+                        try:
+                            repeat = int(message.content[8:])
+                            if repeat > 4: repeat = 4
+                        except:
+                            print("repeat failed. only once lol")
                     print(Style.BRIGHT+f"Call me McDonalds cuz be be deep fryin this mf {repeat} times"+Style.RESET_ALL)
                     if get_attach(referenced).filename[-4:] in ['.mov', '.mp4','.gif']:
                         await get_attach(referenced).save(f"static/created/deepfried0.mp4")
