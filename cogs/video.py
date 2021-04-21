@@ -3,6 +3,7 @@ import discord,time,random,sys,os,ffmpy,moviepy.editor, requests, shutil
 from discord.ext import commands
 from discord import Member
 from random import randint, random, uniform
+from PIL import ImageFont
 
 import colorama
 from colorama import Fore
@@ -17,15 +18,37 @@ def clutter():
             os.remove('static/created/' + i)
 
 
-def add_top(vid, caption, w, h):
+def add_top(vid, caption, Fw, h):
     newH = h * 1.35
     placementH = h*0.35
-    font_size = h * 0.15
+    font_size = int(h * 0.1)
+    caption = fit_text(caption, Fw, font_size)
+    
     ff = ffmpy.FFmpeg(
      inputs={vid: None},
-     outputs={f'static/created/captioned.mp4': f'-vf "pad=iw:{newH}:iw/2:{placementH}:color=white",drawtext="fontfile=static/fonts/impact.ttf":text="{caption}":fontcolor=black:fontsize={font_size}:x=(w-tw)/2:y={(h-placementH)/2} -vcodec libx264 -codec:a copy -crf 35'}
+     outputs={f'static/created/captioned.mp4': f'-vf "pad=iw:{newH}:iw/2:{placementH}:color=white",drawtext="fontfile=static/fonts/impact.ttf":text="{caption}":fontcolor=black:fontsize={font_size}:x=(w-tw)/2:y=({placementH}-th)/2:fix_bounds=true:line_spacing=3 -vcodec libx264 -codec:a copy -crf 35'}
     )
     ff.run()
+
+def fit_text(string: str, frame_width, font_size):
+    split_line = [x.strip() for x in string.split()]
+    translation_font = ImageFont.truetype("static/fonts/impact.ttf", size=font_size, encoding="unic")
+    lines = ""
+    w = 0
+    line_num = 0
+    line = ""
+    for word in split_line:
+        # Make a test
+        w, _ = translation_font.getsize(" ".join([line, word]))
+        # If it exceeds the frame width, add a new line
+        if w > (frame_width - (2 * 4)):  # Leave 6px margin on each side
+            lines += line.strip() + "\n"
+            line = ""
+
+        line += word + " "
+
+    lines += line.strip()  # Append leftover words
+    return lines
 
 
 def get_attach(message):
