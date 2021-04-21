@@ -23,7 +23,7 @@ def add_top(vid, caption, w, h):
     font_size = h * 0.15
     ff = ffmpy.FFmpeg(
      inputs={vid: None},
-     outputs={f'static/created/captioned.mp4': f'-vf "pad=iw:{newH}:iw/2:{placementH}:color=white",drawtext="fontfile=static/fonts/impact.ttf":text="{caption}":fontcolor=black:fontsize={font_size}:x=(w-tw)/2:y={placementH/2} -vcodec libx264 -codec:a copy -crf 45'}
+     outputs={f'static/created/captioned.mp4': f'-vf "pad=iw:{newH}:iw/2:{placementH}:color=white",drawtext="fontfile=static/fonts/impact.ttf":text="{caption}":fontcolor=black:fontsize={font_size}:x=(w-tw)/2:y={(h-placementH)/2} -vcodec libx264 -codec:a copy -crf 45'}
     )
     ff.run()
 
