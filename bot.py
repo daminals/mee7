@@ -18,7 +18,7 @@ load_dotenv()
 intents = discord.Intents.all()
 from discord.ext import commands, tasks
 
-bot = commands.Bot(command_prefix='!', intents=intents)
+bot = commands.Bot(command_prefix='?', intents=intents)
 TOKEN = os.environ.get('TOKEN', 3)
 FIREBASE = os.environ.get('FIREBASE', 3)
 FIREBASE_NAME = os.environ.get('FIREBASE_NAME', 3)
@@ -108,7 +108,8 @@ async def on_ready():
     await bot.change_presence(
         # "you all code"
         # "myself break over & over"
-        activity=discord.Activity(type=discord.ActivityType.watching, name=f"over {server_num} servers"))
+        #activity=discord.Activity(type=discord.ActivityType.watching, name=f"over {server_num} servers"))
+        activity=discord.Activity(type=discord.ActivityType.watching, name=f"USE ? FOR COMMANDS NOW"))
 
 
 # ----------------------------------------------------

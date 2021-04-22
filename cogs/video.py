@@ -18,7 +18,7 @@ def clutter():
             os.remove('static/created/' + i)
 
 
-def add_top(vid, caption, Fw, h):
+def add_topv(vid, caption, Fw, h):
     newH = h * 1.35
     placementH = h*0.35
     font_size = int(h * 0.1)
@@ -54,7 +54,7 @@ def fit_text(string: str, frame_width, font_size):
 def get_attach(message):
     return message.attachments[0]
 
-def deepfry(vid, repeat):
+def deepfryv(vid, repeat):
     ff = ffmpy.FFmpeg(
      inputs={vid: None},
      outputs={f'static/created/deepfried{repeat+1}.mp4': f'{create_filter_args()} {create_audio_args(repeat)}-vcodec libx264 -crf 45'}
@@ -102,102 +102,7 @@ class Video(commands.Cog):
         if message.reference != None: # if message has reference
                 messageid = message.reference.message_id
                 referenced = await message.channel.fetch_message(messageid)
-            
-                    
-                # ------------------ ADD HEADER ------------------------------
-                
-                if "caption:" in message.content.lower():
-                    print(Fore.RED + Style.BRIGHT+"\n---------------\n"+Style.RESET_ALL)
-                    clutter()
-                    caption = message.content[9:].upper()
-                    print(caption)
-                    #await message.channel.send(caption)
-                    print(Fore.YELLOW + Style.BRIGHT + "downloading attachment ⏳" + Style.RESET_ALL)
-                    try:
-                        if get_attach(referenced).filename[-4:] in ['.mov', '.mp4','.gif']:
-                            await get_attach(referenced).save(f"static/created/{caption[:2]}.mp4")
-                        else:
-                            print("not a video")
-                            print(get_attach(referenced).filename[-4:])
-                            return
-                    except:
-                        print(referenced.content)
-                        if("https://" in referenced.content):
-                            message_list = referenced.content.split(" ")
-                            matches = [image for image in message_list if "https://" in image]
-                            matches = matches[0]
-                            r = requests.get(matches, stream = True)
-                            with open(f"static/created/{caption[:2]}.mp4",'wb') as out_file:
-                                for chunk in r.iter_content(chunk_size = 1024*1024): 
-                                    if chunk: 
-                                        out_file.write(chunk) 
-                    
-                    captionClip = moviepy.editor.VideoFileClip(f"static/created/{caption[:2]}.mp4")
-                    if int(captionClip.duration) > 60:
-                        await message.reply("sorry bestie, but that video is over a minute. I won't do it")
-                        return     
-                    add_top(f"static/created/{caption[:2]}.mp4",caption,captionClip.w,captionClip.h)
-                    print(Fore.YELLOW + Style.BRIGHT + "sending video ⏳"+ Style.RESET_ALL)
-                    ud = await message.reply(file=discord.File(f"static/created/captioned.mp4"))
-                    print(Fore.GREEN + Style.BRIGHT + "complete ✔︎ " + Style.RESET_ALL)
-                    await ud.add_reaction(upvote)
-                    await ud.add_reaction(downvote)
-                    clutter()
-                    
-                # ------------------ DEEP FRYER ------------------------------
-
-                if "deepfry" in message.content.lower():
-                    clutter()
-                    print(Fore.RED + Style.BRIGHT+"\n---------------\n"+Style.RESET_ALL)
-                    repeat = 1
-                    if message.content[7:]:
-                        try:
-                            repeat = int(message.content[8:])
-                            if repeat > 4: repeat = 4
-                        except:
-                            print("repeat failed. only once lol")
-                    print(Style.BRIGHT+f"Call me McDonalds cuz be be deep fryin this mf {repeat} times"+Style.RESET_ALL)
-                    try:
-                        if get_attach(referenced).filename[-4:] in ['.mov', '.mp4','.gif']:
-                            await get_attach(referenced).save(f"static/created/deepfried0.mp4")
-                        else:
-                            print("not a video")
-                            print(get_attach(referenced).filename[-4:])
-                            return
-                    except:
-                        print(referenced.content)
-                        if("https://" in referenced.content):
-                            message_list = referenced.content.split(" ")
-                            matches = [image for image in message_list if "https://" in image]
-                            matches = matches[0]
-                            r = requests.get(matches, stream = True)
-                            with open("static/created/deepfried0.mp4",'wb') as out_file:
-                                for chunk in r.iter_content(chunk_size = 1024*1024): 
-                                    if chunk: 
-                                        out_file.write(chunk) 
-                    
-                    deep = moviepy.editor.VideoFileClip("static/created/deepfried0.mp4")
-                    if int(deep.duration) > 60:
-                        await message.reply("sorry bestie, but that video is over a minute. I won't do it")
-                        return     
-                    for i in range(repeat):
-                        deepfry(f"static/created/deepfried{i}.mp4", i)
-                        print(Style.DIM+ f"deepfried it {i+1} times bestie" + Style.RESET_ALL)
-                    print(Fore.YELLOW + Style.BRIGHT + "sending video ⏳"+ Style.RESET_ALL)
-                    ud = await message.reply(file=discord.File(f"static/created/deepfried{repeat}.mp4"))
-                    try:
-                        clutter()
-                    except:
-                        print(Fore.RED + "could not remove videos" + Style.RESET_ALL)
-                    print(Fore.GREEN + Style.BRIGHT + "complete ✔︎ " + Style.RESET_ALL)
-                    await ud.add_reaction(upvote)
-                    await ud.add_reaction(downvote)
                             
-                
-        
-        
-            
-        
         
         
 def setup(bot):

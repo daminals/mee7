@@ -5,14 +5,24 @@ from discord import Member
 from PIL import Image, ImageFilter, ImageFont, ImageDraw
 from random import randint
 
-import colorama
+import colorama, moviepy
 from colorama import Fore
 from colorama import Style
+
+from cogs.video import *
 
 sys.path.append(os.path.abspath('../'))
 from bot import firebase, FIREBASE_NAME
 
-' ffmpeg -i allaj.mp4 -vf "pad=iw:ih+90:iw/2:90:color=white" allajj.mp4 '
+
+def download_link(referenced, filename):
+    if("https://" in referenced.content):
+        message_list = referenced.content.split(" ")
+    matches = [image for image in message_list if "https://" in image]
+    matches = matches[0]
+    r = requests.get(matches, stream = True)
+    with open(f"static/created/{filename}",'wb') as out_file:
+        shutil.copyfileobj(r.raw, out_file)
 
 # ------------------ IMAGE MANIPULATION -------------------
 
@@ -99,6 +109,8 @@ def deepfry(img):
 class Images(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.upvote = self.bot.get_emoji(776161705960931399)
+        self.downvote = self.bot.get_emoji(776162465842200617)
 
     @commands.Cog.listener()
     async def on_ready(self):
@@ -176,61 +188,119 @@ class Images(commands.Cog):
                     ud = await message.reply(file=discord.File(f"static/created/{content}.png"))
                     await ud.add_reaction(upvote)
                     await ud.add_reaction(downvote)
-                    
-                # ------------------ ADD HEADER ------------------------------
-                
-                if "caption:" in message.content.lower():
-                    print(Fore.RED + Style.BRIGHT+"\n---------------\n"+Style.RESET_ALL)
-                    caption = message.content[9:].upper()
-                    print(caption)
-                    #await message.channel.send(caption)
-                    print(Fore.YELLOW + Style.BRIGHT + "downloading attachment ⏳" + Style.RESET_ALL)
-                    await get_attach(referenced).save(f"static/created/{caption[:2]}.png")
-                    add_top(f"static/created/{caption[:2]}.png",caption)
-                    print(Fore.YELLOW + Style.BRIGHT + "sending image ⏳"+ Style.RESET_ALL)
-                    ud = await message.reply(file=discord.File(f"static/created/{caption[:2]}.png"))
-                    print(Fore.GREEN + Style.BRIGHT + "complete ✔︎ " + Style.RESET_ALL)
-                    await ud.add_reaction(upvote)
-                    await ud.add_reaction(downvote)
-                    
-                if "deepfry" in message.content.lower():
-                    print(Fore.RED + Style.BRIGHT+"\n---------------\n"+Style.RESET_ALL)
-                    repeat = 1
-                    if message.content[7:]:
-                        repeat = int(message.content[8:])
-                        if repeat > 20: repeat = 20
-                    print(Style.BRIGHT+f"Call me McDonalds cuz be be deep fryin this mf {repeat} times"+Style.RESET_ALL)
-                    try:
-                        if get_attach(referenced).filename[-4:] in ['.png', '.jpg', 'jpeg']:
-                            await get_attach(referenced).save(f"static/created/deepfry.png")
-                        else:
-                            print("not a picture")
-                            print(get_attach(referenced).filename[-4:])
-                            return
-                    except:
-                        print(referenced.content)
-                        if("https://" in referenced.content):
-                            message_list = referenced.content.split(" ")
-                            matches = [image for image in message_list if "https://" in image]
-                            matches = matches[0]
-                            r = requests.get(matches, stream = True)
-                            with open("static/created/deepfry.png",'wb') as out_file:
-                                shutil.copyfileobj(r.raw, out_file)
 
-                    for i in range(repeat):
-                        deepfry(f"static/created/deepfry.png")
-                        print(Style.DIM+ f"deepfried it {i+1} times bestie" + Style.RESET_ALL)
-                    print(Fore.YELLOW + Style.BRIGHT + "sending image ⏳"+ Style.RESET_ALL)
-                    ud = await message.reply(file=discord.File(f"static/created/deepfry.png"))
-                    clutter()
-                    print(Fore.GREEN + Style.BRIGHT + "complete ✔︎ " + Style.RESET_ALL)
-                    await ud.add_reaction(upvote)
-                    await ud.add_reaction(downvote)
-                            
-                
         
+    @commands.command()
+    async def av(self,ctx, member: Member=None):
+        if member == None:
+            member = ctx.author
+        await ctx.channel.send(member.avatar_url)
     
+    @commands.command()
+    async def deepfry(self, ctx, *, repeat: int=1):
+        # upvote / downvote emotes
+        downvote = self.bot.get_emoji(776162465842200617)
+        upvote = self.bot.get_emoji(776161705960931399)
         
+        if ctx.message.reference != None: 
+            messageid = ctx.message.reference.message_id
+            referenced = await ctx.channel.fetch_message(messageid)
+        else:
+            await ctx.send("Sorry! No reference!")
+            return
+        
+        print(Fore.RED + Style.BRIGHT+"\n---------------\n"+Style.RESET_ALL)
+        print(Style.BRIGHT+f"Call me McDonalds cuz be be deep fryin this mf {repeat} times"+Style.RESET_ALL)
+        
+        # check -- is this an image? can I download it?
+        if get_attach(referenced).filename[-4:] in ['.png', '.jpg', 'jpeg']:
+            if repeat > 20: repeat = 20 # set 20 as the deepfry limit
+            try:
+                await get_attach(referenced).save(f"static/created/deepfry.png")
+            except:
+                print(referenced.content)
+                download_link(referenced, 'deepfry.png')
+
+            for i in range(repeat):
+                deepfry(f"static/created/deepfry.png")
+                print(Style.DIM+ f"deepfried it {i+1} times bestie" + Style.RESET_ALL)
+            print(Fore.YELLOW + Style.BRIGHT + "sending image ⏳"+ Style.RESET_ALL)
+            ud = await ctx.reply(file=discord.File(f"static/created/deepfry.png"))
+            print(Fore.GREEN + Style.BRIGHT + "complete ✔︎ " + Style.RESET_ALL)
+        elif get_attach(referenced).filename[-4:] in ['.mov', '.mp4','.gif']:
+            if repeat > 4: repeat = 4 # set 20 as the deepfry limit
+            try:
+                await get_attach(referenced).save(f"static/created/deepfried0.mp4")
+            except:
+                print(referenced.content)
+                download_link(referenced, "deepfried0.mp4")
+            
+            deep = moviepy.editor.VideoFileClip("static/created/deepfried0.mp4")
+            if int(deep.duration) > 60:
+                await ctx.reply("sorry bestie, but that video is over a minute. I won't do it")
+                return     
+            for i in range(repeat):
+                deepfryv(f"static/created/deepfried{i}.mp4", i)
+                print(Style.DIM+ f"deepfried it {i+1} times bestie" + Style.RESET_ALL)
+            print(Fore.YELLOW + Style.BRIGHT + "sending video ⏳"+ Style.RESET_ALL)
+            ud = await ctx.reply(file=discord.File(f"static/created/deepfried{repeat}.mp4"))
+            print(Fore.GREEN + Style.BRIGHT + "complete ✔︎ " + Style.RESET_ALL)
+        await ud.add_reaction(upvote)
+        await ud.add_reaction(downvote)
+        clutter()
+
+
+        
+    @commands.command()
+    async def caption(self, ctx, *, caption):
+        # upvote / downvote emotes
+        downvote = self.bot.get_emoji(776162465842200617)
+        upvote = self.bot.get_emoji(776161705960931399)
+        
+        # if message has reference -- no reference no caption
+        if ctx.message.reference != None: 
+            messageid = ctx.message.reference.message_id
+            referenced = await ctx.channel.fetch_message(messageid)
+        else:
+            await ctx.send("Sorry! No reference!")
+            return
+        
+        # logging
+        print(Fore.RED + Style.BRIGHT+"\n---------------\n"+Style.RESET_ALL)
+        print(Fore.YELLOW + Style.BRIGHT + "downloading attachment ⏳" + Style.RESET_ALL)
+        
+        # is this an image? can I download it?
+        if get_attach(referenced).filename[-4:] in ['.png', '.jpg', 'jpeg']:
+            try:
+                await get_attach(referenced).save(f"static/created/{caption[:2]}.png")                
+            except:
+                print(referenced.content)
+                download_link(referenced,f"{caption[:2]}.png")
+            # ok, caption this image lol
+            add_top(f"static/created/{caption[:2]}.png",caption)
+            print(Fore.YELLOW + Style.BRIGHT + "sending image ⏳"+ Style.RESET_ALL)
+            ud = await ctx.reply(file=discord.File(f"static/created/{caption[:2]}.png"))
+            print(Fore.GREEN + Style.BRIGHT + "complete ✔︎ " + Style.RESET_ALL)
+      
+        # is this a video? can I download it?    
+        elif get_attach(referenced).filename[-4:] in ['.mov', '.mp4','.gif']:
+            try: 
+                await get_attach(referenced).save(f"static/created/{caption[:2]}.mp4")
+            except:
+                print(referenced.content)
+                download_link(referenced, f"{caption[:2]}.mp4")
+            captionClip = moviepy.editor.VideoFileClip(f"static/created/{caption[:2]}.mp4")
+            if int(captionClip.duration) > 60:
+                await ctx.reply("sorry bestie, but that video is over a minute. I won't do it")
+                return     
+            add_topv(f"static/created/{caption[:2]}.mp4",caption,captionClip.w,captionClip.h)
+            print(Fore.YELLOW + Style.BRIGHT + "sending video ⏳"+ Style.RESET_ALL)
+            ud = await ctx.reply(file=discord.File(f"static/created/captioned.mp4"))
+            print(Fore.GREEN + Style.BRIGHT + "complete ✔︎ " + Style.RESET_ALL)
+        await ud.add_reaction(upvote)
+        await ud.add_reaction(downvote)
+        clutter()
+
         
         
 def setup(bot):

@@ -78,6 +78,8 @@ class Extra(commands.Cog):
                     await refEm(search, message, message)
                 if random.randint(0, 100) > 97:
                     await message.add_reaction(random.choice(emojis))
+        if message.content.startswith("!"):
+            await message.channel.send("MY PREFIX IS ? NOW. PLEASE USE ? INSTEAD OF ! FOR COMMANDS")
 
 
                 
@@ -101,7 +103,7 @@ class Extra(commands.Cog):
     # ----------------------------------------------------
     @commands.command()
     async def stank(self,ctx):
-        await ctx.channel.send('lmao imagine not having a !stank command')
+        await ctx.channel.send('lmao imagine not having a ?stank command')
         
     @commands.command()
     async def dm(self,ctx, userid, *, message):    
