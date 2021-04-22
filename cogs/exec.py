@@ -54,7 +54,6 @@ class Exec(commands.Cog):
                 await ctx.send(f'Unbanned {user.mention}')
                 return
 
-
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
@@ -65,7 +64,6 @@ class Exec(commands.Cog):
             await ctx.send('404 Command Not Found')
         else:
             await ctx.send(f'{error} error occurred')
-
 
 
 

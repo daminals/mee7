@@ -24,6 +24,22 @@ def download_link(referenced, filename):
     with open(f"static/created/{filename}",'wb') as out_file:
         shutil.copyfileobj(r.raw, out_file)
 
+def is_image(referenced):
+    img_ext =  ['.png', '.jpg', 'jpeg']
+    try: 
+        is_image = get_attach(referenced).filename[-4:] in img_ext
+    except:
+        is_image = any(ext in referenced.content for ext in img_ext)
+    return is_image
+
+def is_video(referenced):
+    vid_ext =  ['.mp4', '.mov', '.gif']
+    try: 
+        is_vid = get_attach(referenced).filename[-4:] in vid_ext
+    except:
+        is_vid = any(ext in referenced.content for ext in vid_ext)
+    return is_vid
+
 # ------------------ IMAGE MANIPULATION -------------------
 
 # TODO: VIRGIN VS CHAD MEME TEMPLATE 
@@ -97,7 +113,7 @@ def add_top(img,caption):
 
 # ------------------- DEEP FRY ------------------
 
-def deepfry(img):
+def deepfryi(img):
     current = Image.open(img)
     current = current.filter(ImageFilter.UnsharpMask(radius=randint(5,20),percent=randint(105,550),threshold=randint(1,5)))
     layer = Image.new(current.mode, current.size, 'red') # "hue" selection is done by choosing a color...
@@ -213,7 +229,7 @@ class Images(commands.Cog):
         print(Style.BRIGHT+f"Call me McDonalds cuz be be deep fryin this mf {repeat} times"+Style.RESET_ALL)
         
         # check -- is this an image? can I download it?
-        if get_attach(referenced).filename[-4:] in ['.png', '.jpg', 'jpeg']:
+        if is_image(referenced):
             if repeat > 20: repeat = 20 # set 20 as the deepfry limit
             try:
                 await get_attach(referenced).save(f"static/created/deepfry.png")
@@ -222,13 +238,13 @@ class Images(commands.Cog):
                 download_link(referenced, 'deepfry.png')
 
             for i in range(repeat):
-                deepfry(f"static/created/deepfry.png")
+                deepfryi(f"static/created/deepfry.png")
                 print(Style.DIM+ f"deepfried it {i+1} times bestie" + Style.RESET_ALL)
             print(Fore.YELLOW + Style.BRIGHT + "sending image ⏳"+ Style.RESET_ALL)
             ud = await ctx.reply(file=discord.File(f"static/created/deepfry.png"))
             print(Fore.GREEN + Style.BRIGHT + "complete ✔︎ " + Style.RESET_ALL)
-        elif get_attach(referenced).filename[-4:] in ['.mov', '.mp4','.gif']:
-            if repeat > 4: repeat = 4 # set 20 as the deepfry limit
+        elif is_video(referenced):
+            if repeat > 4: repeat = 4 # set 4 as the deepfry limit
             try:
                 await get_attach(referenced).save(f"static/created/deepfried0.mp4")
             except:
@@ -270,7 +286,7 @@ class Images(commands.Cog):
         print(Fore.YELLOW + Style.BRIGHT + "downloading attachment ⏳" + Style.RESET_ALL)
         
         # is this an image? can I download it?
-        if get_attach(referenced).filename[-4:] in ['.png', '.jpg', 'jpeg']:
+        if is_image(referenced):
             try:
                 await get_attach(referenced).save(f"static/created/{caption[:2]}.png")                
             except:
@@ -283,7 +299,7 @@ class Images(commands.Cog):
             print(Fore.GREEN + Style.BRIGHT + "complete ✔︎ " + Style.RESET_ALL)
       
         # is this a video? can I download it?    
-        elif get_attach(referenced).filename[-4:] in ['.mov', '.mp4','.gif']:
+        elif is_video(referenced):
             try: 
                 await get_attach(referenced).save(f"static/created/{caption[:2]}.mp4")
             except:
