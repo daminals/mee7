@@ -1,6 +1,7 @@
 # fun.py
 import discord, random, asyncio
 from discord.ext import commands
+from discord import Member
 
 import colorama
 from colorama import Fore
@@ -104,6 +105,12 @@ class Extra(commands.Cog):
     @commands.command()
     async def stank(self,ctx):
         await ctx.channel.send('lmao imagine not having a ?stank command')
+    
+    @commands.command()
+    async def age(self,ctx, member: Member=None):
+        if member is None:
+            member = ctx.author
+        await ctx.channel.send(f'**THIS COMMAND IS STILL IN BETA** \n\naccount created: {member.created_at} \nserver joined: {member.joined_at} \nstatus: {member.status}')
         
     @commands.command()
     async def dm(self,ctx, userid, *, message):    
