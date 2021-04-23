@@ -267,7 +267,7 @@ class Images(commands.Cog):
 
 
         
-    @commands.command()
+    @commands.command(aliases=["caption:"])
     async def caption(self, ctx, *, caption):
         # upvote / downvote emotes
         downvote = self.bot.get_emoji(776162465842200617)
