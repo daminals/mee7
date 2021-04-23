@@ -107,7 +107,7 @@ class Extra(commands.Cog):
         await ctx.channel.send('lmao imagine not having a ?stank command')
     
     @commands.command()
-    async def age(self,ctx, member: Member=None):
+    async def info(self,ctx, member: Member=None):
         if member is None:
             member = ctx.author
         await ctx.channel.send(f'**__THIS COMMAND IS STILL IN BETA__** \n\naccount created: {member.created_at} \nserver joined: {member.joined_at} \nstatus: {member.activity}')
