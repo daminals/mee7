@@ -101,7 +101,7 @@ class Extra(commands.Cog):
 
 
 
-    # ----------------------------------------------------
+    # -----------------------------------------------------
     @commands.command()
     async def stank(self,ctx):
         await ctx.channel.send('lmao imagine not having a ?stank command')
