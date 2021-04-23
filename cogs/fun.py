@@ -110,7 +110,7 @@ class Extra(commands.Cog):
     async def age(self,ctx, member: Member=None):
         if member is None:
             member = ctx.author
-        await ctx.channel.send(f'**THIS COMMAND IS STILL IN BETA** \n\naccount created: {member.created_at} \nserver joined: {member.joined_at} \nstatus: {member.status}')
+        await ctx.channel.send(f'**THIS COMMAND IS STILL IN BETA** \n\naccount created: {member.created_at} \nserver joined: {member.joined_at} \nstatus: {member.activity}')
         
     @commands.command()
     async def dm(self,ctx, userid, *, message):    
