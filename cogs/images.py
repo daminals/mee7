@@ -261,8 +261,11 @@ class Images(commands.Cog):
             print(Fore.YELLOW + Style.BRIGHT + "sending video ⏳"+ Style.RESET_ALL)
             ud = await ctx.reply(file=discord.File(f"static/created/deepfried{repeat}.mp4"))
             print(Fore.GREEN + Style.BRIGHT + "complete ✔︎ " + Style.RESET_ALL)
-        await ud.add_reaction(upvote)
-        await ud.add_reaction(downvote)
+        try:
+            await ud.add_reaction(upvote)
+            await ud.add_reaction(downvote)
+        except:
+            await ctx.message.reply("no")
         clutter()
 
 
@@ -313,8 +316,11 @@ class Images(commands.Cog):
             print(Fore.YELLOW + Style.BRIGHT + "sending video ⏳"+ Style.RESET_ALL)
             ud = await ctx.reply(file=discord.File(f"static/created/captioned.mp4"))
             print(Fore.GREEN + Style.BRIGHT + "complete ✔︎ " + Style.RESET_ALL)
-        await ud.add_reaction(upvote)
-        await ud.add_reaction(downvote)
+        try:
+            await ud.add_reaction(upvote)
+            await ud.add_reaction(downvote)
+        except:
+            await ctx.message.reply("no")
         clutter()
 
         
