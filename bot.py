@@ -200,7 +200,7 @@ async def on_message(message):
         attachm = ""
         for i in message.attachments:
             attachm += str(i.proxy_url) + "\n"
-        await me.send(f'{message.author} [{message.author.id}]: {message.content} {attachm}')
+        await me.send(f'**{message.author}** _[{message.author.id}]_: {message.content} {attachm}')
     if ('happy birthday' in message.content.lower()) and not (message.author.bot):
         await message.channel.send('Happy Birthday! 🥳🎉')
     if 'i agree' in message.content.lower():
