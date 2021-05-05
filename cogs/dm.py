@@ -110,6 +110,7 @@ class DMH(commands.Cog):
             reddit.check()
             if reddit.size <= 8 * (1 << 20):
                 file_ = reddit.download()
+                print(Fore.GREEN + Style.BRIGHT+ "sending....."+ Style.RESET_ALL)
                 ud = await ctx.reply(file=discord.File(file_))
             else:
                 print('Size > 8 MB')
@@ -123,8 +124,10 @@ class DMH(commands.Cog):
                     inputs={file_: None},
                     outputs={f'static/download/downloaded.mp4': f'-vcodec libx264 -crf 30'}
                     )
+                print(Style.DIM)
                 ff.run()
-                print("sending.....")
+                print(Style.RESET_ALL)
+                print(Fore.GREEN + Style.BRIGHT+ "sending....."+ Style.RESET_ALL)
                 ud = await ctx.send(file=discord.File('static/download/downloaded.mp4'))
         else:
             with youtube_dl.YoutubeDL(ydl_opts) as ydl:
@@ -140,11 +143,13 @@ class DMH(commands.Cog):
                     inputs={"static/download/downloaded.mp4": None},
                     outputs={f'static/download/downloaded2.mp4': f'-vcodec libx264 -crf 30'}
                         )
+                    print(Style.DIM)
                     ff.run()
-                    print("sending.....")
+                    print(Style.RESET_ALL)
+                    print(Fore.GREEN + Style.BRIGHT+ "sending....."+ Style.RESET_ALL)
                     ud = await ctx.reply(file=discord.File('static/download/downloaded2.mp4'))
                 else:
-                    print("sending.....")
+                    print(Fore.GREEN + Style.BRIGHT + "sending....." + Style.RESET_ALL)
                     ud = await ctx.reply(file=discord.File('static/download/downloaded.mp4'))
         await ud.add_reaction(upvote)
         await ud.add_reaction(downvote)
