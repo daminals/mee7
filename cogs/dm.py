@@ -65,29 +65,6 @@ class DMH(commands.Cog):
                 attachmnt += "\n" + str(i.proxy_url)
             await me.send(f'**{message.author}** _[{message.author.id}]_: {message.content} {attachmnt}')
             
-            if "reddit" in message.content and message.author == me:  
-                reddit = Downloader(max_q=True)
-                reddit.path = 'static/download'
-                reddit.url = message.content
-                reddit.check()
-                if reddit.size <= 8 * (1 << 20):
-                    file_ = reddit.download()
-                    await channel_.send(file=discord.File(file_))
-                else:
-                    print('Size > 8 MB')
-                    file_ = reddit.download()
-                    depth = moviepy.editor.VideoFileClip(file_)
-                    if int(depth.duration) > 210:
-                        await message.reply("sorry, over 210 seconds. Too long")
-                        clutter()
-                        return
-                    ff = ffmpy.FFmpeg(
-                        inputs={file_: None},
-                        outputs={f'static/download/downloaded.mp4': f'-vcodec libx264 -crf 30'}
-                        )
-                    ff.run()
-                    await channel_.send(file=discord.File('static/download/downloaded.mp4'))
-                clutter()
         if message.channel == self.bot.get_channel(826470109618634783):
             await self.download(await self.bot.get_context(message), message.content)
 
