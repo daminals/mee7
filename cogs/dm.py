@@ -27,6 +27,7 @@ def download_link(link, filename):
         shutil.copyfileobj(r.raw, out_file)
 
 
+
 def clutter():
     for i in os.listdir('static/download'):
         if not i=='.gitkeep':
@@ -72,19 +73,21 @@ class DMH(commands.Cog):
         mee7 = self.bot.get_user(706194661366300753)
         channel_ = self.bot.get_channel(825724511831457813)
         
-        if message.guild == None and message.author != mee7:
-            attachmnt = ""
-            for i in message.attachments:
-                attachmnt += "\n" + str(i.proxy_url)
-            await me.send(f'**{message.author}** _[{message.author.id}]_: {message.content} {attachmnt}')
-            
-        if message.channel == self.bot.get_channel(826470109618634783):
-            try:
-                await self.download(await self.bot.get_context(message), message.content)
-            except:
-                await message.reply("Sorry champ, couldn't download")
-                return
-            await message.delete() #no longer need this link lol
+        if message. author != mee7:
+            if message.guild == None:
+                attachmnt = ""
+                for i in message.attachments:
+                    attachmnt += "\n" + str(i.proxy_url)
+                await me.send(f'**{message.author}** _[{message.author.id}]_: {message.content} {attachmnt}')
+
+            if message.channel == self.bot.get_channel(826470109618634783):
+                if message.attachments == []:
+                    try:
+                        await self.download(await self.bot.get_context(message), message.content)
+                    except:
+                        await message.reply("Sorry champ, couldn't download")
+                        return
+                    await message.delete() #no longer need this link lol
             
     @commands.command()
     async def download(self, ctx, link=None):
