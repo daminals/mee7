@@ -24,6 +24,7 @@ FIREBASE = os.environ.get('FIREBASE', 3)
 FIREBASE_NAME = os.environ.get('FIREBASE_NAME', 3)
 firebase = firebase.FirebaseApplication(FIREBASE, None)
 bot.remove_command('help')
+# TODO: charades game
 
 MEE6_garbolist = ['STFU ABOUT MEE6 WE DON\'T MENTION THAT DISGUSTING PIECE OF MALWARE HERE',
                   'Ok why are we STILL talking about that defective bot',

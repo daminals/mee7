@@ -11,7 +11,7 @@ from colorama import Style
 
 sys.path.append(os.path.abspath('../'))
 from bot import firebase, FIREBASE_NAME
-
+# TODO: Stitch two images together
 
 def add_topv(vid, caption, Fw, h):
     newH = h * 1.35
