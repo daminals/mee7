@@ -108,8 +108,8 @@ async def on_ready():
     await bot.change_presence(
         # "you all code"
         # "myself break over & over"
-        #activity=discord.Activity(type=discord.ActivityType.watching, name=f"over {server_num} servers"))
-        activity=discord.Activity(type=discord.ActivityType.watching, name=f"USE ? FOR COMMANDS NOW"))
+        activity=discord.Activity(type=discord.ActivityType.watching, name=f"over {server_num} servers"))
+        #activity=discord.Activity(type=discord.ActivityType.watching, name=f"USE ? FOR COMMANDS NOW"))
 
 
 # ----------------------------------------------------
@@ -137,7 +137,6 @@ async def on_guild_remove(server):
 
 # PAYLOAD REACTION --> BASED AND UPVOTE TRACKER
 # ----------------------------------------------------
-
 @bot.event
 async def on_raw_reaction_add(payload):
     # NOTE: We have to use the raw function because on the regular reaction, it
@@ -368,17 +367,17 @@ def embedBarter():
 def embedMedia():
     embed = discord.Embed(title='Help: Media', description="MEE7 tracks all of your baseds and upvotes across every server that it is on. reply to someone with 'based' to increase their count, and react with the based and upvote reactions",
                         color=discord.Color(6345206))
-    embed.add_field(name='**upvote**',
-                    value='Sends leaderboard of all upvotes',
+    embed.add_field(name='**caption {link/attachment}**',
+                    value='Captions media. Works for replies',
                     inline=False)
-    embed.add_field(name='**based**',
-                    value='Sends leaderboard of all baseds',
+    embed.add_field(name='**deepfry {number} {link/attachment}**',
+                    value='deepfries media {number} times. Works for replies.',
                     inline=False)
-    embed.add_field(name='**giveb _{@person}_ _{number}_**',
-                    value='Gives _{@person}_ _{number}_ more upvotes',
+    embed.add_field(name='**download {link}**',
+                    value='Downloads a video from a link (reddit/youtube/etc). Works for replies',
                     inline=False)
-    embed.add_field(name='***giveb _{@person}_ _{number}_***', 
-                    value='Gives _{@person}_ _{number}_ more baseds',
+    embed.add_field(name='***convert {link/attachment}***', 
+                    value='Converts a video/link to an MP4 attachment. Works for replies',
                     inline=False)
     embed.add_field(name='**MORE COMING SOON!**', 
                     value='in development', 
@@ -389,6 +388,12 @@ def embedMisc():
                         color=discord.Color(6345206))
     embed.add_field(name='**flip**',
                     value='Flips a coin',
+                    inline=False)
+    embed.add_field(name='**info {@person}**',
+                    value='Sends {@person}\'s account info IN DEVELOPMENT',
+                    inline=False)
+    embed.add_field(name='**av {@person{**',
+                    value='Sends {@person}\'s avatar',
                     inline=False)
     return embed
 def embedWhat():

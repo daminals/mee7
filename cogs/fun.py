@@ -81,8 +81,8 @@ class Extra(commands.Cog):
                     await refEm(search, message, message)
                 if random.randint(0, 100) > 97:
                     await message.add_reaction(random.choice(emojis))
-        if message.content.startswith("!"):
-            await message.reply("MY PREFIX IS ? NOW. PLEASE USE ? INSTEAD OF ! FOR COMMANDS")
+        #if message.content.startswith("!"):
+        #    await message.reply("MY PREFIX IS ? NOW. PLEASE USE ? INSTEAD OF ! FOR COMMANDS")
 
 
                 
