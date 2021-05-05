@@ -101,6 +101,16 @@ def is_video(referenced):
         is_vid = any(ext in referenced.content for ext in vid_ext)
     return is_vid
 
+def converting_ffmpy(inputV, outputV):
+    ff = ffmpy.FFmpeg(
+    inputs={inputV: None},
+    outputs={outputV: f'-vcodec libx264 -crf 30'}
+        )
+    print(Style.DIM)
+    ff.run()
+    print(Style.RESET_ALL)
+
+
 # ------------------ IMAGE MANIPULATION -------------------
 
 # TODO: VIRGIN VS CHAD MEME TEMPLATE 
@@ -283,8 +293,11 @@ class Images(commands.Cog):
             messageid = ctx.message.reference.message_id
             referenced = await ctx.channel.fetch_message(messageid)
         else:
-            await ctx.send("Sorry! No reference!")
-            return
+            if get_attach(ctx.message) != 0:
+                referenced = ctx.message
+            else:
+                await ctx.reply("Sorry! No reference!")
+                return
         
         print(Fore.RED + Style.BRIGHT+"\n---------------\n"+Style.RESET_ALL)
         print(Style.BRIGHT+f"Call me McDonalds cuz be be deep fryin this mf {repeat} times"+Style.RESET_ALL)
@@ -342,8 +355,11 @@ class Images(commands.Cog):
             messageid = ctx.message.reference.message_id
             referenced = await ctx.channel.fetch_message(messageid)
         else:
-            await ctx.send("Sorry! No reference!")
-            return
+            if get_attach(ctx.message) != 0:
+                referenced = ctx.message
+            else:
+                await ctx.reply("Sorry! No reference!")
+                return
         
         # logging
         print(Fore.RED + Style.BRIGHT+"\n---------------\n"+Style.RESET_ALL)
@@ -384,7 +400,44 @@ class Images(commands.Cog):
             await ctx.message.reply("no")
         clutter()
 
-        
+    @commands.command(name="convert")
+    async def convert(self, ctx, *, link=None):
+        # upvote / downvote emotes
+        downvote = self.bot.get_emoji(776162465842200617)
+        upvote = self.bot.get_emoji(776161705960931399)
+        clutter()
+        # logging
+        print(Fore.RED + Style.BRIGHT+"\n---------------\n"+Style.RESET_ALL)
+        print(Fore.YELLOW + Style.BRIGHT + "downloading attachment ⏳" + Style.RESET_ALL)
+        # download
+        if ctx.message.reference is not None: 
+            messageid = ctx.message.reference.message_id
+            referenced = await ctx.channel.fetch_message(messageid)
+            try:
+                await get_attach(referenced).save(f"static/created/convert.mp4")
+            except: 
+                download_link(referenced, f"convert.mp4")
+        else:
+            if link is None:
+                await get_attach(ctx.message).save(f"static/created/convert.mp4")
+            else:
+                download_link(ctx.message, "convert.mp4")
+                
+        captionClip = moviepy.editor.VideoFileClip(f"static/created/convert.mp4")
+        if int(captionClip.duration) > 210:
+            await ctx.reply("sorry bestie, but that video is over 210 seconds. I won't do it")
+            return     
+        converting_ffmpy("static/created/convert.mp4", "static/created/converted.mp4")
+        print(Fore.YELLOW + Style.BRIGHT + "sending video ⏳"+ Style.RESET_ALL)
+        ud = await ctx.reply(file=discord.File(f"static/created/converted.mp4"))
+        print(Fore.GREEN + Style.BRIGHT + "complete ✔︎ " + Style.RESET_ALL)
+        try:
+            await ud.add_reaction(upvote)
+            await ud.add_reaction(downvote)
+        except:
+            await ctx.message.reply("no")
+        clutter()
+
         
 def setup(bot):
     bot.add_cog(Images(bot))

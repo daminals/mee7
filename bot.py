@@ -365,13 +365,13 @@ def embedBarter():
                     inline=False)
     return embed
 def embedMedia():
-    embed = discord.Embed(title='Help: Media', description="MEE7 tracks all of your baseds and upvotes across every server that it is on. reply to someone with 'based' to increase their count, and react with the based and upvote reactions",
+    embed = discord.Embed(title='Help: Media', description="MEE7 tracks all of your baseds and upvotes across every server that it is on. reply to someone with 'based' to increase their count, and react with the based and upvote reactions \nWorks for replies means you can reply to a message with an attachment/link and it will still work",
                         color=discord.Color(6345206))
-    embed.add_field(name='**caption {link/attachment}**',
+    embed.add_field(name='**caption {attachment}**',
                     value='Captions media. Works for replies',
                     inline=False)
-    embed.add_field(name='**deepfry {number} {link/attachment}**',
-                    value='deepfries media {number} times. Works for replies.',
+    embed.add_field(name='**deepfry {number} {attachment}**',
+                    value='deepfries media {number} times. Works for replies',
                     inline=False)
     embed.add_field(name='**download {link}**',
                     value='Downloads a video from a link (reddit/youtube/etc). Works for replies',
