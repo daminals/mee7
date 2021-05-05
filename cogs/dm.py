@@ -23,7 +23,7 @@ def download_link(link, filename):
     matches = [image for image in message_list if "https://" in image]
     matches = matches[0]
     r = requests.get(matches, stream = True)
-    with open(f"static/created/{filename}",'wb') as out_file:
+    with open(f"static/download/{filename}",'wb') as out_file:
         shutil.copyfileobj(r.raw, out_file)
 
 
@@ -96,7 +96,7 @@ class DMH(commands.Cog):
                 return
         
         if is_image(link):
-            download_link(link, "static/download/downloaded.png")
+            download_link(link, "downloaded.png")
             await ctx.reply(file=discord.File("static/download/downloaded.png"))
             clutter()
             return
