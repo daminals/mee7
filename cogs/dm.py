@@ -57,6 +57,7 @@ class DMH(commands.Cog):
         MEE6 = self.bot.get_user(159985870458322944)
         me = self.bot.get_user(577668867380477962)
         mee7 = self.bot.get_user(706194661366300753)
+        channel_ = self.bot.get_channel(825724511831457813)
         
         if message.guild == None and message.author != mee7:
             attachmnt = ""
@@ -64,14 +65,14 @@ class DMH(commands.Cog):
                 attachmnt += "\n" + str(i.proxy_url)
             await me.send(f'**{message.author}** _[{message.author.id}]_: {message.content} {attachmnt}')
             
-            if "http" in message.content:  
+            if "reddit" in message.content and message.author == me:  
                 reddit = Downloader(max_q=True)
                 reddit.path = 'static/download'
                 reddit.url = message.content
                 reddit.check()
                 if reddit.size <= 8 * (1 << 20):
                     file_ = reddit.download()
-                    await message.author.send(file=discord.File(file_))
+                    await channel_.send(file=discord.File(file_))
                 else:
                     print('Size > 8 MB')
                     file_ = reddit.download()
@@ -85,7 +86,7 @@ class DMH(commands.Cog):
                         outputs={f'static/download/downloaded.mp4': f'-vcodec libx264 -crf 30'}
                         )
                     ff.run()
-                    await message.reply(file=discord.File('static/download/downloaded.mp4'))
+                    await channel_.send(file=discord.File('static/download/downloaded.mp4'))
                 clutter()
 
     @commands.command()
