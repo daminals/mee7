@@ -79,8 +79,13 @@ class DMH(commands.Cog):
             await me.send(f'**{message.author}** _[{message.author.id}]_: {message.content} {attachmnt}')
             
         if message.channel == self.bot.get_channel(826470109618634783):
-            await self.download(await self.bot.get_context(message), message.content)
-
+            try:
+                await self.download(await self.bot.get_context(message), message.content)
+            except:
+                await message.reply("Sorry champ, couldn't download")
+                return
+            await message.delete() #no longer need this link lol
+            
     @commands.command()
     async def download(self, ctx, link=None):
         clutter()
