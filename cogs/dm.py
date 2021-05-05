@@ -73,7 +73,7 @@ class DMH(commands.Cog):
         mee7 = self.bot.get_user(706194661366300753)
         channel_ = self.bot.get_channel(825724511831457813)
         
-        if message. author != mee7:
+        if message.author != mee7:
             if message.guild == None:
                 attachmnt = ""
                 for i in message.attachments:
@@ -83,11 +83,13 @@ class DMH(commands.Cog):
             if message.channel == self.bot.get_channel(826470109618634783):
                 if message.attachments == []:
                     try:
+                        clutter()
                         await self.download(await self.bot.get_context(message), message.content)
                     except:
                         await message.reply("Sorry champ, couldn't download")
                         return
                     await message.delete() #no longer need this link lol
+                    clutter()
             
     @commands.command()
     async def download(self, ctx, link=None):
