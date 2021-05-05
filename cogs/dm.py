@@ -94,8 +94,8 @@ class DMH(commands.Cog):
         downvote = self.bot.get_emoji(776162465842200617)
         upvote = self.bot.get_emoji(776161705960931399)
         if link is None:
-            if ctx.reference != None: # if message has reference
-                messageid = ctx.reference.message_id
+            if ctx.message.reference != None: # if message has reference
+                messageid = ctx.message.reference.message_id
                 referenced = await ctx.channel.fetch_message(messageid)
                 link = referenced.content
             else:
