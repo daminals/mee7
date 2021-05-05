@@ -75,6 +75,11 @@ class DMH(commands.Cog):
                 else:
                     print('Size > 8 MB')
                     file_ = reddit.download()
+                    depth = moviepy.editor.VideoFileClip(file_)
+                    if int(depth.duration) > 210:
+                        await message.reply("sorry, over 210 seconds. Too long")
+                        clutter()
+                        return
                     ff = ffmpy.FFmpeg(
                         inputs={file_: None},
                         outputs={f'static/download/downloaded.mp4': f'-vcodec libx264 -crf 30'}
@@ -98,6 +103,11 @@ class DMH(commands.Cog):
             else:
                 print('Size > 8 MB')
                 file_ = reddit.download()
+                depth = moviepy.editor.VideoFileClip(file_)
+                if int(depth.duration) > 210:
+                    await ctx.reply("sorry, over 210 seconds. Too long")
+                    clutter()
+                    return
                 ff = ffmpy.FFmpeg(
                     inputs={file_: None},
                     outputs={f'static/download/downloaded.mp4': f'-vcodec libx264 -crf 30'}
@@ -109,14 +119,19 @@ class DMH(commands.Cog):
             with youtube_dl.YoutubeDL(ydl_opts) as ydl:
                 ydl.download([link])
                 video_s = TinyTag.get("static/download/downloaded.mp4")
+                depth = moviepy.editor.VideoFileClip("static/download/downloaded.mp4")
                 if video_s.filesize > 8000000:
+                    if int(depth.duration) > 210:
+                        await ctx.reply("sorry, over 210 seconds. Too long")
+                        clutter()
+                        return
                     ff = ffmpy.FFmpeg(
                     inputs={"static/download/downloaded.mp4": None},
                     outputs={f'static/download/downloaded2.mp4': f'-vcodec libx264 -crf 30'}
                         )
                     ff.run()
                     print("sending.....")
-                    await ctx.send(file=discord.File('static/download/downloaded2.mp4'))    
+                    await ctx.reply(file=discord.File('static/download/downloaded2.mp4'))    
                 else:
                     print("sending.....")
                     await ctx.reply(file=discord.File('static/download/downloaded.mp4'))
