@@ -69,7 +69,7 @@ class Exec(commands.Cog):
             await ctx.message.add_reaction("😳")
             return
         else:
-            await ctx.send(f'{error} error occurred')
+            print(Fore.RED + Style.BRIGHT + f'{error} error occurred' + Style.RESET_ALL)
 
 
 
