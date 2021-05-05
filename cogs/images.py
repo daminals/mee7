@@ -86,7 +86,7 @@ def download_link(referenced, filename):
         shutil.copyfileobj(r.raw, out_file)
 
 def is_image(referenced):
-    img_ext =  ['.png', '.jpg', 'jpeg']
+    img_ext =  ['.png', '.jpg', 'jpeg', 'webp']
     try: 
         is_image = get_attach(referenced).filename[-4:] in img_ext
     except:
