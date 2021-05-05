@@ -110,7 +110,7 @@ class DMH(commands.Cog):
             reddit.check()
             if reddit.size <= 8 * (1 << 20):
                 file_ = reddit.download()
-                await ctx.reply(file=discord.File(file_))
+                ud = await ctx.reply(file=discord.File(file_))
             else:
                 print('Size > 8 MB')
                 file_ = reddit.download()
@@ -142,7 +142,7 @@ class DMH(commands.Cog):
                         )
                     ff.run()
                     print("sending.....")
-                    await ctx.reply(file=discord.File('static/download/downloaded2.mp4'))    
+                    ud = await ctx.reply(file=discord.File('static/download/downloaded2.mp4'))
                 else:
                     print("sending.....")
                     ud = await ctx.reply(file=discord.File('static/download/downloaded.mp4'))
