@@ -69,4 +69,5 @@ utils==1.0.1
 wasabi==0.7.0
 websockets==8.1
 yarl==1.4.2
+youtube-dl==2021.4.26
 zipp==3.1.0

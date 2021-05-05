@@ -196,11 +196,6 @@ async def on_message(message):
         for i in range(20):
             await message.channel.send("thanon")
     """
-    if message.guild == None:
-        attachmnt = ""
-        for i in message.attachments:
-            attachmnt += str(i.proxy_url) + "\n"
-        await me.send(f'**{message.author}** _[{message.author.id}]_: {message.content} {attachmnt}')
     if ('happy birthday' in message.content.lower()) and not (message.author.bot):
         await message.channel.send('Happy Birthday! 🥳🎉')
     if 'i agree' in message.content.lower():
