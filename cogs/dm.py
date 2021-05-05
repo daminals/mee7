@@ -88,9 +88,12 @@ class DMH(commands.Cog):
                     ff.run()
                     await channel_.send(file=discord.File('static/download/downloaded.mp4'))
                 clutter()
+        if message.channel == self.bot.get_channel(826470109618634783):
+            await self.download(await self.bot.get_context(message), message.content)
 
     @commands.command()
     async def download(self, ctx, link=None):
+        clutter()
         downvote = self.bot.get_emoji(776162465842200617)
         upvote = self.bot.get_emoji(776161705960931399)
         if link is None:
@@ -154,7 +157,7 @@ class DMH(commands.Cog):
         await ud.add_reaction(upvote)
         await ud.add_reaction(downvote)
         clutter()
-
+ 
 
 def setup(bot):
     bot.add_cog(DMH(bot))
