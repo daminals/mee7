@@ -3,7 +3,7 @@ import discord,time,random
 from discord.ext import commands
 from discord import Member
 
-import colorama
+import colorama, ffmpy
 from colorama import Fore
 from colorama import Style
 
@@ -61,7 +61,10 @@ class Exec(commands.Cog):
             return
         elif isinstance(error, commands.CommandNotFound):
             await ctx.message.add_reaction("😳")
-            await ctx.send('404 Command Not Found')
+            return
+        elif isinstance(error, ffmpy.FFRuntimeError):
+            await ctx.message.add_reaction("😳")
+            return
         else:
             await ctx.send(f'{error} error occurred')
 

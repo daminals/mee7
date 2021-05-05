@@ -90,7 +90,17 @@ class DMH(commands.Cog):
                 clutter()
 
     @commands.command()
-    async def download(self, ctx, link):
+    async def download(self, ctx, link=None):
+        downvote = self.bot.get_emoji(776162465842200617)
+        upvote = self.bot.get_emoji(776161705960931399)
+        if link is None:
+            if ctx.reference != None: # if message has reference
+                messageid = ctx.reference.message_id
+                referenced = await ctx.channel.fetch_message(messageid)
+                link = referenced.content
+            else:
+                await ctx.reply("No link detected")
+                return
         print("\nrunning....")
         if "reddit" in link:  
             print("reddit detected....")
@@ -115,7 +125,7 @@ class DMH(commands.Cog):
                     )
                 ff.run()
                 print("sending.....")
-                await ctx.send(file=discord.File('static/download/downloaded.mp4'))
+                ud = await ctx.send(file=discord.File('static/download/downloaded.mp4'))
         else:
             with youtube_dl.YoutubeDL(ydl_opts) as ydl:
                 ydl.download([link])
@@ -135,7 +145,9 @@ class DMH(commands.Cog):
                     await ctx.reply(file=discord.File('static/download/downloaded2.mp4'))    
                 else:
                     print("sending.....")
-                    await ctx.reply(file=discord.File('static/download/downloaded.mp4'))
+                    ud = await ctx.reply(file=discord.File('static/download/downloaded.mp4'))
+        await ud.add_reaction(upvote)
+        await ud.add_reaction(downvote)
         clutter()
 
 
