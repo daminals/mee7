@@ -1,6 +1,6 @@
 #exec.py
 from __future__ import unicode_literals
-import discord,time,random, requests, os, ffmpy
+import discord,time,random, requests, os, ffmpy, moviepy.editor, moviepy
 from discord.ext import commands
 from discord import Member
 
@@ -11,6 +11,8 @@ from colorama import Style
 import youtube_dl
 from urllib.request import urlopen, URLError
 from redvid import Downloader
+from tinytag import TinyTag
+
 
 def clutter():
     for i in os.listdir('static/download'):
@@ -78,19 +80,21 @@ class DMH(commands.Cog):
                         outputs={f'static/download/downloaded.mp4': f'-vcodec libx264 -crf 30'}
                         )
                     ff.run()
-                    await message.author.send(file=discord.File('static/download/downloaded.mp4'))
+                    await message.reply(file=discord.File('static/download/downloaded.mp4'))
                 clutter()
 
     @commands.command()
     async def download(self, ctx, link):
+        print("\nrunning....")
         if "reddit" in link:  
+            print("reddit detected....")
             reddit = Downloader(max_q=True)
             reddit.path = 'static/download'
             reddit.url = link
             reddit.check()
             if reddit.size <= 8 * (1 << 20):
                 file_ = reddit.download()
-                await ctx.send(file=discord.File(file_))
+                await ctx.reply(file=discord.File(file_))
             else:
                 print('Size > 8 MB')
                 file_ = reddit.download()
@@ -99,12 +103,25 @@ class DMH(commands.Cog):
                     outputs={f'static/download/downloaded.mp4': f'-vcodec libx264 -crf 30'}
                     )
                 ff.run()
+                print("sending.....")
                 await ctx.send(file=discord.File('static/download/downloaded.mp4'))
-            clutter()
         else:
             with youtube_dl.YoutubeDL(ydl_opts) as ydl:
                 ydl.download([link])
-                await ctx.send(file=discord.File('static/download/downloaded.mp4'))
+                video_s = TinyTag.get("static/download/downloaded.mp4")
+                if video_s.filesize > 8000000:
+                    ff = ffmpy.FFmpeg(
+                    inputs={"static/download/downloaded.mp4": None},
+                    outputs={f'static/download/downloaded2.mp4': f'-vcodec libx264 -crf 30'}
+                        )
+                    ff.run()
+                    print("sending.....")
+                    await ctx.send(file=discord.File('static/download/downloaded2.mp4'))    
+                else:
+                    print("sending.....")
+                    await ctx.reply(file=discord.File('static/download/downloaded.mp4'))
+        clutter()
+
 
 def setup(bot):
     bot.add_cog(DMH(bot))
