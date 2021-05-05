@@ -101,7 +101,7 @@ class DMH(commands.Cog):
                 link = referenced.content
             else:
                 await ctx.reply("No link detected")
-                return
+                raise Exception("No link detected")
         
         if is_image(link):
             download_link(link, "downloaded.png")
@@ -127,7 +127,7 @@ class DMH(commands.Cog):
                 if int(depth.duration) > 210:
                     await ctx.reply("sorry, over 210 seconds. Too long")
                     clutter()
-                    return
+                    raise Exception("sorry, over 210 seconds. Too long")
                 ff = ffmpy.FFmpeg(
                     inputs={file_: None},
                     outputs={f'static/download/downloaded.mp4': f'-vcodec libx264 -crf 30'}
@@ -146,7 +146,7 @@ class DMH(commands.Cog):
                     if int(depth.duration) > 210:
                         await ctx.reply("sorry, over 210 seconds. Too long")
                         clutter()
-                        return
+                        raise Exception("sorry, over 210 seconds. Too long")
                     ff = ffmpy.FFmpeg(
                     inputs={"static/download/downloaded.mp4": None},
                     outputs={f'static/download/downloaded2.mp4': f'-vcodec libx264 -crf 30'}
