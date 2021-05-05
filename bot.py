@@ -313,36 +313,36 @@ def embedNone():
 def embedMee6():
     embed = discord.Embed(title='Help: MEE6', description="MEE7's anti-Mee6 commands",
                         color=discord.Color(6345206))
-    embed.add_field(name='**!insult**',
+    embed.add_field(name='**insult**',
                     value='Use !insult to add in your own insult for me to attack MEE6 with! Let\'s get the bastard!',
                     inline=False)
-    embed.add_field(name='**!count**',
+    embed.add_field(name='**count**',
                     value='Use !count to track how many times I\'ve berated the little monster >:)',
                     inline=False)
     embed.add_field(name='**!mock**',
                     value='Use !mock to insult MEE6, without MEE6 even provoking it!',
                     inline=False)
-    embed.add_field(name='***!allroast***', value='This sends a text file containing my entire insult database!',
+    embed.add_field(name='***allroast***', value='This sends a text file containing my entire insult database!',
                     inline=False)
-    embed.add_field(name='**!censor**', value='Censors MEE7. MEE7 is censored by default', inline=False)
-    embed.add_field(name='**!uncensor**', value='Uncensors MEE7. MEE7 is censored by default', inline=False)
+    embed.add_field(name='**censor**', value='Censors MEE7. MEE7 is censored by default', inline=False)
+    embed.add_field(name='**uncensor**', value='Uncensors MEE7. MEE7 is censored by default', inline=False)
     return embed   
 def embedAdmin():
     embed = discord.Embed(title='Help: Admin', description="MEE7's list of administrative commands",
                         color=discord.Color(6345206))
-    embed.add_field(name='**kick {@person}**',
+    embed.add_field(name='**kick _{@person_}**',
                     value='Kicks people',
                     inline=False)
-    embed.add_field(name='**ban {@person}**',
+    embed.add_field(name='**ban _{@person}_**',
                     value='Bans people',
                     inline=False)
     embed.add_field(name='**clear _{number}_**',
                     value='Deletes _{number}_ of messages in channel',
                     inline=False)
-    embed.add_field(name='***unban {user ID}***', 
+    embed.add_field(name='***unban _{user ID}_***', 
                     value='in development',
                     inline=False)
-    embed.add_field(name='**invite {user ID}**', 
+    embed.add_field(name='**invite _{user ID}_**', 
                     value='in development', 
                     inline=False)
     return embed
@@ -368,13 +368,13 @@ def embedBarter():
 def embedMedia():
     embed = discord.Embed(title='Help: Media', description="MEE7 tracks all of your baseds and upvotes across every server that it is on. reply to someone with 'based' to increase their count, and react with the based and upvote reactions \n_**Works for replies**_ means you can reply to a message with an attachment/link and it will still work",
                         color=discord.Color(6345206))
-    embed.add_field(name='**caption {attachment}**',
+    embed.add_field(name='**caption _{attachment}_**',
                     value='Captions media. Works for replies',
                     inline=False)
-    embed.add_field(name='**deepfry {number} {attachment}**',
-                    value='deepfries media {number} times. Works for replies',
+    embed.add_field(name='**deepfry _{number} {attachment}_**',
+                    value='deepfries media _{number}_ times. Works for replies',
                     inline=False)
-    embed.add_field(name='**download {link}**',
+    embed.add_field(name='**download _{link}_**',
                     value='Downloads a video from a link (reddit/youtube/etc). Works for replies',
                     inline=False)
     embed.add_field(name='**convert _{link/attachment}_**', 
@@ -390,11 +390,11 @@ def embedMisc():
     embed.add_field(name='**flip**',
                     value='Flips a coin',
                     inline=False)
-    embed.add_field(name='**info {@person}**',
-                    value='Sends {@person}\'s account info IN DEVELOPMENT',
+    embed.add_field(name='**info _{@person}_**',
+                    value='Sends _{@person}_\'s account info IN DEVELOPMENT',
                     inline=False)
-    embed.add_field(name='**av {@person{**',
-                    value='Sends {@person}\'s avatar',
+    embed.add_field(name='**av _{@person}_**',
+                    value='Sends _{@person}_\'s avatar',
                     inline=False)
     return embed
 def embedWhat():
