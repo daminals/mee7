@@ -1,6 +1,6 @@
 #exec.py
 from __future__ import unicode_literals
-import discord,time,random, requests, os, ffmpy, moviepy.editor, moviepy
+import discord,time,random, requests, os, ffmpy, moviepy.editor, moviepy, shutil
 from discord.ext import commands
 from discord import Member
 
@@ -12,6 +12,19 @@ import youtube_dl
 from urllib.request import urlopen, URLError
 from redvid import Downloader
 from tinytag import TinyTag
+
+def is_image(link):
+    img_ext =  ['.png', '.jpg', 'jpeg', 'webp']
+    is_image = any(ext in link for ext in img_ext)
+    return is_image
+def download_link(link, filename):
+    if("https://" in link):
+        message_list = link.split(" ")
+    matches = [image for image in message_list if "https://" in image]
+    matches = matches[0]
+    r = requests.get(matches, stream = True)
+    with open(f"static/created/{filename}",'wb') as out_file:
+        shutil.copyfileobj(r.raw, out_file)
 
 
 def clutter():
@@ -81,6 +94,13 @@ class DMH(commands.Cog):
             else:
                 await ctx.reply("No link detected")
                 return
+        
+        if is_image(link):
+            download_link(link, "static/download/downloaded.png")
+            await ctx.reply(file=discord.File("static/download/downloaded.png"))
+            clutter()
+            return
+        
         print("\nrunning....")
         if "reddit" in link:  
             print("reddit detected....")
