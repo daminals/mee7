@@ -41,13 +41,15 @@ search_list = ['based', 'so true','sotrue', 'lmao', 'bruh', 'sexy', 'ahaha','sad
 class Extra(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.emotes = {
+            "based": '<:based:764140006640975922>',
+            "sotrue" : "<:sotrue:825473477837848598>",
+            "lmao" : '<:lmao:758747233075200000>',
+            "upvote" : '<:upvote:776161705960931399>',
+            "downvote" :'<:downvote:776162465842200617>'
+             }
     
-    # Emotes
-    based = '<:based:764140006640975922>'
-    sotrue = '<:sotrue:825473477837848598>'
-    lmao = '<:lmao:758747233075200000>'
-    upvote = '<:upvote:776161705960931399>'
-    downvote = '<:downvote:776162465842200617>'
+    
 
     @commands.Cog.listener()
     async def on_ready(self):
@@ -80,7 +82,7 @@ class Extra(commands.Cog):
                 if random.randint(0, 100) > 97:
                     await message.add_reaction(random.choice(emojis))
         if message.content.startswith("!"):
-            await message.channel.send("MY PREFIX IS ? NOW. PLEASE USE ? INSTEAD OF ! FOR COMMANDS")
+            await message.reply("MY PREFIX IS ? NOW. PLEASE USE ? INSTEAD OF ! FOR COMMANDS")
 
 
                 
@@ -128,6 +130,16 @@ class Extra(commands.Cog):
         channelid = int(channelid)
         channel = self.bot.get_channel(channelid)
         await channel.send(message)
+        
+
+    @commands.command(name='flip')
+    async def flip(self, ctx):
+        if random.choice([1, 2]) == 1:
+            await ctx.reply(file=discord.File("static/coin/heads.png"))
+        else:
+            await ctx.reply(file=discord.File("staticcoin/tails.png"))
+
+
     
 
 def setup(bot):

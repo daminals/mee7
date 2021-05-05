@@ -83,8 +83,8 @@ class Based(commands.Cog):
         
     # ------------ Trades and Bartering ----------------------
     
-    @commands.command(name="giveu")
-    async def giveu(self, ctx, recip: discord.Member, amount):
+    @commands.command(name="give")
+    async def giveu(self, ctx, recip: discord.Member, amount=1):
         amount = int(amount)
         if amount < 0:
             await ctx.send("Sorry, you can't give negative upvotes???")
@@ -104,7 +104,7 @@ class Based(commands.Cog):
         await ctx.send(f"Transferred {amount} upvotes into {recip.mention}'s balance")
         
     @commands.command(name="giveb")
-    async def giveb(self, ctx, recip: discord.Member, amount):
+    async def giveb(self, ctx, recip: discord.Member, amount=1):
         amount = int(amount)
         if amount < 0:
             await ctx.send("Sorry, you can't give negative baseds???")

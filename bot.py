@@ -289,15 +289,30 @@ async def on_message_edit(old, message):
             await message.reply(f'*{i}* is banned please shut the fuck up already {message.author.mention}')
 """
 
-
-
-# THE COMMANDS
-# ----------------------------------------------------
-
-@bot.command(name='help')
-async def help(ctx):
-    embed = discord.Embed(title='Help!',
+# embeds
+# ----------------------------------------------
+def embedNone():
+        embed = discord.Embed(title='Help: Categories!', description="Type ?help {category} for commands in a specific category",
                           color=discord.Color(6345206))
+        embed.add_field(name='**MEE6**',
+                    value='MEE6 related commands',
+                    inline=False)
+        embed.add_field(name='**Admin**',
+                    value='Administrative commands',
+                    inline=False)
+        embed.add_field(name='**Barter System**',
+                    value='Barter System commands _in current development_',
+                    inline=False)
+        embed.add_field(name='**Media**',
+                    value='Video, GIF, and Image commands',
+                    inline=False)
+        embed.add_field(name='**Misc**',
+                    value='Miscellaneous commands',
+                    inline=False)
+        return embed
+def embedMee6():
+    embed = discord.Embed(title='Help: MEE6', description="MEE7's anti-Mee6 commands",
+                        color=discord.Color(6345206))
     embed.add_field(name='**!insult**',
                     value='Use !insult to add in your own insult for me to attack MEE6 with! Let\'s get the bastard!',
                     inline=False)
@@ -311,6 +326,96 @@ async def help(ctx):
                     inline=False)
     embed.add_field(name='**!censor**', value='Censors MEE7. MEE7 is censored by default', inline=False)
     embed.add_field(name='**!uncensor**', value='Uncensors MEE7. MEE7 is censored by default', inline=False)
+    return embed   
+def embedAdmin():
+    embed = discord.Embed(title='Help: Admin', description="MEE7's list of administrative commands",
+                        color=discord.Color(6345206))
+    embed.add_field(name='**kick {@person}**',
+                    value='Kicks people',
+                    inline=False)
+    embed.add_field(name='**ban {@person}**',
+                    value='Bans people',
+                    inline=False)
+    embed.add_field(name='**clear _{number}_**',
+                    value='Deletes _{number}_ of messages in channel',
+                    inline=False)
+    embed.add_field(name='***unban {user ID}***', 
+                    value='in development',
+                    inline=False)
+    embed.add_field(name='**invite {user ID}**', 
+                    value='in development', 
+                    inline=False)
+    return embed
+def embedBarter():
+    embed = discord.Embed(title='Help: Barter', description="MEE7 tracks all of your baseds and upvotes across every server that it is on. reply to someone with 'based' to increase their count, and react with the based and upvote reactions",
+                        color=discord.Color(6345206))
+    embed.add_field(name='**upvote**',
+                    value='Sends leaderboard of all upvotes',
+                    inline=False)
+    embed.add_field(name='**based**',
+                    value='Sends leaderboard of all baseds',
+                    inline=False)
+    embed.add_field(name='**giveb _{@person}_ _{number}_**',
+                    value='Gives _{@person}_ _{number}_ more upvotes',
+                    inline=False)
+    embed.add_field(name='***giveb _{@person}_ _{number}_***', 
+                    value='Gives _{@person}_ _{number}_ more baseds',
+                    inline=False)
+    embed.add_field(name='**MORE COMING SOON!**', 
+                    value='in development', 
+                    inline=False)
+    return embed
+def embedMedia():
+    embed = discord.Embed(title='Help: Media', description="MEE7 tracks all of your baseds and upvotes across every server that it is on. reply to someone with 'based' to increase their count, and react with the based and upvote reactions",
+                        color=discord.Color(6345206))
+    embed.add_field(name='**upvote**',
+                    value='Sends leaderboard of all upvotes',
+                    inline=False)
+    embed.add_field(name='**based**',
+                    value='Sends leaderboard of all baseds',
+                    inline=False)
+    embed.add_field(name='**giveb _{@person}_ _{number}_**',
+                    value='Gives _{@person}_ _{number}_ more upvotes',
+                    inline=False)
+    embed.add_field(name='***giveb _{@person}_ _{number}_***', 
+                    value='Gives _{@person}_ _{number}_ more baseds',
+                    inline=False)
+    embed.add_field(name='**MORE COMING SOON!**', 
+                    value='in development', 
+                    inline=False)
+    return embed
+def embedMisc():
+    embed = discord.Embed(title='Help: Misc', description="MEE7 Miscellaneous commands",
+                        color=discord.Color(6345206))
+    embed.add_field(name='**flip**',
+                    value='Flips a coin',
+                    inline=False)
+    return embed
+def embedWhat():
+    embed = discord.Embed(title='Bro what??', description="I have no idea what that category is my guy",
+                color=discord.Color(6345206))
+    return embed
+
+# THE COMMANDS
+# ----------------------------------------------------
+
+@bot.command(name='help')
+async def help(ctx, cate=None):
+    help_switch = {
+        None: embedNone(),
+        "mee6": embedMee6(),
+        "admin": embedAdmin(),
+        "barter": embedBarter(),
+        "media": embedMedia(),
+        "misc": embedMisc(),
+        "?": embedWhat()
+    }
+    if cate is not None:
+        cate = cate.lower()
+    try:
+        embed = help_switch[cate]
+    except:
+        embed = help_switch["?"]
     await ctx.channel.send(embed=embed)
 
 
@@ -323,17 +428,6 @@ async def insult(ctx, *, insult):
     result = firebase.post(FIREBASE_NAME + '/insult', insult)
     print(result)
     await ctx.send(random.choice(Acceptance_List))
-
-
-# ------------------------------------------------------
-
-@bot.command(name='flip')
-async def flip(ctx):
-    if random.choice([1, 2]) == 1:
-        await ctx.channel.send(file=discord.File("static/coin/heads.png"))
-    else:
-        await ctx.channel.send(file=discord.File("staticcoin/tails.png"))
-
 
 # ----------------------------------------------------
 @bot.command(name='mock')

@@ -7,6 +7,9 @@ import colorama, ffmpy
 from colorama import Fore
 from colorama import Style
 
+#TODO: Invite command
+#TODO: make unban command actually work
+
 class Exec(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
