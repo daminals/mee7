@@ -21,7 +21,7 @@ def add_topv(vid, caption, Fw, h):
     
     ff = ffmpy.FFmpeg(
      inputs={vid: None},
-     outputs={f'static/created/captioned.mp4': f'-vf "pad=iw:{newH}:iw/2:{placementH}:color=white",drawtext="fontfile=static/fonts/impact.ttf":text="{caption}":fontcolor=black:fontsize={font_size}:x=(w-tw)/2:y=({placementH}-th)/2:fix_bounds=true:line_spacing=3 -vcodec libx264 -codec:a copy -crf 35'}
+     outputs={f'static/created/captioned.mp4': f'-vf "pad=iw:{newH}:iw/2:{placementH}:color=white",drawtext="fontfile=static/fonts/impact.ttf":text="{caption}":fontcolor=black:fontsize={font_size}:x=(w-tw)/2:y=({placementH}-th)/2:fix_bounds=true:line_spacing=3 -x264-params rc-lookahead 20 -vcodec libx264 -codec:a copy -crf 35'}
     )
     ff.run()
 
@@ -48,7 +48,7 @@ def fit_text(string: str, frame_width, font_size):
 def deepfryv(vid, repeat):
     ff = ffmpy.FFmpeg(
      inputs={vid: None},
-     outputs={f'static/created/deepfried{repeat+1}.mp4': f'{create_filter_args()} {create_audio_args(repeat)}-vcodec libx264 -crf 45'}
+     outputs={f'static/created/deepfried{repeat+1}.mp4': f'{create_filter_args()} {create_audio_args(repeat)}-vcodec libx264 -x264-params rc-lookahead 20 -crf 45'}
     )
     ff.run()
 
