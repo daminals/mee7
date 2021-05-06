@@ -21,7 +21,7 @@ def add_topv(vid, caption, Fw, h):
     
     ff = ffmpy.FFmpeg(
      inputs={vid: None},
-     outputs={f'static/created/captioned.mp4': f'-vf "pad=iw:{newH}:iw/2:{placementH}:color=white",drawtext="fontfile=static/fonts/impact.ttf":text="{caption}":fontcolor=black:fontsize={font_size}:x=(w-tw)/2:y=({placementH}-th)/2:fix_bounds=true:line_spacing=3 -x264-params rc-lookahead 20 -vcodec libx264 -codec:a copy -crf 35'}
+     outputs={f'static/created/captioned.mp4': f'-vf "pad=iw:{newH}:iw/2:{placementH}:color=white",drawtext="fontfile=static/fonts/impact.ttf":text="{caption}":fontcolor=black:fontsize={font_size}:x=(w-tw)/2:y=({placementH}-th)/2:fix_bounds=true:line_spacing=3 -vcodec libx264 -codec:a copy -crf 35'}
     )
     ff.run()
 
