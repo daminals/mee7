@@ -111,6 +111,15 @@ def converting_ffmpy(inputV, outputV):
     ff.run()
     print(Style.RESET_ALL)
 
+def fast_forward(speed):
+    ff = ffmpy.FFmpeg(
+    inputs={inputV: None},
+    outputs={outputV: f'-vcodec libx264 -crf 30'}
+        )
+    print(Style.DIM)
+    ff.run()
+    print(Style.RESET_ALL)
+
 
 # ------------------ IMAGE MANIPULATION -------------------
 
@@ -408,16 +417,10 @@ class Images(commands.Cog):
         if ctx.message.reference is not None: 
             messageid = ctx.message.reference.message_id
             referenced = await ctx.channel.fetch_message(messageid)
-            try:
-                await get_attach(referenced).save(f"static/created/convert.mp4")
-            except: 
-                download_link(referenced, f"convert.mp4")
+            await downloadM_(referenced, f"convert.mp4")
         else:
-            if link is None:
-                await get_attach(ctx.message).save(f"static/created/convert.mp4")
-            else:
-                download_link(ctx.message, "convert.mp4")
-                
+            await downloadM_(ctx.message, f"convert.mp4")
+        
         captionClip = moviepy.editor.VideoFileClip(f"static/created/convert.mp4")
         if int(captionClip.duration) > 210:
             await ctx.reply("sorry bestie, but that video is over 210 seconds. I won't do it")
