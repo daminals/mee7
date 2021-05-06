@@ -75,8 +75,6 @@ def create_filter_args():
 
     return '-vf ' + eq_str + ',' + noise_str + ',' + sharpness_str
 
-
-
 def download_link(referenced, filename):
     if("https://" in referenced.content):
         message_list = referenced.content.split(" ")
@@ -111,16 +109,65 @@ def converting_ffmpy(inputV, outputV):
     ff.run()
     print(Style.RESET_ALL)
 
-def fast_forward(speed):
+def fast_forward(inputV, outputV, speed):
+    newSpeed = round(1/speed, 2)
     ff = ffmpy.FFmpeg(
     inputs={inputV: None},
-    outputs={outputV: f'-vcodec libx264 -crf 30'}
+    outputs={outputV: f'-filter:a atempo={speed} -filter:v "setpts={newSpeed}*PTS" -vcodec libx264 -crf 30'}
         )
     print(Style.DIM)
     ff.run()
     print(Style.RESET_ALL)
 
+async def check_refs_(ref, filename):
+    print("Checking References")
+    if ref.reference is not None: 
+        #print("running 2")
+        messageid = ref.reference.message_id
+        referenced = await ref.channel.fetch_message(messageid)
+        #print("running 3")
+        await downloadM_(referenced, f"{filename}")
+    else:
+        #print("running 2")
+        await downloadM_(ref, f"{filename}")
 
+async def imgVidRefs(message):
+    if message.reference != None: 
+        messageid = message.reference.message_id
+        referenced = await message.channel.fetch_message(messageid)
+        return referenced
+    else:
+        if get_attach(message) != 0:
+            referenced = message
+            return referenced
+        else:
+            await message.reply("Sorry! No reference!")
+            raise Exception("No references detected")
+
+
+async def video_crefs(ref,filename,duration=210):
+    await check_refs_(ref,filename)
+    checkLength(filename, duration)
+        
+def checkLength(filename, duration=210):
+    MovieClip = moviepy.editor.VideoFileClip(f"static/created/{filename}")
+    if int(MovieClip.duration) > duration:
+        raise Exception(f"Video over {duration} seconds")  
+    return MovieClip
+
+    
+async def upvDownv(bot, ud, message):
+    downvote = bot.get_emoji(776162465842200617)
+    upvote = bot.get_emoji(776161705960931399)
+    try:
+        await ud.add_reaction(upvote)
+        await ud.add_reaction(downvote)
+    except Exception as e:
+        print(exit)
+        await message.reply("no")
+    clutter()
+
+    
 # ------------------ IMAGE MANIPULATION -------------------
 
 # TODO: VIRGIN VS CHAD MEME TEMPLATE 
@@ -306,24 +353,10 @@ class Images(commands.Cog):
         await ctx.channel.send(member.avatar_url)
     
     @commands.command()
-    async def deepfry(self, ctx, *, repeat: int=1):
-        # upvote / downvote emotes
-        downvote = self.bot.get_emoji(776162465842200617)
-        upvote = self.bot.get_emoji(776161705960931399)
-        
-        if ctx.message.reference != None: 
-            messageid = ctx.message.reference.message_id
-            referenced = await ctx.channel.fetch_message(messageid)
-        else:
-            if get_attach(ctx.message) != 0:
-                referenced = ctx.message
-            else:
-                await ctx.reply("Sorry! No reference!")
-                return
-        
+    async def deepfry(self, ctx, *, repeat: int=1):        
+        referenced = await imgVidRefs(ctx.message)        
         print(Fore.RED + Style.BRIGHT+"\n---------------\n"+Style.RESET_ALL)
         print(Style.BRIGHT+f"Call me McDonalds cuz be be deep fryin this mf {repeat} times"+Style.RESET_ALL)
-        
         # check -- is this an image? can I download it?
         if is_image(referenced):
             if repeat > 20: repeat = 20 # set 20 as the deepfry limit
@@ -336,44 +369,21 @@ class Images(commands.Cog):
             print(Fore.GREEN + Style.BRIGHT + "complete ✔︎ " + Style.RESET_ALL)
         elif is_video(referenced):
             if repeat > 4: repeat = 4 # set 4 as the deepfry limit
-            await downloadM_(referenced, f"deepfried0.mp4")
-            deep = moviepy.editor.VideoFileClip("static/created/deepfried0.mp4")
-            if int(deep.duration) > 60:
-                await ctx.reply("sorry bestie, but that video is over a minute. I won't do it")
-                return     
+            await downloadM_(referenced, f"deepfried0.mp4") # downloads video
+            checkLength("deepfried0.mp4",60) # throws exception if video is too long
             for i in range(repeat):
                 deepfryv(f"static/created/deepfried{i}.mp4", i)
                 print(Style.DIM+ f"deepfried it {i+1} times bestie" + Style.RESET_ALL)
             print(Fore.YELLOW + Style.BRIGHT + "sending video ⏳"+ Style.RESET_ALL)
             ud = await ctx.reply(file=discord.File(f"static/created/deepfried{repeat}.mp4"))
             print(Fore.GREEN + Style.BRIGHT + "complete ✔︎ " + Style.RESET_ALL)
-        try:
-            await ud.add_reaction(upvote)
-            await ud.add_reaction(downvote)
-        except:
-            await ctx.message.reply("no")
-        clutter()
-
+        await upvDownv(self.bot,ud,ctx.message)
 
         
     @commands.command(aliases=["caption:"])
-    async def caption(self, ctx, *, caption):
-        # upvote / downvote emotes
-        downvote = self.bot.get_emoji(776162465842200617)
-        upvote = self.bot.get_emoji(776161705960931399)
-        
+    async def caption(self, ctx, *, caption):        
         # if message has reference -- no reference no caption
-        if ctx.message.reference != None: 
-            messageid = ctx.message.reference.message_id
-            referenced = await ctx.channel.fetch_message(messageid)
-        else:
-            if get_attach(ctx.message) != 0:
-                referenced = ctx.message
-            else:
-                await ctx.reply("Sorry! No reference!")
-                return
-        
-        # logging
+        referenced = await imgVidRefs(ctx.message)        
         print(Fore.RED + Style.BRIGHT+"\n---------------\n"+Style.RESET_ALL)
         print(Fore.YELLOW + Style.BRIGHT + "downloading attachment ⏳" + Style.RESET_ALL)
         
@@ -389,53 +399,48 @@ class Images(commands.Cog):
         # is this a video? can I download it?    
         elif is_video(referenced):
             await downloadM_(referenced, f"{caption[:2]}.mp4")
-            captionClip = moviepy.editor.VideoFileClip(f"static/created/{caption[:2]}.mp4")
-            if int(captionClip.duration) > 60:
-                await ctx.reply("sorry bestie, but that video is over a minute. I won't do it")
-                return     
+            captionClip = checkLength(f"{caption[:2]}.mp4",60) # throws exception if video is too long
             add_topv(f"static/created/{caption[:2]}.mp4",caption,captionClip.w,captionClip.h)
             print(Fore.YELLOW + Style.BRIGHT + "sending video ⏳"+ Style.RESET_ALL)
             ud = await ctx.reply(file=discord.File(f"static/created/captioned.mp4"))
             print(Fore.GREEN + Style.BRIGHT + "complete ✔︎ " + Style.RESET_ALL)
-        try:
-            await ud.add_reaction(upvote)
-            await ud.add_reaction(downvote)
-        except:
-            await ctx.message.reply("no")
-        clutter()
+        await upvDownv(self.bot, ud, ctx.message)
+
 
     @commands.command(name="convert")
     async def convert(self, ctx, *, link=None):
-        # upvote / downvote emotes
-        downvote = self.bot.get_emoji(776162465842200617)
-        upvote = self.bot.get_emoji(776161705960931399)
         clutter()
         # logging
         print(Fore.RED + Style.BRIGHT+"\n---------------\n"+Style.RESET_ALL)
         print(Fore.YELLOW + Style.BRIGHT + "downloading attachment ⏳" + Style.RESET_ALL)
         # download
-        if ctx.message.reference is not None: 
-            messageid = ctx.message.reference.message_id
-            referenced = await ctx.channel.fetch_message(messageid)
-            await downloadM_(referenced, f"convert.mp4")
-        else:
-            await downloadM_(ctx.message, f"convert.mp4")
-        
-        captionClip = moviepy.editor.VideoFileClip(f"static/created/convert.mp4")
-        if int(captionClip.duration) > 210:
-            await ctx.reply("sorry bestie, but that video is over 210 seconds. I won't do it")
-            return     
+        await video_crefs(ctx.message, f"convert.mp4")
         converting_ffmpy("static/created/convert.mp4", "static/created/converted.mp4")
+        # send vid
         print(Fore.YELLOW + Style.BRIGHT + "sending video ⏳"+ Style.RESET_ALL)
         ud = await ctx.reply(file=discord.File(f"static/created/converted.mp4"))
         print(Fore.GREEN + Style.BRIGHT + "complete ✔︎ " + Style.RESET_ALL)
-        try:
-            await ud.add_reaction(upvote)
-            await ud.add_reaction(downvote)
-        except:
-            await ctx.message.reply("no")
-        clutter()
+        await upvDownv(self.bot, ud, ctx.message)
 
+    @commands.command(name="speed")
+    async def speed(self,ctx, spd, *, link=None):
+        spd = float(spd)
+        clutter()
+        # logging
+        print(Fore.RED + Style.BRIGHT+"\n---------------\n"+Style.RESET_ALL)
+        print(Fore.YELLOW + Style.BRIGHT + "downloading attachment ⏳" + Style.RESET_ALL)
+        # download
+        try:
+            await video_crefs(ctx.message, "spd.mp4")
+        except Exception as e:
+            print(e)
+            await ctx.reply("sorry bestie, but that video is over 210 seconds. I won't do it")
+            return
+        fast_forward("static/created/spd.mp4","static/created/newSpeed.mp4",spd)
+        print(Fore.YELLOW + Style.BRIGHT + "sending video ⏳"+ Style.RESET_ALL)
+        ud = await ctx.reply(file=discord.File(f"static/created/newSpeed.mp4"))
+        print(Fore.GREEN + Style.BRIGHT + "complete ✔︎ " + Style.RESET_ALL)
+        await upvDownv(self.bot,ud,ctx.message)
         
 def setup(bot):
     bot.add_cog(Images(bot))
