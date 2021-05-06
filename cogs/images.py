@@ -423,7 +423,7 @@ class Images(commands.Cog):
         await upvDownv(self.bot, ud, ctx.message)
 
     @commands.command(name="speed")
-    async def speed(self,ctx, spd, *, link=None):
+    async def speed(self,ctx, spd, link=None):
         spd = float(spd)
         clutter()
         # logging
@@ -441,6 +441,11 @@ class Images(commands.Cog):
         ud = await ctx.reply(file=discord.File(f"static/created/newSpeed.mp4"))
         print(Fore.GREEN + Style.BRIGHT + "complete ✔︎ " + Style.RESET_ALL)
         await upvDownv(self.bot,ud,ctx.message)
+        
+    @commands.command(name="layered")
+    async def speed(self,ctx, commands, link=None):
+        pass
+        
         
 def setup(bot):
     bot.add_cog(Images(bot))
