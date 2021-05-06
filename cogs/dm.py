@@ -149,7 +149,7 @@ class DMH(commands.Cog):
                         raise Exception("sorry, over 210 seconds. Too long")
                     ff = ffmpy.FFmpeg(
                     inputs={"static/download/downloaded.mp4": None},
-                    outputs={f'static/download/downloaded2.mp4': f'-vcodec libx264 -crf 30'}
+                    outputs={f'static/download/downloaded2.mp4': f'-x264-params rc-lookahead 20 -vcodec libx264 -crf 30'}
                         )
                     print(Style.DIM)
                     ff.run()
