@@ -12,6 +12,7 @@ from colorama import Style
 sys.path.append(os.path.abspath('../'))
 from bot import firebase, FIREBASE_NAME
 # TODO: Stitch two images together
+# TODO: speed up a video
 
 def add_topv(vid, caption, Fw, h):
     newH = h * 1.35
@@ -183,6 +184,17 @@ def add_top(img,caption):
     top.save(img, optimize=True)
     print("image created")
 
+async def downloadM_(referenced, filename):
+    try: 
+        await get_attach(referenced).save(f"static/created/{filename}")
+        print("attachment received")
+    except:
+        print(referenced.content)
+        download_link(referenced, f"{filename}")
+    print("Downloaded") 
+    return f"static/created/{filename}"
+
+
 # ------------------- DEEP FRY ------------------
 
 def deepfryi(img):
@@ -306,12 +318,7 @@ class Images(commands.Cog):
         # check -- is this an image? can I download it?
         if is_image(referenced):
             if repeat > 20: repeat = 20 # set 20 as the deepfry limit
-            try:
-                await get_attach(referenced).save(f"static/created/deepfry.png")
-            except:
-                print(referenced.content)
-                download_link(referenced, 'deepfry.png')
-
+            await downloadM_(referenced, f"deepfry.png")
             for i in range(repeat):
                 deepfryi(f"static/created/deepfry.png")
                 print(Style.DIM+ f"deepfried it {i+1} times bestie" + Style.RESET_ALL)
@@ -320,12 +327,7 @@ class Images(commands.Cog):
             print(Fore.GREEN + Style.BRIGHT + "complete ✔︎ " + Style.RESET_ALL)
         elif is_video(referenced):
             if repeat > 4: repeat = 4 # set 4 as the deepfry limit
-            try:
-                await get_attach(referenced).save(f"static/created/deepfried0.mp4")
-            except:
-                print(referenced.content)
-                download_link(referenced, "deepfried0.mp4")
-            
+            await downloadM_(referenced, f"deepfried0.mp4")
             deep = moviepy.editor.VideoFileClip("static/created/deepfried0.mp4")
             if int(deep.duration) > 60:
                 await ctx.reply("sorry bestie, but that video is over a minute. I won't do it")
@@ -368,11 +370,7 @@ class Images(commands.Cog):
         
         # is this an image? can I download it?
         if is_image(referenced):
-            try:
-                await get_attach(referenced).save(f"static/created/{caption[:2]}.png")                
-            except:
-                print(referenced.content)
-                download_link(referenced,f"{caption[:2]}.png")
+            await downloadM_(referenced, f"{caption[:2]}.png")
             # ok, caption this image lol
             add_top(f"static/created/{caption[:2]}.png",caption)
             print(Fore.YELLOW + Style.BRIGHT + "sending image ⏳"+ Style.RESET_ALL)
@@ -381,11 +379,7 @@ class Images(commands.Cog):
       
         # is this a video? can I download it?    
         elif is_video(referenced):
-            try: 
-                await get_attach(referenced).save(f"static/created/{caption[:2]}.mp4")
-            except:
-                print(referenced.content)
-                download_link(referenced, f"{caption[:2]}.mp4")
+            await downloadM_(referenced, f"{caption[:2]}.mp4")
             captionClip = moviepy.editor.VideoFileClip(f"static/created/{caption[:2]}.mp4")
             if int(captionClip.duration) > 60:
                 await ctx.reply("sorry bestie, but that video is over a minute. I won't do it")
