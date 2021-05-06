@@ -136,9 +136,10 @@ class Extra(commands.Cog):
     async def flip(self, ctx):
         if random.choice([1, 2]) == 1:
             await ctx.reply(file=discord.File("static/coin/heads.png"))
+            print("HEADS!!")
         else:
             await ctx.reply(file=discord.File("static/coin/tails.png"))
-
+            print("TAILS!")
 
     
 
