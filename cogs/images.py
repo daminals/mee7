@@ -442,7 +442,7 @@ class Images(commands.Cog):
         await upvDownv(self.bot,ud,ctx.message)
         
     @commands.command(name="layered")
-    async def speed(self,ctx, commands, link=None):
+    async def layered(self,ctx, commands, link=None):
         pass
         
         
