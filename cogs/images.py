@@ -140,6 +140,7 @@ def clutter():
             os.remove('static/created/' + i)
 
 def add_top(img,caption):
+    caption = caption.upper()
     print("loading image")
     current = Image.open(img)
     ch = current.height
