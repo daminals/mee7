@@ -406,7 +406,6 @@ class Images(commands.Cog):
             print(Fore.GREEN + Style.BRIGHT + "complete ✔︎ " + Style.RESET_ALL)
         await upvDownv(self.bot, ud, ctx.message)
 
-
     @commands.command(name="convert")
     async def convert(self, ctx, *, link=None):
         clutter()

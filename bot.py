@@ -377,6 +377,9 @@ def embedMedia():
     embed.add_field(name='**download _{link}_**',
                     value='Downloads a video from a link (reddit/youtube/etc). Works for replies',
                     inline=False)
+    embed.add_field(name='**speed _{link/attachment}_**', 
+                    value='Increases or Decreases the speed of a video. Works for replies',
+                    inline=False)
     embed.add_field(name='**convert _{link/attachment}_**', 
                     value='Converts a video/link to an MP4 attachment. Works for replies',
                     inline=False)
