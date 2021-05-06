@@ -137,7 +137,7 @@ class Extra(commands.Cog):
         if random.choice([1, 2]) == 1:
             await ctx.reply(file=discord.File("static/coin/heads.png"))
         else:
-            await ctx.reply(file=discord.File("staticcoin/tails.png"))
+            await ctx.reply(file=discord.File("static/coin/tails.png"))
 
 
     
