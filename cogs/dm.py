@@ -26,8 +26,6 @@ def download_link(link, filename):
     with open(f"static/download/{filename}",'wb') as out_file:
         shutil.copyfileobj(r.raw, out_file)
 
-
-
 def clutter():
     for i in os.listdir('static/download'):
         if not i=='.gitkeep':
