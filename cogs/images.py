@@ -48,7 +48,7 @@ def fit_text(string: str, frame_width, font_size):
 def deepfryv(vid, repeat):
     ff = ffmpy.FFmpeg(
      inputs={vid: None},
-     outputs={f'static/created/deepfried{repeat+1}.mp4': f'{create_filter_args()} {create_audio_args(repeat)}-vcodec libx264 -x264-params rc-lookahead 20 -crf 45'}
+     outputs={f'static/created/deepfried{repeat+1}.mp4': f'{create_filter_args()} {create_audio_args(repeat)}-vcodec libx264 -crf 45'}
     )
     ff.run()
 
