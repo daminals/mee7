@@ -383,6 +383,7 @@ class Images(commands.Cog):
     @commands.command(aliases=["caption:"])
     async def caption(self, ctx, *, caption):        
         # if message has reference -- no reference no caption
+        caption = caption.upper()
         referenced = await imgVidRefs(ctx.message)        
         print(Fore.RED + Style.BRIGHT+"\n---------------\n"+Style.RESET_ALL)
         print(Fore.YELLOW + Style.BRIGHT + "downloading attachment ⏳" + Style.RESET_ALL)
