@@ -353,7 +353,11 @@ class Images(commands.Cog):
         await ctx.channel.send(member.avatar_url)
     
     @commands.command()
-    async def deepfry(self, ctx, *, repeat: int=1):        
+    async def deepfry(self, ctx, repeat=1): 
+        try:
+            repeat = int(repeat)
+        except:
+            await ctx.reply("Command paramaters used incorrectly.")
         referenced = await imgVidRefs(ctx.message)        
         print(Fore.RED + Style.BRIGHT+"\n---------------\n"+Style.RESET_ALL)
         print(Style.BRIGHT+f"Call me McDonalds cuz be be deep fryin this mf {repeat} times"+Style.RESET_ALL)
