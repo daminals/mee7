@@ -364,7 +364,7 @@ class Images(commands.Cog):
         # check -- is this an image? can I download it?
         if is_image(referenced):
             if repeat > 20: repeat = 20 # set 20 as the deepfry limit
-            await downloadM_(referenced, f"deepfry.png")
+            await downloadM_(referenced, f"deepfry.png")            
             for i in range(repeat):
                 deepfryi(f"static/created/deepfry.png")
                 print(Style.DIM+ f"deepfried it {i+1} times bestie" + Style.RESET_ALL)
