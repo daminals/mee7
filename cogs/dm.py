@@ -83,14 +83,16 @@ class DMH(commands.Cog):
                     try:
                         clutter()
                         await self.download(await self.bot.get_context(message), message.content)
-                    except:
+                    except Exception as e:
+                        print(e)
                         await message.reply("Sorry champ, couldn't download")
                         return
                     await message.delete() #no longer need this link lol
                     clutter()
             
     @commands.command()
-    async def download(self, ctx, link=None, *, theRest=None):
+    async def download(self, ctx, link=None, *, theRest=' '):
+        # TODO: ADD all downloaded links to a database, if the same link is called twice send a link
         clutter()
         downvote = self.bot.get_emoji(776162465842200617)
         upvote = self.bot.get_emoji(776161705960931399)
@@ -145,6 +147,28 @@ class DMH(commands.Cog):
                 print(Style.RESET_ALL)
                 print(Fore.GREEN + Style.BRIGHT+ "sending....."+ Style.RESET_ALL)
                 ud = await ctx.send(f"{theRest}", file=discord.File('static/download/downloaded.mp4'))
+        elif "discord" in link:
+            print("discord detected lol")
+            download_link(link, "downloaded.mp4")
+            video_s = TinyTag.get("static/download/downloaded.mp4")
+            depth = moviepy.editor.VideoFileClip("static/download/downloaded.mp4")
+            if video_s.filesize > 8000000:
+                if int(depth.duration) > 210:
+                    await ctx.reply("sorry, over 210 seconds. Too long")
+                    clutter()
+                    raise Exception("sorry, over 210 seconds. Too long")
+                ff = ffmpy.FFmpeg(
+                inputs={"static/download/downloaded.mp4": None},
+                outputs={f'static/download/downloaded2.mp4': f'-vcodec libx264 -crf 30'}
+                    )
+                print(Style.DIM)
+                ff.run()
+                print(Style.RESET_ALL)
+                print(Fore.GREEN + Style.BRIGHT+ "sending....."+ Style.RESET_ALL)
+                ud = await ctx.reply(f"{theRest}",file=discord.File('static/download/downloaded2.mp4'))
+            else:
+                print(Fore.GREEN + Style.BRIGHT + "sending....." + Style.RESET_ALL)
+                ud = await ctx.reply(f"{theRest}", file=discord.File('static/download/downloaded.mp4'))
         else:
             with youtube_dl.YoutubeDL(ydl_opts) as ydl:
                 ydl.download([link])
