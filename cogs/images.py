@@ -412,7 +412,7 @@ class Images(commands.Cog):
         await upvDownv(self.bot, ud, ctx.message)
 
     @commands.command(name="convert")
-    async def convert(self, ctx, *, link=None):
+    async def convert(self, ctx, link=None, *, theRest=None):
         clutter()
         # logging
         print(Fore.RED + Style.BRIGHT+"\n---------------\n"+Style.RESET_ALL)
@@ -422,7 +422,7 @@ class Images(commands.Cog):
         converting_ffmpy("static/created/convert.mp4", "static/created/converted.mp4")
         # send vid
         print(Fore.YELLOW + Style.BRIGHT + "sending video ⏳"+ Style.RESET_ALL)
-        ud = await ctx.reply(file=discord.File(f"static/created/converted.mp4"))
+        ud = await ctx.reply(f"{theRest}", file=discord.File(f"static/created/converted.mp4"))
         print(Fore.GREEN + Style.BRIGHT + "complete ✔︎ " + Style.RESET_ALL)
         await upvDownv(self.bot, ud, ctx.message)
 
@@ -442,7 +442,7 @@ class Images(commands.Cog):
             return
         fast_forward("static/created/spd.mp4","static/created/newSpeed.mp4",spd)
         print(Fore.YELLOW + Style.BRIGHT + "sending video ⏳"+ Style.RESET_ALL)
-        ud = await ctx.reply(file=discord.File(f"static/created/newSpeed.mp4"))
+        ud = await ctx.reply(f"{theRest}", file=discord.File(f"static/created/newSpeed.mp4"))
         print(Fore.GREEN + Style.BRIGHT + "complete ✔︎ " + Style.RESET_ALL)
         await upvDownv(self.bot,ud,ctx.message)
         

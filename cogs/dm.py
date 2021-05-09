@@ -90,7 +90,7 @@ class DMH(commands.Cog):
                     clutter()
             
     @commands.command()
-    async def download(self, ctx, link=None):
+    async def download(self, ctx, link=None, *, theRest=None):
         clutter()
         downvote = self.bot.get_emoji(776162465842200617)
         upvote = self.bot.get_emoji(776161705960931399)
@@ -155,10 +155,10 @@ class DMH(commands.Cog):
                     ff.run()
                     print(Style.RESET_ALL)
                     print(Fore.GREEN + Style.BRIGHT+ "sending....."+ Style.RESET_ALL)
-                    ud = await ctx.reply(file=discord.File('static/download/downloaded2.mp4'))
+                    ud = await ctx.reply(f"{theRest}",file=discord.File('static/download/downloaded2.mp4'))
                 else:
                     print(Fore.GREEN + Style.BRIGHT + "sending....." + Style.RESET_ALL)
-                    ud = await ctx.reply(file=discord.File('static/download/downloaded.mp4'))
+                    ud = await ctx.reply(f"{theRest}", file=discord.File('static/download/downloaded.mp4'))
         await ud.add_reaction(upvote)
         await ud.add_reaction(downvote)
         clutter()
