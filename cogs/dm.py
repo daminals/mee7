@@ -119,7 +119,7 @@ class DMH(commands.Cog):
             if reddit.size <= 8 * (1 << 20):
                 file_ = reddit.download()
                 print(Fore.GREEN + Style.BRIGHT+ "sending....."+ Style.RESET_ALL)
-                ud = await ctx.reply(file=discord.File(file_))
+                ud = await ctx.reply(f"{theRest}", file=discord.File(file_))
             else:
                 print('Size > 8 MB')
                 file_ = reddit.download()
@@ -136,7 +136,7 @@ class DMH(commands.Cog):
                 ff.run()
                 print(Style.RESET_ALL)
                 print(Fore.GREEN + Style.BRIGHT+ "sending....."+ Style.RESET_ALL)
-                ud = await ctx.send(file=discord.File('static/download/downloaded.mp4'))
+                ud = await ctx.send(f"{theRest}", file=discord.File('static/download/downloaded.mp4'))
         else:
             with youtube_dl.YoutubeDL(ydl_opts) as ydl:
                 ydl.download([link])
