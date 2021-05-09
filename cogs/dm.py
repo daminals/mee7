@@ -98,7 +98,15 @@ class DMH(commands.Cog):
             if ctx.message.reference != None: # if message has reference
                 messageid = ctx.message.reference.message_id
                 referenced = await ctx.channel.fetch_message(messageid)
-                link = referenced.content
+                content_ = referenced.content
+                if("https://" in content_):
+                    message_list = content_.split(" ")
+                    matches = [image for image in message_list if "https://" in image]
+                    link = matches[0]
+                else:
+                    ctx.reply("No link detected")
+                    raise Exception("No link detected")
+
             else:
                 await ctx.reply("No link detected")
                 raise Exception("No link detected")
