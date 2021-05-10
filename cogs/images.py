@@ -12,7 +12,7 @@ from colorama import Style
 sys.path.append(os.path.abspath('../'))
 from bot import firebase, FIREBASE_NAME
 # TODO: Stitch two images together
-# TODO: speed up a video
+# TODO: ADD DEFAULT AUDIO TO A VIDEO
 
 def add_topv(vid, caption, Fw, h):
     newH = h * 1.35
