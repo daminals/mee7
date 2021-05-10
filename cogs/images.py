@@ -442,7 +442,7 @@ class Images(commands.Cog):
             return
         fast_forward("static/created/spd.mp4","static/created/newSpeed.mp4",spd)
         print(Fore.YELLOW + Style.BRIGHT + "sending video ⏳"+ Style.RESET_ALL)
-        ud = await ctx.reply(f"{theRest}", file=discord.File(f"static/created/newSpeed.mp4"))
+        ud = await ctx.reply(file=discord.File(f"static/created/newSpeed.mp4"))
         print(Fore.GREEN + Style.BRIGHT + "complete ✔︎ " + Style.RESET_ALL)
         await upvDownv(self.bot,ud,ctx.message)
         
