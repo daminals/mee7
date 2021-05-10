@@ -13,6 +13,14 @@ from urllib.request import urlopen, URLError
 from redvid import Downloader
 from tinytag import TinyTag
 
+def name_p(link):
+    name_ = link.split("/")
+    name_ = name_[len(name_)-1]
+    name_ = name_.split(".")
+    name_ = name_[0]
+    name_ += ".mp4"
+    return name_
+
 def is_image(link):
     img_ext =  ['.png', '.jpg', 'jpeg', 'webp']
     is_image = any(ext in link for ext in img_ext)
@@ -39,8 +47,6 @@ class MyLogger(object):
 
     def error(self, msg):
         print(msg)
-
-
 def my_hook(d):
     if d['status'] == 'finished':
         print('Done downloading, now converting ...')
@@ -149,8 +155,7 @@ class DMH(commands.Cog):
                 ud = await ctx.send(f"{theRest}", file=discord.File('static/download/downloaded.mp4'))
         elif "discord" in link:
             print("discord detected lol")
-            name_ = link.split("/")
-            name_ = name_[len(name_)-1]
+            name_ = name_p(link)
             download_link(link, f"{name_}")
             video_s = TinyTag.get(f"static/download/{name_}")
             depth = moviepy.editor.VideoFileClip(f"static/download/{name_}")
