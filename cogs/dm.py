@@ -138,7 +138,11 @@ class DMH(commands.Cog):
                 ud = await ctx.reply(f"{theRest}", file=discord.File(file_))
             else:
                 print('Size > 8 MB')
-                file_ = reddit.download()
+                try:
+                    file_ = reddit.download()
+                except:
+                    await ctx.send("Unable to download")
+                    raise Exception("Unable to download")
                 depth = moviepy.editor.VideoFileClip(file_)
                 if int(depth.duration) > 210:
                     await ctx.reply("sorry, over 210 seconds. Too long")
