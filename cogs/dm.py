@@ -160,7 +160,11 @@ class DMH(commands.Cog):
         elif "discord" in link:
             print("discord detected lol")
             name_ = name_p(link)
-            download_link(link, f"{name_}")
+            try:
+                download_link(link, f"{name_}")
+            except: 
+                await ctx.send("Unable to download")
+                return
             video_s = TinyTag.get(f"static/download/{name_}")
             depth = moviepy.editor.VideoFileClip(f"static/download/{name_}")
             if video_s.filesize > 8000000:
@@ -182,7 +186,11 @@ class DMH(commands.Cog):
                 ud = await ctx.reply(f"{theRest}", file=discord.File(f'static/download/{name_}'))
         else:
             with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-                ydl.download([link])
+                try:
+                    ydl.download([link])
+                except: 
+                    await ctx.send("Unable to download")
+                    return
                 video_s = TinyTag.get("static/download/downloaded.mp4")
                 depth = moviepy.editor.VideoFileClip("static/download/downloaded.mp4")
                 if video_s.filesize > 8000000:
