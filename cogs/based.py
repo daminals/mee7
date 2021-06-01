@@ -101,7 +101,7 @@ class Based(commands.Cog):
         UpUpdateCountCTX = firebase.put('/' + FIREBASE_NAME + '/upvotecount', str(ctx_id), upCountCTX)
         UpUpdateCountR = firebase.put('/' + FIREBASE_NAME + '/upvotecount', str(r_id), upCountR)
         
-        await ctx.reply(f"Transferred ***{amount}*** upvotes into {recip.mention}'s balance. {ctx.mention}'s balance is now ***{upCountCTX}***")
+        await ctx.reply(f"Transferred ***{amount}*** upvotes into {recip.mention}'s balance. {ctx.author.mention}'s balance is now ***{upCountCTX}***")
         
     @commands.command(name="giveb")
     async def giveb(self, ctx, recip: discord.Member, amount=1):
@@ -121,7 +121,7 @@ class Based(commands.Cog):
         UpUpdateCountCTX = firebase.put('/' + FIREBASE_NAME + '/basedcount', str(ctx_id), upCountCTX)
         UpUpdateCountR = firebase.put('/' + FIREBASE_NAME + '/basedcount', str(r_id), upCountR)
         
-        await ctx.send(f"Transferred ***{amount}*** baseds into {recip.mention}'s balance. {ctx.mention}'s balance is now ***{upCountCTX}***")
+        await ctx.send(f"Transferred ***{amount}*** baseds into {recip.mention}'s balance. {ctx.author.mention}'s balance is now ***{upCountCTX}***")
 
 
 def setup(bot):
