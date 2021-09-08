@@ -25,7 +25,6 @@ class College(commands.Cog):
                 return ctx.author == m.author #To make sure it is the only message author is getting
             msg = await self.bot.wait_for('message', timeout=90.0, check=check)
             if msg.content == ans:
-                await msg.add_reaction("✅")
                 await msg.reply("Correct✅")
                 await msg.delete()
                 return
@@ -43,7 +42,6 @@ class College(commands.Cog):
                 return ctx.author == m.author #To make sure it is the only message author is getting
             msg = await self.bot.wait_for('message', timeout=90.0, check=check)
             if msg.content == ans:
-                await msg.add_reaction("✅")
                 await msg.reply("Correct✅")
                 await msg.delete()
                 return
@@ -62,7 +60,6 @@ class College(commands.Cog):
                 return ctx.author == m.author #To make sure it is the only message author is getting
             msg = await self.bot.wait_for('message', timeout=90.0, check=check)
             if msg.content == ans:
-                await msg.add_reaction("✅")
                 await msg.reply("Correct✅")
                 await msg.delete()
                 return
