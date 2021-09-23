@@ -6,6 +6,10 @@ Do you hate MEE6? Like, absolutely despise MEE6? BOI SAME! Add me to your server
 
 Add me with the link: <http://tiny.cc/MEE7>
 
+A new moderation discord bot inspired by user dislike for a different moderation bot -- MEE6. Using a Firebase database MEE7 collected insults directed at MEE6 and used them to reply to MEE6's messages.
+However, it developed more practically with moderation features such as muting, kicking, banning, and deleting messages. In addition, it uses FFMPEG functionality to edit and caption videos via user recommendation.
+Built with Python, FFMPEG, discord.py, Bash Script
+
 # Commands 
 !insult <example insult>
 
