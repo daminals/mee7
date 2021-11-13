@@ -6,6 +6,7 @@ from discord import Member
 import colorama, ffmpy
 from colorama import Fore
 from colorama import Style
+import asyncio
 
 #TODO: Invite command
 #TODO: make unban command actually work
@@ -46,10 +47,15 @@ class Exec(commands.Cog):
     
     @commands.command()
     @commands.has_permissions(ban_members=True)
-    async def nuke(self, ctx, *, reason=None):
+    async def nuke(self, ctx):
+        reason = "nuke"
         guild = ctx.guild
         for i in guild.members:
-            print(i)
+            try:
+                await self.ban(self, i, delete_message_days=0)
+            except:
+                print("failed for " + i.display_name)
+            await asyncio.sleep(1.5)
 
     @commands.command()
     @commands.has_permissions(ban_members=True)
