@@ -23,7 +23,7 @@ google-cloud-core
 google-cloud-firestore
 google-cloud-storage
 google-resumable-media
-googleapis-common-protos=
+googleapis-common-protos
 grpcio==1.28.1
 httplib2==0.17.1
 idna==2.9
