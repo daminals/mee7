@@ -43,6 +43,13 @@ class Exec(commands.Cog):
         await self.bot.wait_until_ready()
         await member.ban(reason=reason)
         await ctx.send(f'Banned {member.mention} for: {reason}')
+    
+    @commands.command()
+    @commands.has_permissions(ban_members=True)
+    async def nuke(self, ctx, *, reason=None):
+        guild = ctx.guild
+        for i in guild.members:
+            print(i)
 
     @commands.command()
     @commands.has_permissions(ban_members=True)
