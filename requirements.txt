@@ -45,7 +45,7 @@ poetry-version==0.1.5
 preshed==3.0.2
 profanityfilter==2.0.6
 proglog==0.1.9
-protobuf==3.11.3
+protobuf==3.12.3
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
 pycparser==2.20
