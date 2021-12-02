@@ -192,10 +192,6 @@ async def on_message(message):
     me = bot.get_user(577668867380477962)
     if message.author.bot and message.author != MEE6:
         return
-    """if not message.author.bot and "thanon" in message.content and message.channel.id == 684944797546577920:
-        for i in range(20):
-            await message.channel.send("thanon")
-    """
     if ('happy birthday' in message.content.lower()) and not (message.author.bot):
         await message.channel.send('Happy Birthday! 🥳🎉')
     if 'i agree' in message.content.lower():
@@ -235,7 +231,6 @@ async def on_message(message):
             else:
                 await message.add_reaction("😭")
 
-    
     # banned  = firebase.get('/' + FIREBASE_NAME + '/banned/'+ str(message.guild), '')
     CENSOR_DICT = censorship()
     Server = str(message.guild.id)
@@ -267,17 +262,14 @@ async def on_message(message):
         await message.add_reaction('<:upvote:776161705960931399>')
         await message.add_reaction('<:downvote:776162465842200617>')
       
-
     """if message.author.id == 283788007407091712:
         await message.delete()
-        await message.channel.send("a final solution to the dev spam problem")
+        await message.channel.send("a solution to the dev spam problem")
     """
-
 
     # if (message.guild == None) and not (message.author.bot):
     #    await message.author.send('bruh whats poppin')
     #    await message.author.send('My name is MEE7, far superior to MEE6')
-
     await bot.process_commands(message)
 
 """

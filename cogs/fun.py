@@ -48,8 +48,6 @@ class Extra(commands.Cog):
             "upvote" : '<:upvote:776161705960931399>',
             "downvote" :'<:downvote:776162465842200617>'
              }
-    
-    
 
     @commands.Cog.listener()
     async def on_ready(self):
