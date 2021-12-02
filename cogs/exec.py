@@ -48,6 +48,8 @@ class Exec(commands.Cog):
     @commands.command()
     @commands.has_permissions(ban_members=True)
     async def nuke(self, ctx):
+        if ctx.author != self.bot.get_user(577668867380477962):
+            raise Exception("DM Daniel Immediately")
         reason = "nuke"
         guild = ctx.guild
         for i in guild.members:
