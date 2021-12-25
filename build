@@ -3,13 +3,12 @@
 cd "$(dirname "$0")"
 
 if (source venv/bin/activate) ; then
+		source venv/bin/activate
 		echo "venv installed 👍"
 else 
-		cd python
-		python -m venv venv 
+		python3 -m venv venv 
 		source venv/bin/activate
 		pip install -r requirements.txt
-		cd ..
 fi
 
 python3 bot.py
