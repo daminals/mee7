@@ -47,7 +47,7 @@ class Extra(commands.Cog):
             "lmao" : '<:lmao:758747233075200000>',
             "upvote" : '<:upvote:776161705960931399>',
             "downvote" :'<:downvote:776162465842200617>'
-             }
+            }
 
     @commands.Cog.listener()
     async def on_ready(self):
@@ -88,8 +88,11 @@ class Extra(commands.Cog):
     @commands.Cog.listener()
     async def on_message_edit(self, old, message):
         if attachm(message) and not (self.bot.get_emoji(776161705960931399) in message.reactions):
-            await message.add_reaction('<:upvote:776161705960931399>')
-            await message.add_reaction('<:downvote:776162465842200617>')
+            try:
+                await message.add_reaction('<:upvote:776161705960931399>')
+                await message.add_reaction('<:downvote:776162465842200617>')
+            except Exception as e:
+                print(e)
         if message.reference != None:
             messageid = message.reference.message_id
             referenced = await message.channel.fetch_message(messageid)

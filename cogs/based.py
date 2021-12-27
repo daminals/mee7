@@ -4,8 +4,11 @@ import discord,time,random
 from discord.ext import commands
 from discord import Member
 import sys, os.path
-sys.path.append(os.path.abspath('../'))
-from bot import firebase, FIREBASE_NAME
+
+import firebase_admin
+from firebase_admin import db
+firebase_admin.get_app()
+all_data = db.reference('/')
 
 import colorama
 from colorama import Fore
@@ -30,7 +33,8 @@ class Based(commands.Cog):
         else:
             server_track = self.bot.get_guild(int(server_track))
         id_ = ctx.author.id
-        basedCount = firebase.get('/' + FIREBASE_NAME + '/basedcount/', '')
+        basedCount = all_data.child('basedcount').get()
+        #basedCount = firebase.get('/' + FIREBASE_NAME + '/basedcount/', '')
         based_leader = []
         countss = []
         downvote = self.bot.get_emoji(776162465842200617)
@@ -59,7 +63,8 @@ class Based(commands.Cog):
         else:
             server_track = self.bot.get_guild(int(server_track))
         id_ = ctx.author.id
-        basedCount = firebase.get('/' + FIREBASE_NAME + '/upvotecount/', '')
+        basedCount = all_data.child('upvotecount').get()
+        #basedCount = firebase.get('/' + FIREBASE_NAME + '/upvotecount/', '')
         based_leader = []
         countss = []
         downvote = self.bot.get_emoji(776162465842200617)
@@ -91,16 +96,23 @@ class Based(commands.Cog):
             return
         ctx_id = ctx.author.id
         r_id = recip.id
-        upCountCTX = int(firebase.get('/' + FIREBASE_NAME + '/upvotecount/' + str(ctx_id), ''))
-        upCountR = int(firebase.get('/' + FIREBASE_NAME + '/upvotecount/' + str(r_id), ''))
+        
+        ctx_database = all_data.child('upvotecount').child(str(ctx_id))
+        r_database = all_data.child('upvotecount').child(str(r_id))
+        
+        upCountCTX = int(ctx_database.get())
+        upCountR = int(r_database.get())
+        #upCountCTX = int(firebase.get('/' + FIREBASE_NAME + '/upvotecount/' + str(ctx_id), ''))
+        #upCountR = int(firebase.get('/' + FIREBASE_NAME + '/upvotecount/' + str(r_id), ''))
         if upCountCTX < amount:
             await ctx.send(f"You don't have enough upvotes. Lmao poor loser")
             return
         upCountCTX -= amount
         upCountR += amount
-        UpUpdateCountCTX = firebase.put('/' + FIREBASE_NAME + '/upvotecount', str(ctx_id), upCountCTX)
-        UpUpdateCountR = firebase.put('/' + FIREBASE_NAME + '/upvotecount', str(r_id), upCountR)
-        
+        UpUpdateCountCTX = ctx_database.update(upCountCTX)
+        UpUpdateCountCTX = r_database.update(upCountR)
+        #UpUpdateCountCTX = firebase.put('/' + FIREBASE_NAME + '/upvotecount', str(ctx_id), upCountCTX)
+        #UpUpdateCountR = firebase.put('/' + FIREBASE_NAME + '/upvotecount', str(r_id), upCountR)
         await ctx.reply(f"Transferred ***{amount}*** upvotes into {recip.mention}'s balance. {ctx.author.mention}'s balance is now ***{upCountCTX}***")
         
     @commands.command(name="giveb")
@@ -111,16 +123,24 @@ class Based(commands.Cog):
             return
         ctx_id = ctx.author.id
         r_id = recip.id
-        upCountCTX = int(firebase.get('/' + FIREBASE_NAME + '/basedcount/' + str(ctx_id), ''))
-        upCountR = int(firebase.get('/' + FIREBASE_NAME + '/basedcount/' + str(r_id), ''))
+        ctx_database = all_data.child('basedcount').child(str(ctx_id))
+        r_database = all_data.child('basedcount').child(str(r_id))
+        
+        upCountCTX = int(ctx_database.get())
+        upCountR = int(r_database.get())
+
+        
+        #upCountCTX = int(firebase.get('/' + FIREBASE_NAME + '/basedcount/' + str(ctx_id), ''))
+        #upCountR = int(firebase.get('/' + FIREBASE_NAME + '/basedcount/' + str(r_id), ''))
         if upCountCTX < amount:
             await ctx.send(f"You don't have enough baseds. Lmao poor loser")
             return
         upCountCTX -= amount
         upCountR += amount
-        UpUpdateCountCTX = firebase.put('/' + FIREBASE_NAME + '/basedcount', str(ctx_id), upCountCTX)
-        UpUpdateCountR = firebase.put('/' + FIREBASE_NAME + '/basedcount', str(r_id), upCountR)
-        
+        UpUpdateCountCTX = ctx_database.update(upCountCTX)
+        UpUpdateCountR = ctx_database.update(upCountR)
+        #UpUpdateCountCTX = firebase.put('/' + FIREBASE_NAME + '/basedcount', str(ctx_id), upCountCTX)
+        #UpUpdateCountR = firebase.put('/' + FIREBASE_NAME + '/basedcount', str(r_id), upCountR)
         await ctx.send(f"Transferred ***{amount}*** baseds into {recip.mention}'s balance. {ctx.author.mention}'s balance is now ***{upCountCTX}***")
 
 

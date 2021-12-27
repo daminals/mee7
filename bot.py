@@ -2,9 +2,10 @@
 import os, sys, pytz, re
 from datetime import *
 
-import discord, random, asyncio
+import discord, random, asyncio,json
 from dotenv import load_dotenv
-from firebase import firebase
+import firebase_admin
+from firebase_admin import credentials, db
 from profanityfilter import ProfanityFilter
 from cogs.fun import attachm
 pf = ProfanityFilter()
@@ -22,7 +23,14 @@ bot = commands.Bot(command_prefix='?', intents=intents)
 TOKEN = os.environ.get('TOKEN', 3)
 FIREBASE = os.environ.get('FIREBASE', 3)
 FIREBASE_NAME = os.environ.get('FIREBASE_NAME', 3)
-firebase = firebase.FirebaseApplication(FIREBASE, None)
+
+cred = credentials.Certificate("mee7fbkey.json")
+firebase_admin.initialize_app(cred, {
+    'databaseURL': FIREBASE
+})
+all_data = db.reference('/')
+
+#firebase = firebase.FirebaseApplication(FIREBASE, None)
 bot.remove_command('help')
 # TODO: charades game
 
@@ -61,9 +69,18 @@ def gen_ID(char):
 # FUNCTION CALLS
 # ----------------------------------------------------
 
+"""
+def download_firebase():
+    firebase_database = firebase.get('/' + FIREBASE_NAME, '')
+    #print(firebase_database)
+    with open('data.json', 'w') as outfile:
+        json.dump(firebase_database, outfile, indent=4,sort_keys=True)
+"""
+
 def refresh():
     local_MEE6_LIST = []
-    FirebaseList = firebase.get('/' + FIREBASE_NAME + '/insult', '')
+    #FirebaseList = firebase.get('/' + FIREBASE_NAME + '/insult', '')
+    FirebaseList = all_data.child('insult').get()
     for i in FirebaseList.values():
         local_MEE6_LIST.append(i)
     return local_MEE6_LIST
@@ -72,31 +89,26 @@ def refresh():
 # ----------------------------------------------------
 
 def censorship():
-    local_CENSOR_LIST = firebase.get('/' + FIREBASE_NAME + '/censor', '')
+    #local_CENSOR_LIST = firebase.get('/' + FIREBASE_NAME + '/censor', '')
+    local_CENSOR_LIST = all_data.child('censor').get()
     return local_CENSOR_LIST
 
 
 # ----------------------------------------------------
 
 def CurrentTicker():
-    FirebaseTicker = firebase.get('/' + FIREBASE_NAME + '/ticker', '')
-    print(FirebaseTicker)
-    key = list(FirebaseTicker.keys())
-    ticker = list(FirebaseTicker.values())
-    key = key[0]
-    ticker = ticker[0]
-    ticker = ticker['ticker']
-    return [key, ticker]
+    #FirebaseTicker = firebase.get('/' + FIREBASE_NAME + '/ticker', '')
+    FirebaseTicker = all_data.child('ticker').get()
+    return FirebaseTicker
 
 
 # ----------------------------------------------------
 
 def updateTicker():
-    Dict_Tick = CurrentTicker()
-    key = Dict_Tick[0]
-    ticker = Dict_Tick[1]
+    ticker = CurrentTicker()
     ticker += 1
-    firebase.put('/' + FIREBASE_NAME + '/ticker/' + key, 'ticker', ticker)
+    all_data.child('ticker').set(ticker)
+    #firebase.put('/' + FIREBASE_NAME + '/ticker/' + key, 'ticker', ticker)
     
 # EVENTS
 # ----------------------------------------------------
@@ -119,7 +131,8 @@ async def on_ready():
 async def on_guild_join(server):
     servers = list(bot.guilds)
     server_num = len(servers)
-    firebase.put('/' + FIREBASE_NAME + '/censor/', str(server.id), True)
+    all_data.child('censor').child(str(server.id)).update(True)
+    #firebase.put('/' + FIREBASE_NAME + '/censor/', str(server.id), True)
     await bot.change_presence(
         # "you all code"
         # "myself break over & over"
@@ -155,11 +168,14 @@ async def on_raw_reaction_add(payload):
     if user != message_.author:
         if payload.emoji == upvote:
             try:
-                upCount = firebase.get('/' + FIREBASE_NAME + '/upvotecount/' + str(message_.author.id), '')
+                message_firebase = all_data.child('upvotecount')
+                id_dict = message_firebase.get()
+                upCount = id_dict[str(message_.author.id)]
                 newUpCount = int(upCount) + 1
-                UpUpdateCount = firebase.put('/' + FIREBASE_NAME + '/upvotecount', str(message_.author.id), newUpCount)
-            except:
-                upStartCount = firebase.put('/' + FIREBASE_NAME + '/upvotecount', str(message_.author.id), 1)
+                UpUpdateCount = message_firebase.update({str(message_.author.id):newUpCount})
+            except Exception as e:
+                print(e)
+                upStartCount = all_data.child('upvotecount').update({str(message_.author.id): 1})
                 
         if payload.emoji == downvote:
             if message_.author == me and user != mee7:
@@ -167,21 +183,27 @@ async def on_raw_reaction_add(payload):
                 return
             try:
                 await asyncio.sleep(0.5)
-                upCount = firebase.get('/' + FIREBASE_NAME + '/upvotecount/' + str(message_.author.id), '')
-                newUpCount = int(upCount) + - 1
-                UpUpdateCount = firebase.put('/' + FIREBASE_NAME + '/upvotecount', str(message_.author.id), newUpCount)
+                message_firebase = all_data.child('upvotecount')
+                id_dict = message_firebase.get()
+                upCount = id_dict[str(message_.author.id)]
+                newUpCount = int(upCount) - 1
+                UpUpdateCount = message_firebase.update({str(message_.author.id): newUpCount})
                 #await reaction.message.channel.send(f'upvote count {newUpCount}')
-            except:
-                upStartCount = firebase.put('/' + FIREBASE_NAME + '/upvotecount', str(message_.author.id), -1)
+            except Exception as e:
+                print(e)
+                upStartCount = all_data.child('upvotecount').update({str(message_.author.id): -1})
                 
         if payload.emoji == based:
             try:
-                basedCount = firebase.get('/' + FIREBASE_NAME + '/basedcount/' + str(message_.author.id), '')
+                #basedCount = firebase.get('/' + FIREBASE_NAME + '/basedcount/' + str(message_.author.id), '')
+                message_firebase = all_data.child('basedcount')
+                id_dict = message_firebase.get()
+                basedCount = id_dict[str(message_.author.id)]
                 newBasedCount = int(basedCount) + 1
-                basedUpdateCount = firebase.put('/' + FIREBASE_NAME + '/basedcount', str(message_.author.id), newBasedCount)
+                basedUpdateCount = message_firebase.update({str(message_.author.id): newBasedCount})
                 #await ctx.send(f'based count {newBasedCount}')
             except:
-                basedStartCount = firebase.put('/' + FIREBASE_NAME + '/basedcount', str(message_.author.id), 1)
+                basedStartCount = all_data.child('basedcount').update({str(message_.author.id): 1})
 
 # ON MESSAGE BRO
 # ----------------------------------------------------
@@ -426,7 +448,7 @@ async def help(ctx, cate=None):
 async def insult(ctx, *, insult):
     if len(insult) < 4 or re.search("<@!\d{18}>", insult):
         return
-    result = firebase.post(FIREBASE_NAME + '/insult', insult)
+    result = all_data.child('insult').update({insult: insult})
     print(result)
     await ctx.send(random.choice(Acceptance_List))
 
@@ -450,7 +472,7 @@ async def mock(ctx):
 @bot.command(name='censor')
 async def censor(ctx):
     Server = str(ctx.guild.id)
-    firebase.put('/' + FIREBASE_NAME + '/censor/', Server, True)
+    all_data.child('censor').update({Server: True})
     await ctx.send('I am now censored for this server')
 
 
@@ -459,7 +481,7 @@ async def censor(ctx):
 @commands.has_permissions(administrator=True)
 async def uncensor(ctx):
     Server = str(ctx.guild.id)
-    firebase.put('/' + FIREBASE_NAME + '/censor/', Server, False)
+    all_data.child('censor').update({Server: False})
     await ctx.send('I am now uncensored for this server')
 
 
@@ -496,9 +518,9 @@ everything is perfectly fine
 """
 
 # ----------------------------------------------------
-
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py') and not filename.startswith('__'):
         bot.load_extension(f'cogs.{filename[:-3]}')
 
-bot.run(TOKEN)
+if __name__ == '__main__':
+    bot.run(TOKEN)

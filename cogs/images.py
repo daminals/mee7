@@ -9,8 +9,11 @@ import colorama, moviepy
 from colorama import Fore
 from colorama import Style
 
-sys.path.append(os.path.abspath('../'))
-from bot import firebase, FIREBASE_NAME
+import firebase_admin
+from firebase_admin import db
+firebase_admin.get_app()
+all_data = db.reference('/')
+
 # TODO: Stitch two images together
 # TODO: ADD DEFAULT AUDIO TO A VIDEO
 
@@ -280,7 +283,7 @@ class Images(commands.Cog):
         # ----------- MIRROR MIRROR --------------------------
         
         if "mirror mirror on the wall whos the upvotedest of them all" in message.content.lower():
-            basedCount = firebase.get('/' + FIREBASE_NAME + '/upvotecount/', '')
+            basedCount = all_data.child('upvotecount').get()
             basedest = 0
             basedestp = ""
             for based_users in basedCount.items():
@@ -300,7 +303,7 @@ class Images(commands.Cog):
             return
                 
         if "mirror mirror on the wall whos the basedest of them all" in message.content.lower():
-            basedCount = firebase.get('/' + FIREBASE_NAME + '/basedcount/', '')
+            basedCount = all_data.child('basedcount').get()
             basedest = 0
             basedestp = ""
             for based_users in basedCount.items():
