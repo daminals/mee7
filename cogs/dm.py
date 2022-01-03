@@ -1,4 +1,4 @@
-#exec.py
+#dm.py
 from __future__ import unicode_literals
 import discord,time,random, requests, os, ffmpy, moviepy.editor, moviepy, shutil
 from discord.ext import commands
@@ -37,7 +37,11 @@ def download_link(link, filename):
 def clutter():
     for i in os.listdir('static/download'):
         if not i=='.gitkeep':
-            os.remove('static/download/' + i)
+            try:
+                os.remove('static/download/' + i)
+            except Exception as e:
+                print(e)
+                
 class MyLogger(object):
     def debug(self, msg):
         pass
@@ -47,6 +51,7 @@ class MyLogger(object):
 
     def error(self, msg):
         print(msg)
+    
 def my_hook(d):
     if d['status'] == 'finished':
         print('Done downloading, now converting ...')
@@ -103,18 +108,19 @@ class DMH(commands.Cog):
         downvote = self.bot.get_emoji(776162465842200617)
         upvote = self.bot.get_emoji(776161705960931399)
         if link is None or "http" not in link:
+            print('no link found; looking for reference')
             if ctx.message.reference != None: # if message has reference
                 messageid = ctx.message.reference.message_id
                 referenced = await ctx.channel.fetch_message(messageid)
                 content_ = referenced.content
                 if("https://" in content_):
                     message_list = content_.split(" ")
-                    matches = [image for image in message_list if "https://" in image]
-                    link = matches[0]
+                    matches = [is_link for is_link in message_list if "https://" in is_link] # find the link part of the message
+                    link = matches[0] 
+                    print(link) # the link
                 else:
                     ctx.reply("No link detected")
                     raise Exception("No link detected")
-
             else:
                 await ctx.reply("No link detected")
                 raise Exception("No link detected")
@@ -135,6 +141,7 @@ class DMH(commands.Cog):
             if reddit.size <= 8 * (1 << 20):
                 file_ = reddit.download()
                 print(Fore.GREEN + Style.BRIGHT+ "sending....."+ Style.RESET_ALL)
+                print(file_)
                 ud = await ctx.reply(f"{theRest}", file=discord.File(file_))
             else:
                 print('Size > 8 MB')

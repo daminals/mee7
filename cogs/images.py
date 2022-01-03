@@ -56,7 +56,7 @@ def deepfryv(vid, repeat):
     )
     ff.run()
 
-def create_audio_args(repeat):
+def create_audio_args():
     return '-af ' + 'bass=g=18,treble=g=2,volume=10dB,' + 'acompressor=threshold=0.02:makeup=5,acontrast=45 '
 
 def create_filter_args():
@@ -300,6 +300,7 @@ class Images(commands.Cog):
             ud = await message.reply(file=discord.File(f"static/created/{user}.jpg"))
             await ud.add_reaction(upvote)
             await ud.add_reaction(downvote)
+            os.remove(f"static/created/{user}.jpg")
             return
                 
         if "mirror mirror on the wall whos the basedest of them all" in message.content.lower():
@@ -320,6 +321,7 @@ class Images(commands.Cog):
             ud = await message.reply(file=discord.File(f"static/created/{user}.jpg"))
             await ud.add_reaction(upvote)
             await ud.add_reaction(downvote)
+            os.remove(f"static/created/{user}.jpg")
             return
     
         if "mirror mirror on the wall who" in message.content.lower():
@@ -331,6 +333,7 @@ class Images(commands.Cog):
             ud = await message.reply(file=discord.File(f"static/created/{user}.jpg"))
             await ud.add_reaction(upvote)
             await ud.add_reaction(downvote)
+            os.remove(f"static/created/{user}.jpg")
                 
                 
         # -----------------------------------------------------------------
@@ -347,6 +350,8 @@ class Images(commands.Cog):
                     ud = await message.reply(file=discord.File(f"static/created/{content}.png"))
                     await ud.add_reaction(upvote)
                     await ud.add_reaction(downvote)
+                    os.remove(f"static/created/{content}.jpg")
+
 
         
     @commands.command()
