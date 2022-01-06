@@ -28,6 +28,7 @@ class Based(commands.Cog):
         
     @commands.command(name='based')
     async def based(self,ctx, server_track="no id"):
+        await ctx.message.add_reaction("✅")
         if server_track == "no id":
             server_track = ctx.guild
         else:
@@ -58,6 +59,7 @@ class Based(commands.Cog):
 
     @commands.command(name='upvote')
     async def upvote(self, ctx, server_track="no id"):
+        await ctx.message.add_reaction("✅")
         if server_track == "no id":
             server_track = ctx.guild
         else:
@@ -90,6 +92,7 @@ class Based(commands.Cog):
     
     @commands.command(name="give", aliases=["giveu"])
     async def giveu(self, ctx, recip: discord.Member, amount=1):
+        await ctx.message.add_reaction("✅")
         amount = int(amount)
         if amount < 0:
             await ctx.send("Sorry, you can't give negative upvotes???")
@@ -117,6 +120,7 @@ class Based(commands.Cog):
         
     @commands.command(name="giveb")
     async def giveb(self, ctx, recip: discord.Member, amount=1):
+        await ctx.message.add_reaction("✅")
         amount = int(amount)
         if amount < 0:
             await ctx.send("Sorry, you can't give negative baseds???")

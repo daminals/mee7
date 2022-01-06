@@ -356,12 +356,14 @@ class Images(commands.Cog):
         
     @commands.command()
     async def av(self,ctx, member: Member=None):
+        await ctx.message.add_reaction("✅")
         if member == None:
             member = ctx.author
         await ctx.channel.send(member.avatar_url)
     
     @commands.command()
     async def deepfry(self, ctx, repeat=1): 
+        await ctx.message.add_reaction("✅")
         try:
             repeat = int(repeat)
         except:
@@ -393,7 +395,8 @@ class Images(commands.Cog):
 
         
     @commands.command(aliases=["caption:"])
-    async def caption(self, ctx, *, caption):        
+    async def caption(self, ctx, *, caption):     
+        await ctx.message.add_reaction("✅")   
         # if message has reference -- no reference no caption
         caption = caption.upper()
         referenced = await imgVidRefs(ctx.message)        
@@ -421,6 +424,7 @@ class Images(commands.Cog):
 
     @commands.command(name="convert")
     async def convert(self, ctx, link=None, *, theRest=" "):
+        await ctx.message.add_reaction("✅")
         clutter()
         # logging
         print(Fore.RED + Style.BRIGHT+"\n---------------\n"+Style.RESET_ALL)
@@ -436,6 +440,7 @@ class Images(commands.Cog):
 
     @commands.command(name="speed")
     async def speed(self,ctx, spd, link=None):
+        await ctx.message.add_reaction("✅")
         spd = float(spd)
         clutter()
         # logging
@@ -456,6 +461,7 @@ class Images(commands.Cog):
         
     @commands.command(name="layered")
     async def layered(self,ctx, commands, link=None):
+        await ctx.message.add_reaction("✅")
         pass
         
         

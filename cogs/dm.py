@@ -103,6 +103,7 @@ class DMH(commands.Cog):
             
     @commands.command()
     async def download(self, ctx, link=None, *, theRest=' '):
+        await ctx.message.add_reaction("✅")
         # TODO: ADD all downloaded links to a database, if the same link is called twice send a link
         clutter()
         downvote = self.bot.get_emoji(776162465842200617)

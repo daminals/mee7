@@ -424,6 +424,7 @@ def embedWhat():
 
 @bot.command(name='help')
 async def help(ctx, cate=None):
+    await ctx.message.add_reaction("✅")
     help_switch = {
         None: embedNone(),
         "mee6": embedMee6(),
@@ -446,6 +447,7 @@ async def help(ctx, cate=None):
 
 @bot.command(name='insult')
 async def insult(ctx, *, insult):
+    await ctx.message.add_reaction("✅")
     if len(insult) < 4 or re.search("<@!\d{18}>", insult):
         return
     result = all_data.child('insult').update({insult: insult})
@@ -455,6 +457,7 @@ async def insult(ctx, *, insult):
 # ----------------------------------------------------
 @bot.command(name='mock')
 async def mock(ctx):
+    await ctx.message.add_reaction("✅")
     MEE6_LIST = refresh()
     CENSOR_DICT = censorship()
     async with ctx.channel.typing():
@@ -470,7 +473,9 @@ async def mock(ctx):
 
 # ----------------------------------------------------
 @bot.command(name='censor')
+@commands.has_permissions(administrator=True)
 async def censor(ctx):
+    await ctx.message.add_reaction("✅")
     Server = str(ctx.guild.id)
     all_data.child('censor').update({Server: True})
     await ctx.send('I am now censored for this server')
@@ -480,6 +485,7 @@ async def censor(ctx):
 @bot.command(name='uncensor')
 @commands.has_permissions(administrator=True)
 async def uncensor(ctx):
+    await ctx.message.add_reaction("✅")
     Server = str(ctx.guild.id)
     all_data.child('censor').update({Server: False})
     await ctx.send('I am now uncensored for this server')
@@ -489,6 +495,7 @@ async def uncensor(ctx):
 
 @bot.command(name='allroast')
 async def allroast(ctx):
+    await ctx.message.add_reaction("✅")
     MEE6_LIST = refresh()
     async with ctx.channel.typing():
         await asyncio.sleep(2.5)
@@ -504,6 +511,7 @@ async def allroast(ctx):
 
 @bot.command(name='count')
 async def count(ctx):
+    await ctx.message.add_reaction("✅")
     Dict_Tick = CurrentTicker()
     ticker = Dict_Tick[1]
     servers = list(bot.guilds)

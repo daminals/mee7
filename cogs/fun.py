@@ -107,17 +107,20 @@ class Extra(commands.Cog):
     # -----------------------------------------------------
     @commands.command()
     async def stank(self,ctx):
+        await ctx.message.add_reaction("✅")
         await ctx.channel.send('lmao imagine not having a ?stank command')
     
     # TODO: organize this command and make it a nice looking embed
     @commands.command()
     async def info(self,ctx, member: Member=None):
+        await ctx.message.add_reaction("✅")
         if member is None:
             member = ctx.author
         await ctx.channel.send(f'**__THIS COMMAND IS STILL IN BETA__** \n\naccount created: {member.created_at} \nserver joined: {member.joined_at} \nstatus: {member.activity}')
         
     @commands.command()
     async def dm(self,ctx, userid, *, message):    
+        await ctx.message.add_reaction("✅")
         me = self.bot.get_user(577668867380477962)
         if ctx.author == me:
             userid = int(userid)
@@ -125,16 +128,18 @@ class Extra(commands.Cog):
             await user.send(message)
             
     @commands.command()
-    async def message(self,ctx, channelid, *, message):    
-     me = self.bot.get_user(577668867380477962)
-     if ctx.author == me:
-        channelid = int(channelid)
-        channel = self.bot.get_channel(channelid)
-        await channel.send(message)
+    async def message(self,ctx, channelid, *, message):   
+        await ctx.message.add_reaction("✅") 
+        me = self.bot.get_user(577668867380477962)
+        if ctx.author == me:
+            channelid = int(channelid)
+            channel = self.bot.get_channel(channelid)
+            await channel.send(message)
         
 
     @commands.command(name='flip')
     async def flip(self, ctx):
+        await ctx.message.add_reaction("✅")
         if random.choice([1, 2]) == 1:
             await ctx.reply("https://cdn.discordapp.com/attachments/840745532736667648/840745647657582592/heads.png")
             print("HEADS!!")
