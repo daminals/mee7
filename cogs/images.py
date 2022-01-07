@@ -17,6 +17,12 @@ all_data = db.reference('/')
 # TODO: Stitch two images together
 # TODO: ADD DEFAULT AUDIO TO A VIDEO
 
+def gen_ID(char):
+    ID = ''
+    for i in range(char):
+        ID += str(randint(0, 9))
+    return ID
+
 def add_topv(vid, caption, Fw, h):
     newH = h * 1.35
     placementH = h*0.35
@@ -52,12 +58,12 @@ def fit_text(string: str, frame_width, font_size):
 def deepfryv(vid, repeat):
     ff = ffmpy.FFmpeg(
      inputs={vid: None},
-     outputs={f'static/created/deepfried{repeat+1}.mp4': f'{create_filter_args()} {create_audio_args(repeat)}-vcodec libx264 -crf 45'}
+     outputs={f'static/created/deepfried{repeat+1}.mp4': f'{create_filter_args()} {create_audio_args()} -vcodec libx264 -crf 45'}
     )
     ff.run()
 
 def create_audio_args():
-    return '-af ' + 'bass=g=18,treble=g=2,volume=10dB,' + 'acompressor=threshold=0.02:makeup=5,acontrast=45 '
+    return '-af ' + 'bass=g=18,treble=g=2,volume=10dB,' + 'acompressor=threshold=0.02:makeup=5,acontrast=45'
 
 def create_filter_args():
     """
@@ -441,6 +447,7 @@ class Images(commands.Cog):
     @commands.command(name="speed")
     async def speed(self,ctx, spd, link=None):
         await ctx.message.add_reaction("✅")
+        id_ = gen_ID(4)
         spd = float(spd)
         clutter()
         # logging
@@ -448,14 +455,14 @@ class Images(commands.Cog):
         print(Fore.YELLOW + Style.BRIGHT + "downloading attachment ⏳" + Style.RESET_ALL)
         # download
         try:
-            await video_crefs(ctx.message, "spd.mp4")
+            await video_crefs(ctx.message, f"spd{id_}.mp4")
         except Exception as e:
             print(e)
             await ctx.reply("sorry bestie, but that video is over 210 seconds. I won't do it")
             return
-        fast_forward("static/created/spd.mp4","static/created/newSpeed.mp4",spd)
+        fast_forward(f"static/created/spd{id_}.mp4",f"static/created/newSpeed{id_}.mp4",spd)
         print(Fore.YELLOW + Style.BRIGHT + "sending video ⏳"+ Style.RESET_ALL)
-        ud = await ctx.reply(file=discord.File(f"static/created/newSpeed.mp4"))
+        ud = await ctx.reply(file=discord.File(f"static/created/newSpeed{id_}.mp4"))
         print(Fore.GREEN + Style.BRIGHT + "complete ✔︎ " + Style.RESET_ALL)
         await upvDownv(self.bot,ud,ctx.message)
         

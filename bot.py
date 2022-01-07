@@ -281,8 +281,12 @@ async def on_message(message):
         updateTicker()
 
     if attachm(message):
-        await message.add_reaction('<:upvote:776161705960931399>')
-        await message.add_reaction('<:downvote:776162465842200617>')
+        try:
+            await message.add_reaction('<:upvote:776161705960931399>')
+            await message.add_reaction('<:downvote:776162465842200617>')
+        except Exception as e:
+            # no permissions to execute this reaction 
+            print("put in permission error pass here so no cluttered logs")
       
     """if message.author.id == 283788007407091712:
         await message.delete()
