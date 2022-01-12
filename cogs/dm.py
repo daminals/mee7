@@ -50,10 +50,10 @@ def clutter():
                 
 class MyLogger(object):
     def debug(self, msg):
-        pass
+        print(msg)
 
     def warning(self, msg):
-        pass
+        print(msg)
 
     def error(self, msg):
         print(msg)
@@ -199,10 +199,14 @@ class DMH(commands.Cog):
             else:
                 print(Fore.GREEN + Style.BRIGHT + "sending....." + Style.RESET_ALL)
                 ud = await ctx.reply(f"{theRest}", file=discord.File(f'static/download/{name_}'))
+        elif "tiktok" in link:
+            print('tiktok detected')
+            await ctx.reply('due to tiktok changing its API, downloading tiktoks is temporarily unsupported')
         else:
             ydl_opts['outtmpl'] = f'static/download/downloaded{d_ID}.mp4'
             with youtube_dl.YoutubeDL(ydl_opts) as ydl:
                 try:
+                    print('attempting download via youtube-dl')
                     ydl.download([link])
                 except: 
                     await ctx.send("Unable to download")
