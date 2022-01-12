@@ -55,10 +55,10 @@ def fit_text(string: str, frame_width, font_size):
     lines += line.strip()  # Append leftover words
     return lines
 
-def deepfryv(vid, repeat):
+def deepfryv(vid, repeat, id):
     ff = ffmpy.FFmpeg(
      inputs={vid: None},
-     outputs={f'static/created/deepfried{repeat+1}.mp4': f'{create_filter_args()} {create_audio_args()} -vcodec libx264 -crf 45'}
+     outputs={f'static/created/deepfried{id}{repeat+1}.mp4': f'{create_filter_args()} {create_audio_args()} -vcodec libx264 -crf 45'}
     )
     ff.run()
 
@@ -370,6 +370,8 @@ class Images(commands.Cog):
     @commands.command()
     async def deepfry(self, ctx, repeat=1): 
         await ctx.message.add_reaction("✅")
+        df_ID = gen_ID(4) # deepfry ID
+        df_ID = str(df_ID) + '-'
         try:
             repeat = int(repeat)
         except:
@@ -380,22 +382,27 @@ class Images(commands.Cog):
         # check -- is this an image? can I download it?
         if is_image(referenced):
             if repeat > 20: repeat = 20 # set 20 as the deepfry limit
-            await downloadM_(referenced, f"deepfry.png")            
+            await downloadM_(referenced, f"deepfry{df_ID}.png")            
             for i in range(repeat):
-                deepfryi(f"static/created/deepfry.png")
+                deepfryi(f"static/created/deepfry{df_ID}.png")
                 print(Style.DIM+ f"deepfried it {i+1} times bestie" + Style.RESET_ALL)
             print(Fore.YELLOW + Style.BRIGHT + "sending image ⏳"+ Style.RESET_ALL)
-            ud = await ctx.reply(file=discord.File(f"static/created/deepfry.png"))
+            ud = await ctx.reply(file=discord.File(f"static/created/deepfry{df_ID}.png"))
             print(Fore.GREEN + Style.BRIGHT + "complete ✔︎ " + Style.RESET_ALL)
         elif is_video(referenced):
             if repeat > 4: repeat = 4 # set 4 as the deepfry limit
-            await downloadM_(referenced, f"deepfried0.mp4") # downloads video
-            checkLength("deepfried0.mp4",60) # throws exception if video is too long
+            await downloadM_(referenced, f"deepfried{df_ID}0.mp4") # downloads video
+            try:
+                checkLength(f"deepfried{df_ID}0.mp4",60) # throws exception if video is too long
+            except Exception as e:
+                print(e)
+                await ctx.send(e)
+                return
             for i in range(repeat):
-                deepfryv(f"static/created/deepfried{i}.mp4", i)
+                deepfryv(f"static/created/deepfried{df_ID}{i}.mp4", i, df_ID)
                 print(Style.DIM+ f"deepfried it {i+1} times bestie" + Style.RESET_ALL)
             print(Fore.YELLOW + Style.BRIGHT + "sending video ⏳"+ Style.RESET_ALL)
-            ud = await ctx.reply(file=discord.File(f"static/created/deepfried{repeat}.mp4"))
+            ud = await ctx.reply(file=discord.File(f"static/created/deepfried{df_ID}{repeat}.mp4"))
             print(Fore.GREEN + Style.BRIGHT + "complete ✔︎ " + Style.RESET_ALL)
         await upvDownv(self.bot,ud,ctx.message)
 
