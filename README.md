@@ -1,4 +1,4 @@
-![github repo badge: Language](https://img.shields.io/badge/Language-Python-181717?color=blue)  ![github repo badge: Powered By](https://img.shields.io/badge/Powered%20By-Discord-181717?color=blue) ![github repo badge: Host](https://img.shields.io/badge/Host-Heroku-181717?color=purple) ![github repo badge: Database](https://img.shields.io/badge/Database-Firebase-181717?color=orange) ![github repo badge: Using](https://img.shields.io/badge/Using-FFMPEG-181717?color=green)
+![github repo badge: Language](https://img.shields.io/badge/Language-Python-181717?color=blue)  ![github repo badge: Powered By](https://img.shields.io/badge/Powered%20By-Discord-181717?color=blue) ![github repo badge: Host](https://img.shields.io/badge/Host-Dcloud-181717?color=blue) ![github repo badge: Database](https://img.shields.io/badge/Database-Firebase-181717?color=orange) ![github repo badge: Using](https://img.shields.io/badge/Using-FFMPEG-181717?color=green)
 # MEE7
 anti-mee6 bot... and MORE
 
