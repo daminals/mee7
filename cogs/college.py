@@ -49,8 +49,6 @@ class College(commands.Cog):
             await msg.reply("Incorrect. Try again")
             await ctx.send(ans)
 
-
-
     @commands.command(name='logos')
     async def logos(self, ctx):
         await ctx.message.add_reaction("✅")

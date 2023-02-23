@@ -12,10 +12,8 @@ emojis = ["😎", "😍", "😂", "🥶", "😱", "😳", "🤢", "🥱", "🤐"
           "⛓", "🔪","😕","👺","🐸","💅","🤦‍♀️","💆‍♀️","🧏‍♀️","💁‍♀️","🤒","🤮","🤥","🤤","😬","😰","🤭","🤫","😓","🥺", "<:lip_biting_2:771376430566342716>", "<:sotrue:825473477837848598>", "<:lmao:758747233075200000>"]
 
 def attachm(message):
-    if (len(message.attachments) > 0 or 'https://' in message.content):
-        return True
-    else:
-        return False
+    return (len(message.attachments) > 0 or 'https://' in message.content)
+
  
 async def refEm(search, searchbar, message): 
     emote_ref = { # when adding an emote to the dictionary, remember to add it to the search list as well
